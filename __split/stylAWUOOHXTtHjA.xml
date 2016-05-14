@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<stylesheet id="stylAWUOOHXTtHjA" lang="any" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[<!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
+Illegal reproduction and disclosure will be prosecuted  -->
+
+<xsl:stylesheet
+                version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:wp="http://www.palominosys.com/wp"
+                xmlns:php="http://php.net/xsl"
+                xmlns:date="http://exslt.org/dates-and-times"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl"
+                >
+
+  <xsl:strip-space elements="*"/>
+
+
+<!-- category tree -->
+  <xsl:template match="product-store-2">
+    <xsl:param name="current-path"/>
+
+    <xsl:variable name="chapter_id" select="../@id"/>
+    <xsl:variable name="path">
+      <xsl:call-template name="create_xpath_to_node">
+        <xsl:with-param name="node_id" select="$chapter_id"/>
+        <xsl:with-param name="web_root" select="//pages"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <ul>
+      <xsl:apply-templates select="categories/category[not(@parent)] 
+                                   | categories/category[@parent='']" 
+                           mode="navigation"/>
+    </ul>
+
+  </xsl:template>
+
+  <xsl:template match="product-store-2/categories/category" mode="navigation">
+    <xsl:param name="path"/>
+    <li>
+      <a href="?node={@id}"><xsl:value-of select="title"/></a>
+      <xsl:variable name="my-name" select="@name"/>
+      <xsl:if test="../category[./@parent = $my-name]">
+        <ul>
+          <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
+        </ul>
+      </xsl:if>
+    </li>
+  </xsl:template>
+
+  <!-- category page -->
+  <xsl:template match="product-store-2/categories/category">
+    <xsl:variable name="my-name" select="@name"/>
+    <xsl:apply-templates select="title"/>
+    <xsl:apply-templates select="description"/>
+    <ul>
+      <xsl:for-each select="../../products/product[@category = $my-name]">
+        <li><a href="?node={@id}"><xsl:value-of select="title"/></a></li>
+      </xsl:for-each>
+    </ul>
+  </xsl:template>
+
+  <xsl:template match="product-store-2/categories/category/title">
+    <h1><xsl:value-of select="."/></h1>
+  </xsl:template>
+
+  <!-- product page -->
+  <xsl:template match="product-store-2/products/product">
+    <xsl:apply-templates select="title"/>
+    <xsl:apply-templates select="description"/>
+    <xsl:apply-templates select="skus"/>
+  </xsl:template>
+
+  <xsl:template match="product-store-2/products/product/title">
+    <h1><xsl:value-of select="."/></h1>
+  </xsl:template>
+  
+  <xsl:template match="product-store-2/products/product/skus">
+    <h3>Skus</h3>
+    <div class="table-responsive">
+      <table>
+        <tr>
+          <th>SKU</th>
+          <th>Size</th>
+          <th>Colour</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+        <xsl:apply-templates select="sku[@discontinued != 'yes']"/>
+      </table>
+    </div>
+  </xsl:template>
+  
+  <xsl:template match="product-store-2/products/product/skus/sku">
+    <tr>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="size"/></td>
+      <td><xsl:value-of select="colour"/></td>
+      <td><xsl:value-of select="qty"/></td>
+      <td><xsl:value-of select="price"/></td>
+      <td><a href="#">add to cart</a></td>
+    </tr>
+  </xsl:template>
+  
+  
+
+</xsl:stylesheet>]]></stylesheet>
