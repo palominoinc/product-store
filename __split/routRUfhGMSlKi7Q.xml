@@ -1,2 +1,4 @@
 <?xml version="1.0"?>
-<routes column-widths="67,60,274,345,92,101,50" id="routRUfhGMSlKi7Q" webpalschematype="wpAppRouteList"><route id="routr2rKu7xRyYRX" __stub="yes"/></routes>
+<routes column-widths="67,60,274,345,92,101,50" id="routRUfhGMSlKi7Q" webpalschematype="wpAppRouteList">
+    <route id="routr2rKu7xRyYRX" __stub="yes"/>
+  </routes>
