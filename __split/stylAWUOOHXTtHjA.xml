@@ -48,13 +48,19 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </li>
   </xsl:template>
 
-  
-  
+
+
   <!-- category page -->
   <xsl:template match="product-store-2/categories/category">
     <xsl:variable name="my-name" select="@name"/>
     <xsl:apply-templates select="title"/>
     <xsl:apply-templates select="description"/>
+    <xsl:if test="../category[./@parent = $my-name]">
+      <em>Sub-categories</em>
+      <ul>
+        <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
+      </ul>
+    </xsl:if>
     <ul>
       <xsl:for-each select="../../products/product[@category = $my-name]">
         <li><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></li>
@@ -66,8 +72,8 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <h1><xsl:value-of select="."/></h1>
   </xsl:template>
 
-  
-  
+
+
   <!-- product page -->
   <xsl:template match="product-store-2/products/product">
     <div class="product-store-product">
@@ -109,11 +115,11 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </tr>
   </xsl:template>
 
-<xsl:template match="product-store-2//*" priority="0.0">
-  <pre>
+  <xsl:template match="product-store-2//*" priority="0.0">
+    <pre>
     <xsl:copy-of select="." disable-output-escaping="yes"/>
   </pre>
-</xsl:template>
-  
+  </xsl:template>
+
 
 </xsl:stylesheet>]]></stylesheet>

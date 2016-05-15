@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <extension id="extej_zuUskF9ytv" name="product-store" webpalschematype="wpExtension">
-  <routes id="routRUfhGMSlKi7Q" __stub="yes"/>
-  <controllers id="contm7KUhWVfEFhn" __stub="yes"/>
-  <node-schema id="nodeRaRzGPZV_khA" __stub="yes"/>
-  <stylesheet id="stylAWUOOHXTtHjA" __stub="yes"/>
-</extension>
+      <routes id="routRUfhGMSlKi7Q" __stub="yes"/>
+      <controllers id="contm7KUhWVfEFhn" __stub="yes"/>
+      <node-schema id="nodeRaRzGPZV_khA" __stub="yes"/>
+      <stylesheet id="stylAWUOOHXTtHjA" __stub="yes"/>
+    </extension>
