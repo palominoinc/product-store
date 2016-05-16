@@ -1,83 +1,5 @@
 <?xml version="1.0"?>
 <node-schema id="nodeRaRzGPZV_khA" lang="any" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<schema xmlns="http://www.palominosys.com/wpschema">
-
-  <complexType extends="wpPage" name="wpPage-wpProductStore">
-    <element name="product-store" type="wpProductStore" folder="list"/>
-  </complexType>
-
-  <complexType name="wpProductStore" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
-    <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
-    <attribute name="name" use="optional" type="wpName" value="product-store"/>
-    <element name="product-categories" type="productCategories" maxOccurs="1"/>
-    <element name="product-list" type="productList" maxOccurs="1" />
-  </complexType>
-
-  <complexType name="productCategories" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="productCategories" />   
-    <element name="product-category" type="productCategory"/>
-  </complexType>
-
-  <complexType name="productCategory" edittype="sheet" icon="input.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="productCategory" />
-    <attribute name="categoryNumber" use="required" type="wpString" value=""/>
-    <element name="categoryTitle" type="wpStringL" minOccurs="1" />
-    <element name="description" type="wpHtml" minOccurs="1"/>
-    <element name="product-groups" type="productGroups"/>
-  </complexType>
-
-  <complexType name="productGroups" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="productGroups" />   
-    <element name="group" type="group"/>
-  </complexType>
-
-  <complexType name="group" edittype="sheet" icon="input.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="group" />
-    <attribute name="groupNumber" use="required" type="wpString" value=""/>
-    <element name="groupTitle" type="wpStringL" minOccurs="1" />
-  </complexType>
-
-  <complexType name="productList" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="productCategories" />   
-    <element name="product" type="product"/>
-  </complexType>
-
-  <complexType name="product" edittype="sheet" icon="input.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="product" />
-    <attribute name="name" use="required" type="wpName" value=""/>
-    <attribute name="featured" use="oneof" type="wpString" value="no,yes"/>
-    <element name="categoryNumber" type="wpString" value="" />
-    <element name="groupNumber" type="wpString" value=""/>
-    <element name="productTitle" type="wpStringL" minOccurs="1" />
-    <element name="description" type="wpHtml" minOccurs="1" />
-    <element name="image" type="wpImage" />
-    <element name="skus" type="productSkus" />
-  </complexType>
-
-  <complexType name="productSkus" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="productSkus" />   
-    <element name="sku" type="sku"/>
-  </complexType>
-
-  <complexType name="sku" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="sku"/>
-    <attribute name="discontinued" use="oneof" type="wpString" value="no,yes"/>
-    <element name="itemNo" type="wpString" minOccurs="1"/>
-    <element name="itemTitle" type="wpStringL" minOccurs="1" />
-    <element name="size" type="wpStringL" minOccurs="1" />
-    <element name="brand" type="wpStringL" minOccurs="1" />
-    <element name="sterility" type="wpStringL" minOccurs="1" />
-    <element name="UOM1" type="wpStringL" minOccurs="1" />
-    <element name="UOM2" type="wpStringL" minOccurs="1" />
-    <element name="colour" type="wpStringL" minOccurs="1" />
-    <element name="features" type="wpHtml" minOccurs="1" />
-    <element name="image" type="wpImage" maxOccurs="1" />
-  </complexType>
-
-
-  
-  
-  
-  <!-- ===================================================== -->
   
   <complexType extends="wpPage" name="wpPage-wpProductStore2">
     <element name="product-store-2" type="wpProductStore2" folder="list"/>
@@ -129,6 +51,7 @@
   <complexType name="wpProductSku" edittype="table" icon="table.png" lockable="yes">
     <attribute name="id" use="auto" type="wpString" value="wpProductSku"/>
     <attribute name="name" use="required" type="wpName" value=""/>
+    <element name="description" type="wpStringL" minOccurs="1" />
     <attribute name="discontinued" use="oneof" type="wpString" value="no,yes"/>
     <element name="size" type="wpStringL"/>
     <element name="colour" type="wpStringL" />

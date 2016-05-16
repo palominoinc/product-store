@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
-<README id="READ8BU5ooMW4BEt" lang="any" webpalschematype="wpHtml"><h1>Product Store</h1>
-
-<p>This extension defines a product-store node which can be used to manage unlimited projects, using nested categories. A check-out and search function is available.</p>
-
-<h3>Updates</h3>
-
-<ul><li>starting: displaying products and categories<ch value="nbsp"/>using by-id routes</li>
-	<li>TODO
-	<ul><li>friendly urls for products &amp; categories</li>
-		<li>add-to-cart</li>
-		<li>search (should use a cached XML file and perform a XSL search)</li>
-	</ul></li>
-</ul><p><ch value="nbsp"/></p>
-</README>
+<README id="READ8BU5ooMW4BEt" lang="any" webpalschematype="wpHtml">
+    <h1>Product Store</h1>
+    <p>This extension defines a product-store node which can be used to manage unlimited projects, using nested categories. A check-out and search function is available.</p>
+    <h3>Updates</h3>
+    <ul>
+      <li>starting: displaying products and categories<ch value="nbsp"/>using by-id routes</li>
+      <li>TODO
+	<ul><li>friendly urls for products &amp; categories</li><li>add-to-cart</li><li>search (should use a cached XML file and perform a XSL search)</li></ul></li>
+    </ul>
+    <p>
+      <ch value="nbsp"/>
+    </p>
+  </README>

@@ -19,13 +19,13 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store-2">
     <xsl:param name="current-path"/>
 
-    <xsl:variable name="chapter_id" select="../@id"/>
+<!--     <xsl:variable name="chapter_id" select="../@id"/>
     <xsl:variable name="path">
       <xsl:call-template name="create_xpath_to_node">
         <xsl:with-param name="node_id" select="$chapter_id"/>
         <xsl:with-param name="web_root" select="//pages"/>
       </xsl:call-template>
-    </xsl:variable>
+    </xsl:variable> -->
 
     <ul>
       <xsl:apply-templates select="categories/category[not(@parent)] 
@@ -36,7 +36,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </xsl:template>
 
   <xsl:template match="product-store-2/categories/category" mode="navigation">
-    <xsl:param name="path"/>
+<!--     <xsl:param name="path"/> -->
     <li>
       <a href="/by-id/{@id}"><xsl:value-of select="title"/></a>
       <xsl:variable name="my-name" select="@name"/>
@@ -57,11 +57,11 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="description"/>
     <xsl:if test="../category[./@parent = $my-name]">
       <em>Sub-categories</em>
-      <ul>
+      <ul class="sub-cat">
         <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
       </ul>
     </xsl:if>
-    <ul>
+    <ul class="product-list">
       <xsl:for-each select="../../products/product[@category = $my-name]">
         <li><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></li>
       </xsl:for-each>
@@ -78,7 +78,14 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store-2/products/product">
     <div class="product-store-product">
       <xsl:apply-templates select="title"/>
+      <h3>
+        Description
+      </h3>
       <xsl:apply-templates select="description"/>
+      <h3>
+        Features
+      </h3>
+      <xsl:apply-templates select="features"/>
       <xsl:apply-templates select="skus"/>
     </div>
   </xsl:template>
@@ -93,10 +100,27 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <table>
         <tr>
           <th>SKU</th>
-          <th>Size</th>
-          <th>Colour</th>
-          <th>Qty</th>
-          <th>Price</th>
+          <xsl:if test="sku/description != ''">
+            <th>Description</th>
+          </xsl:if>
+          <xsl:if test="sku/size != ''">
+            <th>Size</th>
+          </xsl:if>
+          <xsl:if test="sku/colour != ''">
+            <th>Colour</th>
+          </xsl:if>
+          <xsl:if test="sku/sterility != ''">
+            <th>Sterility</th>
+          </xsl:if>
+          <xsl:if test="../brand != ''">
+            <th>Brand</th>
+          </xsl:if>
+          <xsl:if test="sku/UOM1 != ''">
+            <th>UOM1</th>
+          </xsl:if>
+          <xsl:if test="sku/UOM2 != ''">
+            <th>UOM2</th>
+          </xsl:if>
           <th></th>
         </tr>
         <xsl:apply-templates select="sku[@discontinued != 'yes']"/>
@@ -107,10 +131,27 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store-2/products/product/skus/sku">
     <tr>
       <td><xsl:value-of select="@name"/></td>
+      <xsl:if test="description != ''">
+        <td><xsl:value-of select="description"/></td>
+      </xsl:if>
+      <xsl:if test="size != ''">
       <td><xsl:value-of select="size"/></td>
-      <td><xsl:value-of select="colour"/></td>
-      <td><xsl:value-of select="qty"/></td>
-      <td><xsl:value-of select="price"/></td>
+      </xsl:if>
+      <xsl:if test="colour != ''">
+        <td><xsl:value-of select="colour"/></td>
+      </xsl:if>
+      <xsl:if test="sterility != ''">
+        <td><xsl:value-of select="sterility"/></td>
+      </xsl:if>
+      <xsl:if test="../../brand != ''">
+        <td><xsl:value-of select="../../brand"/></td>
+      </xsl:if>
+      <xsl:if test="UOM1 != ''">
+        <td><xsl:value-of select="UOM1"/></td>
+      </xsl:if>
+      <xsl:if test="UOM2 != ''">
+        <td><xsl:value-of select="UOM2"/></td>
+      </xsl:if>
       <td><a href="#">add to cart</a></td>
     </tr>
   </xsl:template>
