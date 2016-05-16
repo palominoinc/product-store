@@ -97,7 +97,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store/products/product/skus">
     <h3>Skus</h3>
     <div class="table-responsive product-store-skus">
-      <table>
+      <table class="table table-bordered">
         <tr>
           <th>SKU</th>
           <xsl:if test="sku/description != ''">
