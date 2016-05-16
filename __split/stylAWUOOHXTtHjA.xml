@@ -16,7 +16,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
 
   <!-- category tree -->
-  <xsl:template match="product-store-2">
+  <xsl:template match="product-store">
     <xsl:param name="current-path"/>
 
 <!--     <xsl:variable name="chapter_id" select="../@id"/>
@@ -35,7 +35,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   </xsl:template>
 
-  <xsl:template match="product-store-2/categories/category" mode="navigation">
+  <xsl:template match="product-store/categories/category" mode="navigation">
 <!--     <xsl:param name="path"/> -->
     <li>
       <a href="/by-id/{@id}"><xsl:value-of select="title"/></a>
@@ -51,7 +51,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
 
   <!-- category page -->
-  <xsl:template match="product-store-2/categories/category">
+  <xsl:template match="product-store/categories/category">
     <xsl:variable name="my-name" select="@name"/>
     <xsl:apply-templates select="title"/>
     <xsl:apply-templates select="description"/>
@@ -68,14 +68,14 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </ul>
   </xsl:template>
 
-  <xsl:template match="product-store-2/categories/category/title">
+  <xsl:template match="product-store/categories/category/title">
     <h1><xsl:value-of select="."/></h1>
   </xsl:template>
 
 
 
   <!-- product page -->
-  <xsl:template match="product-store-2/products/product">
+  <xsl:template match="product-store/products/product">
     <div class="product-store-product">
       <xsl:apply-templates select="title"/>
       <h3>
@@ -90,11 +90,11 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </div>
   </xsl:template>
 
-  <xsl:template match="product-store-2/products/product/title">
+  <xsl:template match="product-store/products/product/title">
     <h2><xsl:value-of select="../@name"/> - <xsl:value-of select="."/></h2>
   </xsl:template>
 
-  <xsl:template match="product-store-2/products/product/skus">
+  <xsl:template match="product-store/products/product/skus">
     <h3>Skus</h3>
     <div class="table-responsive product-store-skus">
       <table>
@@ -128,7 +128,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </div>
   </xsl:template>
 
-  <xsl:template match="product-store-2/products/product/skus/sku">
+  <xsl:template match="product-store/products/product/skus/sku">
     <tr>
       <td><xsl:value-of select="@name"/></td>
       <xsl:if test="description != ''">
@@ -156,7 +156,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     </tr>
   </xsl:template>
 
-  <xsl:template match="product-store-2//*" priority="0.0">
+  <xsl:template match="product-store//*" priority="0.0">
     <pre>
     <xsl:copy-of select="." disable-output-escaping="yes"/>
   </pre>

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <node-schema id="nodeRaRzGPZV_khA" lang="any" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<schema xmlns="http://www.palominosys.com/wpschema">
   
-  <complexType extends="wpPage" name="wpPage-wpProductStore2">
-    <element name="product-store-2" type="wpProductStore2" folder="list"/>
+  <complexType extends="wpPage" name="wpPage-wpProductStore">
+    <element name="product-store" type="wpProductStore" folder="list"/>
   </complexType>
 
-  <complexType name="wpProductStore2" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
+  <complexType name="wpProductStore" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
     <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
     <attribute name="name" use="required" type="wpName" value=""/>
     <element name="categories" type="wpProductCategoryList" maxOccurs="1"/>
