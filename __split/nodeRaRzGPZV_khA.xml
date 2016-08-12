@@ -8,6 +8,7 @@
   <complexType name="wpProductStore" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
     <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
     <attribute name="name" use="required" type="wpName" value=""/>
+    <attribute name="lang" use="oneof" type="wpName" value="any,en,fr"/>
     <element name="categories" type="wpProductCategoryList" maxOccurs="1"/>
     <element name="products" type="wpProductList" minOccurs="1" maxOccurs="1" />
   </complexType>
@@ -23,6 +24,7 @@
     <attribute name="parent" use="optional" type="wpString" value=""/>
     <element name="title" type="wpStringL" />
     <element name="description" type="wpHtml" />
+    <element name="image" type="wpImage" />
   </complexType>
 
   <complexType name="wpProductList" edittype="table" icon="table.png" lockable="yes">
@@ -35,23 +37,36 @@
     <attribute name="name" use="required" type="wpString" value=""/>
     <attribute name="featured" use="oneof" type="wpString" value="no,yes"/>
     <attribute name="category" use="optional" type="wpString" value=""/>
-    <element name="title" type="wpStringL" minOccurs="1" />
-    <element name="description" type="wpHtml" minOccurs="1" />
-    <element name="image" type="wpImage" />
+    <element name="title" type="wpStringL" />
+    <element name="brand" type="wpStringL"  />
+    <element name="description" type="wpHtml"  />
+    <element name="features" type="wpHtml"  />
+<!--     <element name="title" type="wpStringL" minOccurs="1" />
     <element name="brand" type="wpStringL" minOccurs="1" />
-    <element name="features" type="wpHtml" minOccurs="1" />
-    <element name="skus" type="wpProductSkuList" />
+    <element name="description" type="wpHtml" minOccurs="1" />
+    <element name="features" type="wpHtml" minOccurs="1" /> -->
+    <element name="image" type="wpImage" />
+    <element name="file" type="wpProductFile" />
+    <element name="items" type="wpProductItemsList" />
+  </complexType>
+  
+  <complexType name="wpProductFile" edittype="sheet" icon="attach.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductFile" />   
+    <element name="fileName" type="wpStringL"/>
+    <element name="file" type="wpFileL" />
   </complexType>
 
-  <complexType name="wpProductSkuList" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="wpProductSkuList" />   
-    <element name="sku" type="wpProductSku"/>
+  <complexType name="wpProductItemsList" edittype="table" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductItemsList" />   
+    <element name="item" type="wpProductItem"/>
   </complexType>
 
-  <complexType name="wpProductSku" edittype="table" icon="table.png" lockable="yes">
-    <attribute name="id" use="auto" type="wpString" value="wpProductSku"/>
+  <complexType name="wpProductItem" edittype="sheet" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductItems"/>
     <attribute name="name" use="required" type="wpName" value=""/>
-    <element name="description" type="wpStringL" minOccurs="1" />
+<!--     <element name="description" type="wpStringL" minOccurs="1" /> -->
+    <element name="description" type="wpStringL"/>
+
     <attribute name="discontinued" use="oneof" type="wpString" value="no,yes"/>
     <element name="size" type="wpStringL"/>
     <element name="colour" type="wpStringL" />
@@ -59,8 +74,10 @@
   
   <!-- =============== CUSTOM ===================================================== -->
   
-  <complexType name="bndProductSku" extends="wpProductSku" >
+  <complexType name="bndProductItem" extends="wpProductItem" >
     <element name="sterility" type="wpStringL"  />
+    <element name="thickness" type="wpStringL"  />
+    <element name="packaging" type="wpStringL"  />
     <element name="UOM1" type="wpStringL" />
     <element name="UOM2" type="wpStringL" />
   </complexType>

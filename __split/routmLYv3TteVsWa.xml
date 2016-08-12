@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@search" filter="" id="routmLYv3TteVsWa" name="" parameters="" pattern="/product-store/search/{storeid}" verb="get" webpalschematype="wpAppRoute"/>

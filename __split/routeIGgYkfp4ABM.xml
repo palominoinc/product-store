@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\WebpalCore\Controllers\Core@render" filter="" id="routeIGgYkfp4ABM" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store/categories/category[@id='${id}']&quot;}" pattern="/category/{id}" verb="get" webpalschematype="wpAppRoute"/>

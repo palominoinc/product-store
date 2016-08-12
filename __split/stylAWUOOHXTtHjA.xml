@@ -18,34 +18,100 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <!-- category tree -->
   <xsl:template match="product-store">
     <xsl:param name="current-path"/>
-
-<!--     <xsl:variable name="chapter_id" select="../@id"/>
-    <xsl:variable name="path">
-      <xsl:call-template name="create_xpath_to_node">
-        <xsl:with-param name="node_id" select="$chapter_id"/>
-        <xsl:with-param name="web_root" select="//pages"/>
-      </xsl:call-template>
-    </xsl:variable> -->
-
-    <ul>
+    <div class="ul row product-store">
       <xsl:apply-templates select="categories/category[not(@parent)] 
                                    | categories/category[@parent='']" 
-                           mode="navigation"/>
-    </ul>
+                           mode="list"/>
+    </div>
 
   </xsl:template>
 
+  <!--  Home page layout  -->
+  <xsl:template match="product-store/categories/category" mode="homepage">
+
+
+    <xsl:variable name="cat-image-src">
+      <xsl:choose>
+        <xsl:when test="image/@src">
+          <xsl:value-of select="image/@src"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <a href="/category/{@id}">
+      <div class="product">
+        <div class="productContainer">
+          <div class="productInner" style="background-image: url(/resource/dm/{$cat-image-src}/x450);"></div>
+          <div class="productCat">
+            <xsl:value-of select="title"/>
+          </div>
+        </div>
+      </div>
+
+    </a>
+  </xsl:template>
+
+
+
+
+  <!--  Side navigation  -->
   <xsl:template match="product-store/categories/category" mode="navigation">
-<!--     <xsl:param name="path"/> -->
-    <li>
-      <a href="/by-id/{@id}"><xsl:value-of select="title"/></a>
-      <xsl:variable name="my-name" select="@name"/>
-      <xsl:if test="../category[./@parent = $my-name]">
-        <ul>
+
+    <li class="dropdown">
+      <a href="/category/{@id}"><xsl:value-of select="title"/></a>
+      <ul class="dropdown-menu subnav sm-nowrap">
+        <xsl:variable name="my-name" select="@name"/>
+        <xsl:if test="../category[./@parent = $my-name]">
           <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
-        </ul>
-      </xsl:if>
+          <xsl:variable name="name" select="@name"/>
+        </xsl:if>
+        <xsl:for-each select="../../products/product[@category = $my-name]">
+          <li>
+            <a href="/product/{@id}">
+              <xsl:value-of select="title"/>
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+
     </li>
+  </xsl:template>
+
+
+
+  <!--  Product listing on a page  -->
+  <xsl:template match="product-store/categories/category" mode="list">
+    <xsl:variable name="my-name" select="@name"/>
+    <!--     <xsl:param name="path"/> -->
+    <div class="li col-lg-3 col-md-4 col-sm-6">
+
+      <xsl:variable name="cat-image-src">
+        <xsl:choose>
+          <xsl:when test="image/@src">
+            <xsl:value-of select="image/@src"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="cat-get-product-image"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      
+      <a href="/category/{@id}">
+        <div class="product">
+          <div class="productContainer">
+            <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/x450);"></div>
+            <div class="listItems">
+              <div class="title">
+                <xsl:value-of select="title"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
   </xsl:template>
 
 
@@ -56,16 +122,50 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="title"/>
     <xsl:apply-templates select="description"/>
     <xsl:if test="../category[./@parent = $my-name]">
-      <em>Sub-categories</em>
-      <ul class="sub-cat">
-        <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
-      </ul>
+      <h2>
+        Sub-categories
+      </h2>
+      <div class="ul sub-cat nav row product-store">
+        <xsl:apply-templates select="../category[./@parent = $my-name]" mode="list"/>
+      </div>
     </xsl:if>
-    <ul class="product-list">
-      <xsl:for-each select="../../products/product[@category = $my-name]">
-        <li><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></li>
-      </xsl:for-each>
-    </ul>
+    <xsl:if test="../../products/product[@category = $my-name]">
+      <h2>
+        Products
+      </h2>
+      <div class="ul product-store row">
+        <xsl:for-each select="../../products/product[@category = $my-name]">
+          <div class="li col-lg-3 col-md-4 col-sm-6">
+
+            <xsl:variable name="productImage">
+              <xsl:choose>
+                <xsl:when test="image/@src">
+                  <xsl:value-of select="image/@src"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:call-template name="cat-get-product-image"/>
+                </xsl:otherwise>
+              </xsl:choose>
+
+            </xsl:variable>
+            <a href="/product/{@id}">
+              <div class="product">
+                <div class="productContainer" >
+                  <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/x450);"></div>
+
+                  <div class="listItems">
+                    <div class="title">
+                      <xsl:value-of select="title"/>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </a>
+          </div>
+        </xsl:for-each>
+      </div>    </xsl:if>
+
   </xsl:template>
 
   <xsl:template match="product-store/categories/category/title">
@@ -73,86 +173,290 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </xsl:template>
 
 
+  <xsl:template name="cat-get-product-image">
+    <xsl:variable name="my-name" select="@name"/>
+    <!-- for the current category, finds an appropriate image, in this order:
+1. first product in this category
+2. first product in a parent category
+3. first product in the whole store
+-->
+    <xsl:choose>
+      <xsl:when test="../../products/product[@category = $my-name][image]">
+        <xsl:value-of select="(../../products/product[@category = $my-name])[1]/image/@src"/>
+      </xsl:when>
+      <xsl:when test="../category[@parent = $my-name]">
+        <xsl:for-each select="../category[@parent = $my-name]">
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="../../products/product[1]/image/@src"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+
 
   <!-- product page -->
   <xsl:template match="product-store/products/product">
+    <script> 
+      function clickAndDisable(link) {
+        // disable subsequent clicks
+        link.onclick = function(event) {
+          event.preventDefault();
+        }
+      }   
+    </script>
+
     <div class="product-store-product">
       <xsl:apply-templates select="title"/>
-      <h3>
-        Description
-      </h3>
-      <xsl:apply-templates select="description"/>
-      <h3>
-        Features
-      </h3>
-      <xsl:apply-templates select="features"/>
-      <xsl:apply-templates select="skus"/>
+
+      <div class="row">
+        <div class="col-lg-7 col-md-7 col-sm-8">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <xsl:if test="description != '' ">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Description
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <xsl:apply-templates select="description"/>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+            <xsl:if test="features != ''">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      Features
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <xsl:apply-templates select="features"/>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+            <xsl:if test="file != ''">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Documents
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    <ul>
+                      <xsl:apply-templates select="file"/>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-4">
+          <div class="easyzoom easyzoom--overlay">
+            <xsl:if test="./image">
+              <xsl:apply-templates select="./image"/>
+            </xsl:if>
+
+            <!--             <xsl:choose>
+<xsl:when test="./image">
+<xsl:apply-templates select="./image"/>
+</xsl:when>
+<xsl:otherwise>
+<a href="http://dummyimage.com/400x300/f0f0f0/dedede">
+<img class="img-responsive" src="http://dummyimage.com/400x300/f0f0f0/dedede"/>
+</a>
+</xsl:otherwise>
+</xsl:choose> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <xsl:apply-templates select="items"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <!--           products -->
+<!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
+
+        </div>
+      </div>
+
     </div>
   </xsl:template>
 
-  <xsl:template match="product-store/products/product/title">
-    <h2><xsl:value-of select="../@name"/> - <xsl:value-of select="."/></h2>
+  <xsl:template match="product-store/products/product/file" >
+    <li>
+      <a href="/resource/dm/{./file/@src}" target="_blank"><xsl:value-of select="./fileName"/></a>
+    </li>
   </xsl:template>
 
-  <xsl:template match="product-store/products/product/skus">
-    <h3>Skus</h3>
+  <xsl:template match="product-store/products/product/title">
+    <h2><xsl:value-of select="."/></h2>
+  </xsl:template>
+
+
+  <xsl:template match="product-store/products/product/items">
+    <h3>Items</h3>
     <div class="table-responsive product-store-skus">
       <table class="table table-bordered">
         <tr>
-          <th>SKU</th>
-          <xsl:if test="sku/description != ''">
-            <th>Description</th>
+          <!--           <xsl:if test="item/@name != ''"> -->
+          <th>
+            @if(Webpal::language() == 'fr')
+            Item
+            @elseif(Webpal::language() == 'en')
+            Item
+            @endif
+          </th>
+          <!--           </xsl:if> -->
+          <!--           <xsl:if test="item/description != ''"> -->
+          <xsl:if test="item/description[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Description
+              @elseif(Webpal::language() == 'en')
+              Description
+              @endif
+            </th>
           </xsl:if>
-          <xsl:if test="sku/size != ''">
-            <th>Size</th>
+          <!--           </xsl:if> -->
+          <xsl:if test="item/size[.!='']">
+            <th>
+              @if(Webpal::language() == 'fr')
+              Taille
+              @elseif(Webpal::language() == 'en')
+              Size
+              @endif
+            </th>
           </xsl:if>
-          <xsl:if test="sku/colour != ''">
-            <th>Colour</th>
+          <xsl:if test="item/colour[.!='']">
+            <th>
+              @if(Webpal::language() == 'fr')
+              Couleur
+              @elseif(Webpal::language() == 'en')
+              Colour
+              @endif
+            </th>
           </xsl:if>
-          <xsl:if test="sku/sterility != ''">
-            <th>Sterility</th>
+          <xsl:if test="item/sterility[.!='no']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Stérile
+              @elseif(Webpal::language() == 'en')
+              Sterile
+              @endif
+            </th>
           </xsl:if>
-          <xsl:if test="../brand != ''">
-            <th>Brand</th>
-          </xsl:if>
-          <xsl:if test="sku/UOM1 != ''">
+
+          <xsl:if test="item/UOM1[.!='']">
             <th>UOM1</th>
           </xsl:if>
-          <xsl:if test="sku/UOM2 != ''">
+          <xsl:if test="item/UOM2[.!='']">
             <th>UOM2</th>
+          </xsl:if>
+          <xsl:if test="../brand[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Marque
+              @elseif(Webpal::language() == 'en')
+              Brand
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/thickness[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Épaisseur
+              @elseif(Webpal::language() == 'en')
+              Thickness
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/packaging[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Emballage
+              @elseif(Webpal::language() == 'en')
+              Packaging
+              @endif
+            </th>
           </xsl:if>
           <th></th>
         </tr>
-        <xsl:apply-templates select="sku[@discontinued != 'yes']"/>
+        <xsl:apply-templates select="item[@discontinued != 'yes']"/>
       </table>
     </div>
   </xsl:template>
 
-  <xsl:template match="product-store/products/product/skus/sku">
+  <xsl:template match="product-store/products/product/items/item">
+
+    <xsl:variable name="itemName">
+      <xsl:value-of select="@name"/>
+    </xsl:variable>
+
     <tr>
+      <!--       <xsl:if test="@name != ''"> -->
       <td><xsl:value-of select="@name"/></td>
-      <xsl:if test="description != ''">
+      <!--       </xsl:if> -->
+      <xsl:if test="../item/description[.!='']">
         <td><xsl:value-of select="description"/></td>
       </xsl:if>
-      <xsl:if test="size != ''">
-      <td><xsl:value-of select="size"/></td>
+      <xsl:if test="../item/size[.!='']">
+        <td><xsl:value-of select="size"/></td>
       </xsl:if>
-      <xsl:if test="colour != ''">
+      <xsl:if test="../item/colour[.!='']">
         <td><xsl:value-of select="colour"/></td>
       </xsl:if>
-      <xsl:if test="sterility != ''">
-        <td><xsl:value-of select="sterility"/></td>
+      <xsl:if test="../item/sterility[.!='no']">
+        <td>
+          <xsl:if test="sterility != 'no'">
+            <i class="fa fa-check" aria-hidden="true"></i>
+          </xsl:if>
+        </td>
       </xsl:if>
-      <xsl:if test="../../brand != ''">
-        <td><xsl:value-of select="../../brand"/></td>
-      </xsl:if>
-      <xsl:if test="UOM1 != ''">
+
+      <xsl:if test="../item/UOM1[.!='']">
         <td><xsl:value-of select="UOM1"/></td>
       </xsl:if>
-      <xsl:if test="UOM2 != ''">
+      <xsl:if test="../item/UOM2[.!='']">
         <td><xsl:value-of select="UOM2"/></td>
       </xsl:if>
-      <td><a href="#">add to cart</a></td>
+      <xsl:if test="../../brand !=''">
+        <td><xsl:value-of select="../../brand"/></td>
+      </xsl:if>
+      <xsl:if test="../item/thickness[.!='']">
+        <td><xsl:value-of select="thickness"/></td>
+      </xsl:if>
+      <xsl:if test="../item/packaging[.!='']">
+        <td><xsl:value-of select="packaging"/></td>
+      </xsl:if>
+      <td><a href="javascript:product_list_add_cart('{$itemName}')" >add to cart</a></td>
     </tr>
   </xsl:template>
 
@@ -162,5 +466,59 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </pre>
   </xsl:template>
 
+  <xsl:template match="image">
+    <xsl:if test=". and @src !=''">
+      <a href="/resource/dm/{@src}/x1000">
+        <img class="img-responsive" src="/resource/dm/{@src}/x750" />
+      </a>
+    </xsl:if>
+  </xsl:template>
 
+
+<!--   <xsl:template match="product-store/products" mode="similarProducts">
+    <xsl:variable name="my-name" select="product-store/categories/category/@name"/>
+
+    <xsl:variable name="image-path">
+      <xsl:value-of select="image/@src"/>
+    </xsl:variable>
+    <a href="/product/{@id}">
+      <div class="product">
+        <div class="productContainer">
+          <div class="productInner" style="background-image: url(/resource/dm/{$image-path}/x450);"></div>
+          <div class="productCat">
+            <xsl:value-of select="product[@category = $my-name]/title"/>
+          </div>
+        </div>
+      </div>
+    </a>
+  </xsl:template> -->
+
+
+  <!-- breadcrumbs -->
+  <xsl:template match="product-store/products/product" mode="breadcrumbs">
+    <xsl:variable name="category" select="string(./@category)"/>
+    <xsl:apply-templates select="../../categories/category[./@name = $category][1]" mode="breadcrumbs"/>
+    <li class="active"><xsl:value-of select="./title[1]"/></li>
+  </xsl:template>
+  
+  <xsl:template match="product-store/categories/category" mode="breadcrumbs">    
+    <xsl:variable name="parent" select="./@parent"/>
+    <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
+    <xsl:variable name="link">/category/<xsl:value-of select="./@id"/></xsl:variable>
+    <li><a href="{$link}"><xsl:value-of select="./title[1]"/></a></li>
+  </xsl:template>
+
+
+  <xsl:template match="product-store/products/product" mode="search">
+    SEARCH RESULT: <xsl:value-of select="@name"/>
+  </xsl:template>
+
+<!--   <xsl:template match="product-store" priority="1.0">
+  PRODUCTS
+    <xsl:for-each select="products/product[count(items/item) &gt; 1][items/item/description != '']">
+      <xsl:value-of select="@name"/> <xsl:value-of select="title"/><br/>
+    </xsl:for-each>
+    
+  </xsl:template> -->
+  
 </xsl:stylesheet>]]></stylesheet>
