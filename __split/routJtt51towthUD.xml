@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="\ProductStore\Controllers\DataController@search" id="routJtt51towthUD" pattern="/product-store/search/{storeid}" verb="post" webpalschematype="wpAppRoute"/>
+<route controller="\WebpalCore\Controllers\Core@callTemplate" id="routJtt51towthUD" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store&quot;, &quot;template&quot;:&quot;product-store-search&quot;}" pattern="/product-store/search/{storeid}" verb="post" webpalschematype="wpAppRoute"/>
