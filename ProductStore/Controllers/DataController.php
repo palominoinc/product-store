@@ -23,19 +23,22 @@ class DataController extends BaseController
       'design' => '3-column',
       'cache' => false
     ]);
-    
+
   }
-  
+
   /*
   * queries a store by certain criteria and renders results as a view
   */
-  public function search($storeid) {
+  public function search($storeid = null) {
     $q = Input::get('q');
-    $cond = "contains(title, '$q')";
-    // $cond = "1";
-    $xquery = "//product-store[@id='$storeid']/products/product[$cond]";
-    $params['mode'] = 'search';
-    return WebPalResponse::view($xquery, Input::all(), 200, array(), $params);
+    $xpath = "//product-store";
+    if ($storeid) $xpath .= "[@id='$storeid']";
+    $params['q'] = strtolower($q);
+    $template = 'product-store-search';
+    $params['use-cache'] = false;
     
+    return WebPalResponse::callTemplate($xpath, $template, $params);
+
   }
+
 }

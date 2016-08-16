@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="\WebpalCore\Controllers\Core@callTemplate" filter="" id="routmLYv3TteVsWa" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store&quot;, &quot;template&quot;:&quot;product-store-search&quot;, &quot;q&quot;:&quot;${q}&quot;}" pattern="/product-store/search/{storeid}/{q}" verb="get" webpalschematype="wpAppRoute"/>
+<route controller="\WebpalCore\Controllers\Core@callTemplate" filter="" id="routmLYv3TteVsWa" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store&quot;, &quot;template&quot;:&quot;product-store-search&quot;, &quot;q&quot;:&quot;${q}&quot;}" pattern="/product-store/search/{q}" verb="get" webpalschematype="wpAppRoute"/>

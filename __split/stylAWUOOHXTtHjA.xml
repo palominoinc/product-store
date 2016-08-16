@@ -14,7 +14,28 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <xsl:strip-space elements="*"/>
 
-
+  
+  <!-- ===================== SEARCH ================== -->
+  <xsl:template name="product-store-search">
+    <!-- search query expected in $q -->
+    PPRODUCT RESULTS for "<xsl:value-of select="$q"/>":
+    <ul>
+      <xsl:for-each select="//product-store/products/product[contains(translate(title, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), $q)]">
+        <xsl:apply-templates select="." mode="product-store-search-result"/>
+      </xsl:for-each>
+    </ul>    
+  </xsl:template>
+  
+  
+  
+  <xsl:template match="product" mode="product-store-search-result">
+    <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
+    <xsl:apply-templates select="description"/>
+    <p>
+      
+    </p>
+  </xsl:template>
+  
   <!-- category tree -->
   <xsl:template match="product-store">
     <xsl:param name="current-path"/>
@@ -513,24 +534,5 @@ Illegal reproduction and disclosure will be prosecuted  -->
     SEARCH RESULT: <xsl:value-of select="@name"/>
   </xsl:template>
   
-  <!-- ===================== SEARCH ================== -->
-  <xsl:template name="product-store-search">
-    <!-- search query expected in $q -->
-    PRODUCT RESULTS for "<xsl:value-of select="$q"/>":
-    <ul>
-      <xsl:for-each select="products/product[contains(title, $q)]">
-        <li><xsl:value-of select="title"/></li>
-      </xsl:for-each>
-    </ul>    
-  </xsl:template>
-  
-  
-<!--   <xsl:template match="product-store" priority="1.0">
-  PRODUCTS
-    <xsl:for-each select="products/product[count(items/item) &gt; 1][items/item/description != '']">
-      <xsl:value-of select="@name"/> <xsl:value-of select="title"/><br/>
-    </xsl:for-each>
-    
-  </xsl:template> -->
-  
+
 </xsl:stylesheet>]]></stylesheet>
