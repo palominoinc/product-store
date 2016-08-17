@@ -1,2 +1,0 @@
-<?xml version="1.0"?>
-<route controller="\ProductStore\Controllers\DataController@showNewDataPage" id="routr2rKu7xRyYRX" pattern="/new-data" verb="get" webpalschematype="wpAppRoute"/>

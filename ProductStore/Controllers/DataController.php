@@ -13,18 +13,6 @@ use \WebpalCore\Source\Services\WebPalResponse;
 
 class DataController extends BaseController
 {
-  protected $wp;
-  public function __construct() {
-    $this->wp = new WebpalCore;
-  }
-  public function showNewDataPage() {
-    return $this->wp->render([
-      'xpath' => "//pages/page[@name='products']/product-store-2/categories/category[@id='catepVQBVhh2XZCq']",
-      'design' => '3-column',
-      'cache' => false
-    ]);
-
-  }
 
   /*
   * queries a store by certain criteria and renders results as a view

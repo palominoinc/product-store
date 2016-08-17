@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@search" filter="" id="routU4xuWWSnnDDr" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store&quot;, &quot;template&quot;:&quot;product-store-search&quot;}" pattern="/product-store/search" verb="post" webpalschematype="wpAppRoute"/>

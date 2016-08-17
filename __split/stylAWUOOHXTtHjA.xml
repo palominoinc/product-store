@@ -14,28 +14,27 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <xsl:strip-space elements="*"/>
 
-  
+
   <!-- ===================== SEARCH ================== -->
   <xsl:template name="product-store-search">
     <!-- search query expected in $q -->
-    PPRODUCT RESULTS for "<xsl:value-of select="$q"/>":
-    <ul>
-      <xsl:for-each select="//product-store/products/product[contains(translate(title, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), $q)]">
-        <xsl:apply-templates select="." mode="product-store-search-result"/>
-      </xsl:for-each>
-    </ul>    
+    <h1>
+      Results for "<xsl:value-of select="$q"/>"
+    </h1>
+    <xsl:for-each select="//product-store/products/product[contains(translate(title, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), $q)]">
+      <xsl:apply-templates select="." mode="product-store-search-result"/>
+    </xsl:for-each>
   </xsl:template>
-  
-  
-  
+
   <xsl:template match="product" mode="product-store-search-result">
-    <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
-    <xsl:apply-templates select="description"/>
-    <p>
-      
-    </p>
+    <div class="product-store-search-result">
+      <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
+      <div>
+      <xsl:apply-templates select="description"/>        
+      </div>
+    </div>
   </xsl:template>
-  
+
   <!-- category tree -->
   <xsl:template match="product-store">
     <xsl:param name="current-path"/>
@@ -119,7 +118,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      
+
       <a href="/category/{@id}">
         <div class="product">
           <div class="productContainer">
@@ -318,7 +317,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <div class="row">
         <div class="col-xs-12">
           <!--           products -->
-<!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
+          <!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
 
         </div>
       </div>
@@ -496,23 +495,23 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </xsl:template>
 
 
-<!--   <xsl:template match="product-store/products" mode="similarProducts">
-    <xsl:variable name="my-name" select="product-store/categories/category/@name"/>
+  <!--   <xsl:template match="product-store/products" mode="similarProducts">
+<xsl:variable name="my-name" select="product-store/categories/category/@name"/>
 
-    <xsl:variable name="image-path">
-      <xsl:value-of select="image/@src"/>
-    </xsl:variable>
-    <a href="/product/{@id}">
-      <div class="product">
-        <div class="productContainer">
-          <div class="productInner" style="background-image: url(/resource/dm/{$image-path}/x450);"></div>
-          <div class="productCat">
-            <xsl:value-of select="product[@category = $my-name]/title"/>
-          </div>
-        </div>
-      </div>
-    </a>
-  </xsl:template> -->
+<xsl:variable name="image-path">
+<xsl:value-of select="image/@src"/>
+</xsl:variable>
+<a href="/product/{@id}">
+<div class="product">
+<div class="productContainer">
+<div class="productInner" style="background-image: url(/resource/dm/{$image-path}/x450);"></div>
+<div class="productCat">
+<xsl:value-of select="product[@category = $my-name]/title"/>
+</div>
+</div>
+</div>
+</a>
+</xsl:template> -->
 
 
   <!-- breadcrumbs -->
@@ -521,7 +520,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="../../categories/category[./@name = $category][1]" mode="breadcrumbs"/>
     <li class="active"><xsl:value-of select="./title[1]"/></li>
   </xsl:template>
-  
+
   <xsl:template match="product-store/categories/category" mode="breadcrumbs">    
     <xsl:variable name="parent" select="./@parent"/>
     <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
@@ -533,6 +532,6 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store/products/product" mode="search">
     SEARCH RESULT: <xsl:value-of select="@name"/>
   </xsl:template>
-  
+
 
 </xsl:stylesheet>]]></stylesheet>
