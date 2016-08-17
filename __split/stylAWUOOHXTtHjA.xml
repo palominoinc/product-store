@@ -16,18 +16,19 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
 
   <!-- ===================== SEARCH ================== -->
-  <!-- search query expected in $q, assumes the current node
-is a product-store -->
+  <!-- search query expected in $q.
+       the search is performed in EITHER: 
+        - the product-store containing current node, OR:
+        - the first product-store found in the web content
+       the template mode=product-store-search can be overridden. -->
 
   <xsl:template name="product-store-search">
-    <xsl:choose>
-      <xsl:when test="name(.) = 'product-store'">
-        <xsl:apply-templates select="." mode="product-store-search"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="(//product-store)[1]" mode="product-store-search"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]" 
+                         mode="product-store-search"/>
+  </xsl:template>
+  
+  <xsl:template match="product-store" mode="product-store-search" priority="0.5">
+    ...my own search function...
   </xsl:template>
 
   <xsl:template match="product-store" mode="product-store-search" priority="0.1">
@@ -307,17 +308,6 @@ is a product-store -->
             <xsl:if test="./image">
               <xsl:apply-templates select="./image"/>
             </xsl:if>
-
-            <!--             <xsl:choose>
-<xsl:when test="./image">
-<xsl:apply-templates select="./image"/>
-</xsl:when>
-<xsl:otherwise>
-<a href="http://dummyimage.com/400x300/f0f0f0/dedede">
-<img class="img-responsive" src="http://dummyimage.com/400x300/f0f0f0/dedede"/>
-</a>
-</xsl:otherwise>
-</xsl:choose> -->
           </div>
         </div>
       </div>
@@ -509,24 +499,6 @@ is a product-store -->
   </xsl:template>
 
 
-  <!--   <xsl:template match="product-store/products" mode="similarProducts">
-<xsl:variable name="my-name" select="product-store/categories/category/@name"/>
-
-<xsl:variable name="image-path">
-<xsl:value-of select="image/@src"/>
-</xsl:variable>
-<a href="/product/{@id}">
-<div class="product">
-<div class="productContainer">
-<div class="productInner" style="background-image: url(/resource/dm/{$image-path}/x450);"></div>
-<div class="productCat">
-<xsl:value-of select="product[@category = $my-name]/title"/>
-</div>
-</div>
-</div>
-</a>
-</xsl:template> -->
-
 
   <!-- breadcrumbs -->
   <xsl:template match="product-store/products/product" mode="breadcrumbs">
@@ -540,11 +512,6 @@ is a product-store -->
     <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
     <xsl:variable name="link">/category/<xsl:value-of select="./@id"/></xsl:variable>
     <li><a href="{$link}"><xsl:value-of select="./title[1]"/></a></li>
-  </xsl:template>
-
-
-  <xsl:template match="product-store/products/product" mode="search">
-    SEARCH RESULT: <xsl:value-of select="@name"/>
   </xsl:template>
 
 
