@@ -79,7 +79,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <a href="/category/{@id}">
       <div class="product">
         <div class="productContainer">
-          <div class="productInner" style="background-image: url(/resource/dm/{$cat-image-src}/x450);"></div>
+          <div class="productInner" style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450);"></div>
           <div class="productCat">
             <xsl:value-of select="title"/>
           </div>
@@ -137,7 +137,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <a href="/category/{@id}">
         <div class="product">
           <div class="productContainer">
-            <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/x450);"></div>
+            <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450);"></div>
             <div class="listItems">
               <div class="title">
                 <xsl:value-of select="title"/>
@@ -186,7 +186,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
             <a href="/product/{@id}">
               <div class="product">
                 <div class="productContainer" >
-                  <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/x450);"></div>
+                  <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/resize=x450);"></div>
 
                   <div class="listItems">
                     <div class="title">
@@ -199,7 +199,8 @@ Illegal reproduction and disclosure will be prosecuted  -->
             </a>
           </div>
         </xsl:for-each>
-      </div>    </xsl:if>
+      </div>    
+    </xsl:if>
 
   </xsl:template>
 
