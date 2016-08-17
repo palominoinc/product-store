@@ -493,8 +493,8 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <xsl:template match="image">
     <xsl:if test=". and @src !=''">
-      <a href="/resource/dm/{@src}/x1000">
-        <img class="img-responsive" src="/resource/dm/{@src}/x750" />
+      <a href="/resource/dm/{@src}/resize=x1000">
+        <img class="img-responsive" src="/resource/dm/{@src}/resize=x750" />
       </a>
     </xsl:if>
   </xsl:template>
