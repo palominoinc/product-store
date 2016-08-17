@@ -15,6 +15,41 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:strip-space elements="*"/>
 
 
+  <!-- ===================== SEARCH ================== -->
+  <!-- search query expected in $q.
+       the search is performed in EITHER: 
+        - the product-store containing current node, OR:
+        - the first product-store found in the web content
+       the template mode=product-store-search can be overridden. -->
+
+  <xsl:template name="product-store-search">
+    <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]" 
+                         mode="product-store-search"/>
+  </xsl:template>
+  
+  <xsl:template match="product-store" mode="product-store-search" priority="0.5">
+    ...my own search function...
+  </xsl:template>
+
+  <xsl:template match="product-store" mode="product-store-search" priority="0.1">
+    <h1>Results for "<xsl:value-of select="$q"/>" in store <xsl:value-of select="@name"/></h1>
+    <xsl:for-each select="./products/product
+                          [contains(translate(concat(title, description), 
+                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 
+                          'abcdefghijklmnopqrstuvwxyz'), $q)]">
+      <xsl:apply-templates select="." mode="product-store-search-result"/>
+    </xsl:for-each>    
+  </xsl:template>
+
+  <xsl:template match="product" mode="product-store-search-result" priority="0.1">
+    <div class="product-store-search-result">
+      <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
+      <div>
+        <xsl:apply-templates select="description"/>        
+      </div>
+    </div>
+  </xsl:template>
+
   <!-- category tree -->
   <xsl:template match="product-store">
     <xsl:param name="current-path"/>
@@ -98,7 +133,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      
+
       <a href="/category/{@id}">
         <div class="product">
           <div class="productContainer">
@@ -273,17 +308,6 @@ Illegal reproduction and disclosure will be prosecuted  -->
             <xsl:if test="./image">
               <xsl:apply-templates select="./image"/>
             </xsl:if>
-
-            <!--             <xsl:choose>
-<xsl:when test="./image">
-<xsl:apply-templates select="./image"/>
-</xsl:when>
-<xsl:otherwise>
-<a href="http://dummyimage.com/400x300/f0f0f0/dedede">
-<img class="img-responsive" src="http://dummyimage.com/400x300/f0f0f0/dedede"/>
-</a>
-</xsl:otherwise>
-</xsl:choose> -->
           </div>
         </div>
       </div>
@@ -297,7 +321,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <div class="row">
         <div class="col-xs-12">
           <!--           products -->
-<!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
+          <!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
 
         </div>
       </div>
@@ -475,24 +499,6 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </xsl:template>
 
 
-<!--   <xsl:template match="product-store/products" mode="similarProducts">
-    <xsl:variable name="my-name" select="product-store/categories/category/@name"/>
-
-    <xsl:variable name="image-path">
-      <xsl:value-of select="image/@src"/>
-    </xsl:variable>
-    <a href="/product/{@id}">
-      <div class="product">
-        <div class="productContainer">
-          <div class="productInner" style="background-image: url(/resource/dm/{$image-path}/x450);"></div>
-          <div class="productCat">
-            <xsl:value-of select="product[@category = $my-name]/title"/>
-          </div>
-        </div>
-      </div>
-    </a>
-  </xsl:template> -->
-
 
   <!-- breadcrumbs -->
   <xsl:template match="product-store/products/product" mode="breadcrumbs">
@@ -500,7 +506,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="../../categories/category[./@name = $category][1]" mode="breadcrumbs"/>
     <li class="active"><xsl:value-of select="./title[1]"/></li>
   </xsl:template>
-  
+
   <xsl:template match="product-store/categories/category" mode="breadcrumbs">    
     <xsl:variable name="parent" select="./@parent"/>
     <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
@@ -509,16 +515,4 @@ Illegal reproduction and disclosure will be prosecuted  -->
   </xsl:template>
 
 
-  <xsl:template match="product-store/products/product" mode="search">
-    SEARCH RESULT: <xsl:value-of select="@name"/>
-  </xsl:template>
-
-<!--   <xsl:template match="product-store" priority="1.0">
-  PRODUCTS
-    <xsl:for-each select="products/product[count(items/item) &gt; 1][items/item/description != '']">
-      <xsl:value-of select="@name"/> <xsl:value-of select="title"/><br/>
-    </xsl:for-each>
-    
-  </xsl:template> -->
-  
 </xsl:stylesheet>]]></stylesheet>
