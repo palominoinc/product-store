@@ -17,35 +17,31 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <!-- ===================== SEARCH ================== -->
   <!-- search query expected in $q.
-       the search is performed in EITHER: 
+       the search is performed in EITHER:
         - the product-store containing current node, OR:
         - the first product-store found in the web content
        the template mode=product-store-search can be overridden. -->
 
   <xsl:template name="product-store-search">
-    <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]" 
+    <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]"
                          mode="product-store-search"/>
   </xsl:template>
   
-  <xsl:template match="product-store" mode="product-store-search" priority="0.5">
-    ...my own search function...
-  </xsl:template>
-
   <xsl:template match="product-store" mode="product-store-search" priority="0.1">
     <h1>Results for "<xsl:value-of select="$q"/>" in store <xsl:value-of select="@name"/></h1>
     <xsl:for-each select="./products/product
-                          [contains(translate(concat(title, description), 
-                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 
+                          [contains(translate(concat(title, description),
+                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
                           'abcdefghijklmnopqrstuvwxyz'), $q)]">
       <xsl:apply-templates select="." mode="product-store-search-result"/>
-    </xsl:for-each>    
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="product" mode="product-store-search-result" priority="0.1">
     <div class="product-store-search-result">
       <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
       <div>
-        <xsl:apply-templates select="description"/>        
+        <xsl:apply-templates select="description"/>
       </div>
     </div>
   </xsl:template>
@@ -54,8 +50,8 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="product-store">
     <xsl:param name="current-path"/>
     <div class="ul row product-store">
-      <xsl:apply-templates select="categories/category[not(@parent)] 
-                                   | categories/category[@parent='']" 
+      <xsl:apply-templates select="categories/category[not(@parent)]
+                                   | categories/category[@parent='']"
                            mode="list"/>
     </div>
 
@@ -199,7 +195,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
             </a>
           </div>
         </xsl:for-each>
-      </div>    
+      </div>
     </xsl:if>
 
   </xsl:template>
@@ -236,13 +232,13 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <!-- product page -->
   <xsl:template match="product-store/products/product">
-    <script> 
+    <script>
       function clickAndDisable(link) {
         // disable subsequent clicks
         link.onclick = function(event) {
           event.preventDefault();
         }
-      }   
+      }
     </script>
 
     <div class="product-store-product">
@@ -508,7 +504,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <li class="active"><xsl:value-of select="./title[1]"/></li>
   </xsl:template>
 
-  <xsl:template match="product-store/categories/category" mode="breadcrumbs">    
+  <xsl:template match="product-store/categories/category" mode="breadcrumbs">
     <xsl:variable name="parent" select="./@parent"/>
     <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
     <xsl:variable name="link">/category/<xsl:value-of select="./@id"/></xsl:variable>
