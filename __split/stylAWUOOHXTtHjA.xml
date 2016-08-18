@@ -26,10 +26,6 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]" 
                          mode="product-store-search"/>
   </xsl:template>
-  
-  <xsl:template match="product-store" mode="product-store-search" priority="0.5">
-    ...my own search function...
-  </xsl:template>
 
   <xsl:template match="product-store" mode="product-store-search" priority="0.1">
     <h1>Results for "<xsl:value-of select="$q"/>" in store <xsl:value-of select="@name"/></h1>
@@ -494,7 +490,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="image">
     <xsl:if test=". and @src !=''">
       <a href="/resource/dm/{@src}/resize=x1000">
-        <img class="img-responsive" src="/resource/dm/{@src}/resize=x750" />
+        <img class="img-responsive" style="width: 100%;" src="/resource/dm/{@src}/resize=x750" />
       </a>
     </xsl:if>
   </xsl:template>

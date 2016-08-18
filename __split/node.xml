@@ -6,5 +6,7 @@
   <routes id="routRUfhGMSlKi7Q" __stub="yes"/>
   <controllers id="contm7KUhWVfEFhn" __stub="yes"/>
   <node-schema id="nodeRaRzGPZV_khA" __stub="yes"/>
+  <db-schema id="db-s3XisjLWstoyU" __stub="yes"/>
+  <models id="modeKNJQHwDUOTtS" __stub="yes"/>
   <stylesheet id="stylAWUOOHXTtHjA" __stub="yes"/>
 </extension>
