@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<html-code id="htmlZ14WYivlx2Rj" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<h1>Your Cart</h1>
+
+@if (! $cart)
+<div class="message">
+  Cart is empty
+</div>
+@else
+<table class="cart-items">
+  @foreach ($cart->items() as $item)
+  <tr>
+    <td>{{{$item->skucode}}}</td>
+    <td>{{{$item->productname}}}</td>
+    <td>{{{$item->quantity}}}</td>
+    <td><a href="#">remove</a></td>
+  </tr>
+  @endforeach
+</table>
+@endif
+]]></html-code>

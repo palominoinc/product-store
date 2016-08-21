@@ -9,6 +9,7 @@
     <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
     <attribute name="name" use="required" type="wpName" value=""/>
     <attribute name="lang" use="oneof" type="wpName" value="any,en,fr"/>
+    <attribute name="shopping-cart" use="oneof" type="wpName" value="enabled,disabled"/>
     <element name="categories" type="wpProductCategoryList" maxOccurs="1"/>
     <element name="products" type="wpProductList" minOccurs="1" maxOccurs="1" />
   </complexType>

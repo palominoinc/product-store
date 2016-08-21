@@ -477,7 +477,16 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <xsl:if test="../item/packaging[.!='']">
         <td><xsl:value-of select="packaging"/></td>
       </xsl:if>
-      <td><a href="javascript:product_list_add_cart('{$itemName}')" >add to cart</a></td>
+      <td>
+        <form method="post" action="/product-store/add-to-cart">
+          <input type="hidden" name="skucode" value="{@name}"/>
+          <input type="hidden" name="skuname" value="{@name}"/>
+          <input type="hidden" name="productcode" value="{../../@name}"/>
+          <input type="hidden" name="productname" value="{../../title}"/>
+          <input type="hidden" name="quantity" value="1"/>
+          <input type="submit" value="add to cart"/> 
+        </form>
+      </td>
     </tr>
   </xsl:template>
 
