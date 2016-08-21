@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@removeItem" id="routykPp7UmZBBff" pattern="/product-store/remove-from-cart/{id}" verb="get" webpalschematype="wpAppRoute"/>

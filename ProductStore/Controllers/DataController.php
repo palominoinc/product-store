@@ -33,18 +33,67 @@ class DataController extends BaseController
   }
   
   public function addToCart() {
-    if (! Session::has('cart')) {
-      $cart = new Productstorecart;
+    $cart = $this->cart();
+    if ($item = $cart->getItem(['skucode' => Input::get('skucode')])) {
+      // $cart->setItemQuantity($item, $item->quantity + 1);
+      $item->quantity = $item->quantity + 1;
+      $item->save();
       $cart->save();
-      Session::put('cart', $cart);
+    } else {
+      $cart->addItem(Input::all());         
     }
-    $cart = Session::get('cart');
-    $cart->addItem(Input::all());   
+    return $this->showCart();
+  }
+  
+  public function removeItem($id) {
+    $cart = $this->cart();
+    $item = $cart->cartItems()->find($id);
+    if ($item) $item->delete();
+    return $this->showCart();
+  }
+  
+  public function clearCart() {
+    $cart = $this->cart();
+    if ($cart) $cart->delete();
+    Session::forget('cart_id');
     return $this->showCart();
   }
 
+  private function cart() {
+    if (! Session::has('cart_id')) {
+      $cart = new Productstorecart;
+      $cart->save();
+      Session::put('cart_id', $cart->id);
+    }
+    $cart = Productstorecart::find(Session::get('cart_id'));
+    return $cart;
+  }
+  
   public function showCart() {
-    $data['cart'] = Session::get('cart');
+    $cart = $this->cart();
+    $data['cart_id'] = $cart->id;
+    $data['cart'] = $cart;
     return View::make('ProductStore::showCart', $data);
   }
+  
+  public function checkout() {
+    $cart = $this->cart();
+    if (! $cart->cartItems()) return $this->showCart();
+    $data['cart_id'] = $cart->id;
+    $data['cart'] = $cart;
+    return View::make('ProductStore::checkoutCart', $data);  
+  }
+  
+  public function completeCheckout() {
+    $cart = $this->cart();
+    
+    //send email notifications, mark cart as checked out, etc.
+    $cart->checkout(); 
+    
+    //display receipt
+    $data['cart_id'] = $cart->id;
+    $data['cart'] = $cart;
+    return View::make('ProductStore::checkoutComplete', $data);  
+  }
+  
 }
