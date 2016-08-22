@@ -45,41 +45,51 @@
       @endif
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row row-checkoutform">
-        <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
-          <div class="col-md-6">
-            <h3>Shipping Information      </h3>
-            <div class="form-group">
-              <label for="company_name" class="col-sm-2 control-label">Company:</label>
-              <div class="col-sm-10"><input type="text" class="form-control" name="company_name" /></div>
-            </div>
-            <div class="form-group">
-              <label for="shipping_address" class="col-sm-2 control-label">Address:</label>
-              <div class="col-sm-10"><input type="text" class="form-control" name="shipping_address" /></div>
-            </div>
-            <button type="submit" class="btn btn-success btn-default">Submit</button>
-          </div>
-          <div class="col-md-6">
-            <h3>Billing/Quoting Information</h3>
-            <div class="form-group">
-              <label for="contact_name" class="col-sm-2 control-label">Contact Name:</label>
-              <div class="col-sm-10"><input type="text" class="form-control" name="contact_name" /></div>
-            </div>
-            <div class="form-group">
-              <label for="billing_email" class="col-sm-2 control-label">Email:</label>
-              <div class="col-sm-10"><input type="email" class="form-control" name="billing_email" /></div>
-            </div>
-            <div class="form-group">
-              <label for="billing_address" class="col-sm-2 control-label">Address:</label>
-              <div class="col-sm-10"><input type="text" class="form-control" name="billing_address" /></div>
-            </div>
-          </div>
-        </form>
-      </div>
-
+  <div class="row row-checkoutform">
+    <div class="col-md-8">
+      <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
+        <h3>Customer Information</h3>
+        <div class="form-group">
+          <label for="company_name" class="col-sm-4 control-label">Company:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="company_name" /></div>
+        </div>
+        <div class="form-group">
+          <label for="customer_code" class="col-sm-4 control-label">Customer ID:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="customer_code" /></div>
+        </div>
+        <div class="form-group">
+          <label for="shipping_address" class="col-sm-4 control-label">Street Address:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="shipping_address" /></div>
+        </div>
+        <div class="form-group">
+          <label for="shipping_postalcode" class="col-sm-4 control-label">Postal Code:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="shipping_postalcode" /></div>
+        </div>
+        <div class="form-group">
+          <label for="shipping_city" class="col-sm-4 control-label">City:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="shipping_city" /></div>
+        </div>
+        <div class="form-group">
+          <label for="contact_name" class="col-sm-4 control-label">Contact Name:</label>
+          <div class="col-sm-8"><input type="text" class="form-control" name="contact_name" /></div>
+        </div>
+        <div class="form-group">
+          <label for="billing_email" class="col-sm-4 control-label">Email:</label>
+          <div class="col-sm-8"><input type="email" class="form-control" name="billing_email" /></div>
+        </div>
+        <div class="form-group">
+          <label for="billing_phone" class="col-sm-4 control-label">Phone:</label>
+          <div class="col-sm-8"><input type="phone" class="form-control" name="billing_phone" /></div>
+        </div>
+        <div class="form-group">
+          <label for="billing_fax" class="col-sm-4 control-label">Fax:</label>
+          <div class="col-sm-8"><input type="phone" class="form-control" name="billing_fax" /></div>
+        </div>
+        <button type="submit" class="btn btn-success btn-default">Request Quote</button>
+        <a href="/products" class="btn btn-primary btn-default">Continue Shopping</a>
+      </form>
     </div>
+    <div class="col-md-4"/>
   </div>
 </div>
 ]]></html-code>

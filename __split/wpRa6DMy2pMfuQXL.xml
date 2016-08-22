@@ -1,47 +1,81 @@
 <?xml version="1.0"?>
-<html-code id="wpRa6DMy2pMfuQXL" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<h1>Thank You!</h1>
+<html-code id="wpRa6DMy2pMfuQXL" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="container-fluid">
+  <div class="row row-cart">
+    <div class="col-md-12">
+      @if (! $cart)
+      <div class="alert alert-danger hidden">
+        <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+      </div>
+      @else
+      <div>
+        <h1>Thank you!</h1>
+        <div class="alert alert-dismissable alert-warning hidden">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+          <h4>Sorry</h4>[[[ $message ]]]
+        </div>
 
-@if ($cart)
-<div>
-  @if ($cart->cartItems)
-  Items in cart: [[ $cart->itemcount() ]]
-  <table class="cart-items">
-    <tr class="cart-header">
-      <td>Code</td>
-      <td>Product</td>
-      <td>Quantity</td>
-    </tr>
-    @foreach ($cart->cartItems as $item)
-    <tr>
-      <td>{{{$item->skucode}}}</td>
-      <td>{{{$item->productname}}}</td>
-      <td>{{{$item->quantity}}}</td>
-    </tr>
-    @endforeach
-  </table>
-  <div class="checkout-details">
-    <table>
-      <tr>
-        <td>Company Name:</td>
-        <td>[[$company_name]]</td>
-      </tr>
-      <tr>
-        <td>Shipping Address:</td>
-        <td>[[$shipping_address]]</td>
-      </tr>
-    </table>
+        @if ($cart->cartItems)
+        <table class="table table-bordered cart-items">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Product</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($cart->cartItems as $item)
+            <tr>
+              <td>{{{$item->skucode}}}</td>
+              <td>{{{$item->productname}}}</td>
+              <td>{{{$item->quantity}}}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        @else
+        <div class="alert alert-info">
+          No items in cart.
+        </div>
+      </div>
+      @endif
+      @endif
+    </div>
   </div>
-  @else
-  <div class="message">
-    Cart is empty
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row row-checkoutform">
+        <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
+          <div class="col-md-6">
+            <h3>Shipping Information      </h3>
+            <div class="form-group">
+              <label for="company_name" class="col-sm-2 control-label">Company:</label>
+              <div class="col-sm-10">[[$company_name]]</div>
+            </div>
+            <div class="form-group">
+              <label for="shipping_address" class="col-sm-2 control-label">Address:</label>
+              <div class="col-sm-10">[[$shipping_address]]</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3>Billing/Quoting Information</h3>
+            <div class="form-group">
+              <label for="contact_name" class="col-sm-2 control-label">Contact Name:</label>
+              <div class="col-sm-10">[[$contact_name]]</div>
+            </div>
+            <div class="form-group">
+              <label for="billing_email" class="col-sm-2 control-label">Email:</label>
+              <div class="col-sm-10">[[$billing_email]]</div>
+            </div>
+            <div class="form-group">
+              <label for="billing_address" class="col-sm-2 control-label">Address:</label>
+              <div class="col-sm-10">[[$billing_address]]</div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
   </div>
-  @endif
 </div>
-@else
-<div>
-  <div class="message">
-    Something went wrong, there is no cart!
-  </div>
-</div>
-@endif
 ]]></html-code>
