@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<db-schema id="db-s3XisjLWstoyU" webpalschematype="wpAppSchema"><object id="tbleXurnEfWHVXRy" __stub="yes"/><object id="tble43Syd0OSqpQ3" __stub="yes"/>
-    
-    
+<db-schema id="db-s3XisjLWstoyU" webpalschematype="wpAppSchema">
+    <object id="tbleXurnEfWHVXRy" __stub="yes"/>
+    <object id="tble43Syd0OSqpQ3" __stub="yes"/>
   </db-schema>

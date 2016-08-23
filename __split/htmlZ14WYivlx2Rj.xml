@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<html-code id="htmlZ14WYivlx2Rj" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="container-fluid">
-  <div class="row row-cart">
-    <div class="col-md-12">
+<html-code id="htmlZ14WYivlx2Rj" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[  <div class="row-cart">
       @if (! $cart)
       <div class="alert alert-danger hidden">
         <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
@@ -14,8 +12,8 @@
           <h4>Sorry</h4>[[[ $message ]]]
         </div>
 
-        @if ($cart->cartItems)
-        Items in cart: [[ $cart->itemcount() ]]
+        @if ($cart-:cartItems)
+        Items in cart: [[ $cart-:itemcount() ]]
         <table class="table table-bordered cart-items">
           <thead>
             <tr>
@@ -26,12 +24,12 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($cart->cartItems as $item)
+            @foreach ($cart-:cartItems as $item)
             <tr>
-              <td>{{{$item->skucode}}}</td>
-              <td>{{{$item->productname}}}</td>
-              <td>{{{$item->quantity}}}</td>
-              <td><a href="/product-store/remove-from-cart/[[$item->id]]">remove</a></td>
+              <td>{{{$item-:skucode}}}</td>
+              <td>{{{$item-:productname}}}</td>
+              <td>{{{$item-:quantity}}}</td>
+              <td><a href="/product-store/remove-from-cart/[[$item-:id]]">remove</a></td>
             </tr>
             @endforeach
           </tbody>
@@ -42,10 +40,9 @@
         <div class="alert alert-info">
           No items in cart.
         </div>
+        @endif
       </div>
+      
       @endif
-      @endif
-    </div>
   </div>
-</div>
 ]]></html-code>

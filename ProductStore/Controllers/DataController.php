@@ -87,8 +87,32 @@ class DataController extends BaseController
   public function completeCheckout() {
     $cart = $this->cart();
     
+    //(+) TODO: validation
+    $info = Input::only(
+      'companyname',
+      'companyid',
+      'billingaddress1',
+      'billingaddress2',
+      'billingtown',
+      'billingpostal',
+      'billingprovince',
+      'contactname',
+      'contactphone',
+      'contactemail',
+      'companyfax',
+      'shippingaddress1',
+      'shippingaddress2',
+      'shippingtown',
+      'shippingpostal',
+      'shippingprovince',
+      'shippingcountry'
+    );
+    
+// ipaddress
+// sessionduration
+
     //send email notifications, mark cart as checked out, etc.
-    $cart->checkout(); 
+    $cart->checkout($info); 
     
     //display receipt
     $data['cart_id'] = $cart->id;

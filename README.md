@@ -33,11 +33,11 @@ This route calls the template **product-store-search**, which expects the search
 
 Currently, the template implements a simple, case-insensitive search, matching any substring in the product title, however this template can easily be overridden by defining a template as such:
 
- ![data?command=webpalimage.download&web_na](__resources/pastoC3XWUVLIvTI.png)
+ ![data?command=webpalimage.download&web_na](#)
 
  **Default Search Template**
 
- ![data?command=webpalimage.download&web_na](__resources/pastpccfiVJCIjUU.png)
+ ![data?command=webpalimage.download&web_na](#)
 
 ### Add-to Cart Function
 

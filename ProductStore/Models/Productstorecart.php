@@ -12,7 +12,8 @@ use Productstorecartitem;
 class Productstorecart extends Eloquent
 {
   protected $table = "productstorecart";
-  
+  protected $guarded = array('id', 'ipaddress', 'checkedout_at', 'created_at');
+
   /** 
   * clears the cart
   */
@@ -73,10 +74,9 @@ class Productstorecart extends Eloquent
   /** 
   * mark this cart as checked out
   */
-  public function checkout() {
+  public function checkout(array $info=[]) {
     $this->checkedout_at = time();
+    $this->update($info);
     $this->save();
   }
-  
-
 }

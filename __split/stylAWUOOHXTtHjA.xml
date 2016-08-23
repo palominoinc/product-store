@@ -520,55 +520,8 @@ the template mode=product-store-search can be overridden. -->
     <li><a href="{$link}"><xsl:value-of select="./title[1]"/></a></li>
   </xsl:template>
 
+  <xsl:template name="productstore-cart-item-count"></xsl:template>
 
-  <xsl:template name="product-store-cart">
-    <div class="row row-cart">
-      <div class="col-md-12">
-        @if (! $cart)
-        <div class="alert alert-danger hidden">
-          <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
-        </div>
-        @else
-        <div>
-          <h3>Your Cart</h3>
-          <div class="alert alert-dismissable alert-warning hidden">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
-            <h4>Sorry</h4>[[[ $message ]]]
-          </div>
 
-          @if ($cart->cartItems)
-          Items in cart: [[ $cart->itemcount() ]]
-          <table class="table table-bordered cart-items">
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th class="cart-actions">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($cart->cartItems as $item)
-              <tr>
-                <td>{{{$item->skucode}}}</td>
-                <td>{{{$item->productname}}}</td>
-                <td>{{{$item->quantity}}}</td>
-                <td><a href="/product-store/remove-from-cart/[[$item->id]]">remove</a></td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-          <a href="/product-store/clear-cart" class="btn btn-danger">Clear Cart</a>
-          <a href="/product-store/checkout-cart" class="btn btn-primary">Checkout</a>
-          @else
-          <div class="alert alert-info">
-            No items in cart.
-          </div>
-        </div>
-        @endif
-        @endif
-      </div>
-    </div>
-  </xsl:template>
 
 </xsl:stylesheet>]]></stylesheet>
