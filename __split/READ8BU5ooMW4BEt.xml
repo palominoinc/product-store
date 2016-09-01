@@ -1,54 +1,68 @@
 <?xml version="1.0"?>
-<README id="READ8BU5ooMW4BEt" lang="any" webpalschematype="wpHtml">
-    <h1>Product Store</h1>
-    <p>This extension defines a product-store node which can be used to manage unlimited projects, using nested categories. A check-out and search function is available.</p>
-    <h3>Features</h3>
-    <ul>
-      <li>unlimited nested product categories</li>
-      <li>single list of products, manageable like a spreadsheet</li>
-      <li>each product contains
-	<ul><li>title, description, features</li><li>images</li><li>list of SKUs</li></ul></li>
-      <li>displaying products and categories<ch value="nbsp"/>using by-id routes</li>
-      <li>friendly URLs</li>
-      <li>customizable product search</li>
-      <li>add-to-cart functionality</li>
-    </ul>
-    <h3>Friendly URLs</h3>
-    <p>Products can be accessed via</p>
-    <ul>
-      <li>
-        <span style="font-family:courier new,courier,monospace">/product/{product-id}</span>
-      </li>
-      <li>
-        <span style="font-family:courier new,courier,monospace">/category/{category-id}</span>
-      </li>
-    </ul>
-    <h3>Search Function</h3>
-    <p>the following routes are defined, which provide a simple, yet very customizable search capability:</p>
-    <p style="margin-left:40px;">
-      <span style="font-family:courier new,courier,monospace">GET|POST <ch value="nbsp"/><ch value="nbsp"/><ch value="nbsp"/>/product-store/search</span>
-    </p>
-    <p>This route calls the template<ch value="nbsp"/><strong>product-store-search</strong>, which<ch value="nbsp"/>expects the search query to be set in input variable <strong>$q</strong></p>
-    <p>Currently, the template implements a simple, case-insensitive search, matching any substring in the product title, however this template can easily be overridden by defining a template as such:</p>
-    <p>
-      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="231201822114019868" src="231201822114019868"/>
-    </p>
-    <p>
-      <ch value="nbsp"/>
-    </p>
-    <p>
-      <strong>Default Search Template</strong>
-    </p>
-    <p>
-      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="135780599778665306" src="135780599778665306"/>
-    </p>
-    <h3>Add-to Cart Function</h3>
-    <ul>
-      <li>each SKU can be added to a cart</li>
-      <li>show cart</li>
-      <li>customizable checkout</li>
-    </ul>
-    <p>
-      <ch value="nbsp"/>
-    </p>
-  </README>
+<README id="READ8BU5ooMW4BEt" lang="any" webpalschematype="wpHtml"><h1>Product Store</h1>
+
+<p>This extension defines a product-store node which can be used to manage unlimited projects, using nested categories. A check-out and search function is available.</p>
+
+<h3>Features</h3>
+
+<ul><li>unlimited nested product categories</li>
+	<li>single list of products, manageable like a spreadsheet</li>
+	<li>each product contains
+	<ul><li>title, description, features</li>
+		<li>images</li>
+		<li>list of SKUs</li>
+	</ul></li>
+	<li>displaying products and categories<ch value="nbsp"/>using by-id routes</li>
+	<li>friendly URLs</li>
+	<li>customizable product search</li>
+	<li>add-to-cart functionality</li>
+</ul><h3>Friendly URLs</h3>
+
+<p>Products can be accessed via</p>
+
+<ul><li><span style="font-family:courier new,courier,monospace">/product/{product-id}</span></li>
+	<li><span style="font-family:courier new,courier,monospace">/category/{category-id}</span></li>
+</ul><h3>Search Function</h3>
+
+<p>the following routes are defined, which provide a simple, yet very customizable search capability:</p>
+
+<p style="margin-left:40px;"><span style="font-family:courier new,courier,monospace">GET|POST <ch value="nbsp"/><ch value="nbsp"/><ch value="nbsp"/>/product-store/search</span></p>
+
+<p>This route calls the template<ch value="nbsp"/><strong>product-store-search</strong>, which<ch value="nbsp"/>expects the search query to be set in input variable <strong>$q</strong></p>
+
+<p>Currently, the template implements a simple, case-insensitive search, matching any substring in the product title, however this template can easily be overridden by defining a template as such:</p>
+
+<p><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="231201822114019868" src="231201822114019868"/></p>
+
+<p><ch value="nbsp"/></p>
+
+<p><strong>Default Search Template</strong></p>
+
+<p><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="135780599778665306" src="135780599778665306"/></p>
+
+<h3>Shopping Cart Function</h3>
+
+<p>The shopping cart allows for adding of any product item to a centralized shopping cart that is displayed to the user after adding an item. Item quantities can be updated in bulk, with invalid entries handled gracefully.<ch value="nbsp"/></p>
+
+<h4>Sample Layout</h4>
+
+<h4><ch value="nbsp"/></h4>
+
+<h4><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="168646928218726001" src="168646928218726001"/><br/>
+Note: only positive integers are allowed for quantities.</h4>
+
+<p>By default, the store cart can be accessed at:</p>
+
+<ul><li><strong><span style="font-family:courier new,courier,monospace">/product-store/cart</span></strong></li>
+</ul><p><font face="times new roman, times, serif">The total item count can be rendered within any layout by calling the template<ch value="nbsp"/><strong>product-store-itemcount</strong></font></p>
+
+<p><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="810705652877757797" src="810705652877757797"/></p>
+
+<p><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="178956415017794806" src="178956415017794806"/></p>
+
+<h4><strong>All defined shopping cart routes</strong></h4>
+
+<h4><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="537899602164516463" src="537899602164516463"/></h4>
+
+<p><ch value="nbsp"/></p>
+</README>
