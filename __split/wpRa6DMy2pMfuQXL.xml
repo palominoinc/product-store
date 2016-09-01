@@ -1,83 +1,84 @@
 <?xml version="1.0"?>
-<html-code id="wpRa6DMy2pMfuQXL" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[  <div class="row row-cart">
-    <div class="col-md-12">
-      @if (! $cart)
-      <div class="alert alert-danger hidden">
-        <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+<html-code id="wpRa6DMy2pMfuQXL" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="row row-cart">
+  <div class="col-md-12">
+    @if (! $cart)
+    <div class="alert alert-danger hidden">
+      <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+    </div>
+    @else
+    <div>
+      <h1>Thank you!</h1>
+      <p>
+        A representative will be in touch very soon. Feel free to print this page for your records.
+      </p>
+      <div class="alert alert-dismissable alert-info hidden">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+        <h4>Sorry</h4>[[[ $message ]]]
       </div>
+
+      @if ($cart-:cartItems)
+      <table class="table table-bordered cart-items">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Product</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td>{{{$item-:skucode}}}</td>
+            <td>{{{$item-:productname}}}</td>
+            <td>{{{$item-:quantity}}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
       @else
-      <div>
-        <h1>Thank you!</h1>
-        <p>
-          A representative will be in touch very soon. Feel free to print this page for your records.
-        </p>
-        <div class="alert alert-dismissable alert-info hidden">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
-          <h4>Sorry</h4>[[[ $message ]]]
-        </div>
-
-        @if ($cart-:cartItems)
-        <table class="table table-bordered cart-items">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Product</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($cart-:cartItems as $item)
-            <tr>
-              <td>{{{$item-:skucode}}}</td>
-              <td>{{{$item-:productname}}}</td>
-              <td>{{{$item-:quantity}}}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-        @else
-        <div class="alert alert-info">
-          No items in cart.
-        </div>
-        @endif
-
+      <div class="alert alert-info">
+        No items in cart.
       </div>
       @endif
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row row-checkoutform">
-        <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
-          <div class="col-md-6">
-            <h3>Shipping Information      </h3>
-            <div class="form-group">
-              <label for="companyname" class="col-sm-2 control-label">Company:</label>
-              <div class="col-sm-10">[[[$cart->companyname]]]</div>
-            </div>
-            <div class="form-group">
-              <label for="shippingaddress1" class="col-sm-2 control-label">Address:</label>
-              <div class="col-sm-10">[[[$cart->shippingaddress1]]]</div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <h3>Billing/Quoting Information</h3>
-            <div class="form-group">
-              <label for="contactname" class="col-sm-2 control-label">Contact Name:</label>
-              <div class="col-sm-10">[[[$cart->contactname]]]</div>
-            </div>
-            <div class="form-group">
-              <label for="contactemail" class="col-sm-2 control-label">Email:</label>
-              <div class="col-sm-10">[[[$cart->contactemail]]]</div>
-            </div>
-            <div class="form-group">
-              <label for="contactphone" class="col-sm-2 control-label">Phone:</label>
-              <div class="col-sm-10">[[[$cart->contactphone]]]</div>
-            </div>
-          </div>
-        </form>
-      </div>
 
     </div>
+    @endif
   </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="row row-checkoutform">
+      <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
+        <div class="col-md-12">
+          <h3>Customer Information</h3>
+          <div class="row form-group">
+            <label for="companyname" class="col-sm-4">Request Code:</label>
+            <div class="col-sm-8"><b>[[[ substr(sha1($cart->id), 0, 6) ]]]</b></div>
+          </div>
+          <div class="row form-group">
+            <label for="companyname" class="col-sm-4">Company:</label>
+            <div class="col-sm-8">[[[$cart->companyname]]]</div>
+          </div>
+          <div class="row form-group">
+            <label for="shippingaddress1" class="col-sm-4">Address:</label>
+            <div class="col-sm-8">[[[$cart->shippingaddress1]]]</div>
+          </div>
+          <div class="row form-group">
+            <label for="contactname" class="col-sm-4">Contact Name:</label>
+            <div class="col-sm-8">[[[$cart->contactname]]]</div>
+          </div>
+          <div class="row form-group">
+            <label for="contactemail" class="col-sm-4">Email:</label>
+            <div class="col-sm-8">[[[$cart->contactemail]]]</div>
+          </div>
+          <div class="row form-group">
+            <label for="contactphone" class="col-sm-4">Phone:</label>
+            <div class="col-sm-8">[[[$cart->contactphone]]]</div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
 ]]></html-code>

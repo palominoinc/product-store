@@ -64,7 +64,7 @@ class Productstorecart extends Eloquent
   * return set quantity for an item object
   */
   public function setItemQuantity($item, $qty) {
-    if ($item) {      
+    if ($item != null) {      
       $item->quantity = $qty;
       $item->save();
       $this->save();
@@ -75,8 +75,8 @@ class Productstorecart extends Eloquent
   * mark this cart as checked out
   */
   public function checkout(array $info=[]) {
-    $this->checkedout_at = time();
     $this->update($info);
+    $this->checkedout_at = time();
     $this->save();
   }
 }

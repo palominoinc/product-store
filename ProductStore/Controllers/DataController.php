@@ -12,6 +12,7 @@ use Input;
 use \WebpalCore\Source\Services\WebPalResponse;
 use Session;
 use View;
+use Redirect;
 use \ProductStore\Models\Productstorecart;
 
 class DataController extends BaseController
@@ -32,6 +33,17 @@ class DataController extends BaseController
 
   }
   
+  public function updateCart() {
+    $cart = $this->cart();
+    foreach ($cart->cartItems as $item) {
+      $qty = 0 + Input::get('qty_' . $item->id);
+      $qty = (int) $qty;
+      $qty = ($qty > 0) ? $qty: -$qty;
+      $cart->setItemQuantity($item, $qty );
+    }
+    return Redirect::to('/product-store/cart');
+  }
+  
   public function addToCart() {
     $cart = $this->cart();
     if ($item = $cart->getItem(['skucode' => Input::get('skucode')])) {
@@ -40,8 +52,9 @@ class DataController extends BaseController
       $item->save();
       $cart->save();
     } else {
-      $cart->addItem(Input::all());         
+      $cart->addItem(Input::all());  
     }
+    Session::put('cart_itemcount', $cart->itemcount());
     return $this->showCart();
   }
   
@@ -49,6 +62,7 @@ class DataController extends BaseController
     $cart = $this->cart();
     $item = $cart->cartItems()->find($id);
     if ($item) $item->delete();
+    Session::put('cart_itemcount', $cart->itemcount());
     return $this->showCart();
   }
   
@@ -64,6 +78,7 @@ class DataController extends BaseController
       $cart = new Productstorecart;
       $cart->save();
       Session::put('cart_id', $cart->id);
+      Session::put('cart_itemcount', 0);
     }
     $cart = Productstorecart::find(Session::get('cart_id'));
     return $cart;
