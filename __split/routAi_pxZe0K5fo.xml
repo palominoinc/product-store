@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@clearCart" id="routAi_pxZe0K5fo" pattern="/product-store/clear-cart" verb="get" webpalschematype="wpAppRoute"/>

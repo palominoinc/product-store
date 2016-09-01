@@ -14,19 +14,22 @@ Illegal reproduction and disclosure will be prosecuted  -->
 
   <xsl:strip-space elements="*"/>
 
+  <xsl:template name="product-store-itemcount">
+    <xsl:text>{{ Session::get('cart_itemcount')?Session::get('cart_itemcount'):0 }}</xsl:text>
+  </xsl:template>
 
   <!-- ===================== SEARCH ================== -->
   <!-- search query expected in $q.
-       the search is performed in EITHER:
-        - the product-store containing current node, OR:
-        - the first product-store found in the web content
-       the template mode=product-store-search can be overridden. -->
+the search is performed in EITHER:
+- the product-store containing current node, OR:
+- the first product-store found in the web content
+the template mode=product-store-search can be overridden. -->
 
   <xsl:template name="product-store-search">
     <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]"
                          mode="product-store-search"/>
   </xsl:template>
-  
+
   <xsl:template match="product-store" mode="product-store-search" priority="0.1">
     <h1>Results for "<xsl:value-of select="$q"/>" in store <xsl:value-of select="@name"/></h1>
     <xsl:for-each select="./products/product
@@ -222,7 +225,8 @@ Illegal reproduction and disclosure will be prosecuted  -->
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="../../products/product[1]/image/@src"/>
+<!--         <img class="img-responsive" style="width: 100%;" src="/resource/ext/BndDesign/img/sampleProductImage.png" /> -->
+<!--         <xsl:apply-templates select="../../products/product[1]/image/@src"/> -->
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -477,7 +481,16 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <xsl:if test="../item/packaging[.!='']">
         <td><xsl:value-of select="packaging"/></td>
       </xsl:if>
-      <td><a href="javascript:product_list_add_cart('{$itemName}')" >add to cart</a></td>
+      <td>
+        <form method="post" action="/product-store/add-to-cart">
+          <input type="hidden" name="skucode" value="{@name}"/>
+          <input type="hidden" name="skuname" value="{@name}"/>
+          <input type="hidden" name="productcode" value="{../../@name}"/>
+          <input type="hidden" name="productname" value="{../../title}"/>
+          <input type="hidden" name="quantity" value="1"/>
+          <input type="submit" value="add to cart"/> 
+        </form>
+      </td>
     </tr>
   </xsl:template>
 
@@ -490,7 +503,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
   <xsl:template match="image">
     <xsl:if test=". and @src !=''">
       <a href="/resource/dm/{@src}/resize=x1000">
-        <img class="img-responsive" src="/resource/dm/{@src}/resize=x750" />
+        <img class="img-responsive" style="width: 100%;" src="/resource/dm/{@src}/resize=x750" />
       </a>
     </xsl:if>
   </xsl:template>
@@ -510,6 +523,9 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:variable name="link">/category/<xsl:value-of select="./@id"/></xsl:variable>
     <li><a href="{$link}"><xsl:value-of select="./title[1]"/></a></li>
   </xsl:template>
+
+  <xsl:template name="productstore-cart-item-count"></xsl:template>
+
 
 
 </xsl:stylesheet>]]></stylesheet>

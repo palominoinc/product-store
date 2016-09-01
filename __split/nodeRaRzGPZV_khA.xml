@@ -4,11 +4,21 @@
   <complexType extends="wpPage" name="wpPage-wpProductStore">
     <element name="product-store" type="wpProductStore" folder="list"/>
   </complexType>
+  
+  <complexType extends="wpWebsettings" name="wpSettings-wpProductStore">
+    <element name="product-store" type="wpProductStoreSettings" minOccurs="1"/>
+  </complexType>
+  
+  <complexType name="wpProductStoreSettings" icon="wrench.png" edittype="attributes">
+    <attribute name="checkout-button-title" use="required" type="wpString" value="Check Out" /> 
+    <attribute name="clearcart-button-title" use="required" type="wpString" value="Clear Cart" /> 
+  </complexType>
 
   <complexType name="wpProductStore" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
     <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
     <attribute name="name" use="required" type="wpName" value=""/>
     <attribute name="lang" use="oneof" type="wpName" value="any,en,fr"/>
+    <attribute name="shopping-cart" use="oneof" type="wpName" value="enabled,disabled"/>
     <element name="categories" type="wpProductCategoryList" maxOccurs="1"/>
     <element name="products" type="wpProductList" minOccurs="1" maxOccurs="1" />
   </complexType>

@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@showCart" id="routHYVoXjxhKmtU" pattern="/product-store/cart" verb="get" webpalschematype="wpAppRoute"/>

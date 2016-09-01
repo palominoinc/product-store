@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@updateCart" id="rout8CH4i4eXvZfH" pattern="/product-store/update-cart" verb="post" webpalschematype="wpAppRoute"/>

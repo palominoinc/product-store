@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<html-code id="htmlZ14WYivlx2Rj" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="row-cart">
+  @if (! $cart)
+  <div class="alert alert-danger hidden">
+    <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+  </div>
+  @else
+  <div>
+    <h3>Your Cart</h3>
+    <div class="alert alert-dismissable alert-warning hidden">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+      <h4>Sorry</h4>[[[ $message ]]]
+    </div>
+
+    @if ($cart-:cartItems)
+    Items in cart: [[ $cart-:itemcount() ]]
+    <form action="/product-store/update-cart" method="POST">
+      <table class="table table-bordered cart-items">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="cart-actions">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td>{{{$item-:skucode}}}</td>
+            <td>{{{$item-:productname}}}</td>
+            <td style="text-align:right;">
+              <input style="text-align:right;"
+                     id="qty_[[$item-:id]]" 
+                       name="qty_[[$item-:id]]" 
+                       value="[[$item-:quantity]]"/>
+            </td>
+            <td><a href="/product-store/remove-from-cart/[[$item-:id]]">remove</a></td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>          
+      <div class="pull-left">
+        <a href="/product-store/clear-cart" class="btn btn-danger">Clear Cart</a>
+      </div>
+      <div class="pull-right">
+        <input type="submit" class="btn btn-default" value="Update Cart"/>
+        <a href="/product-store/checkout-cart" class="btn btn-primary">Checkout</a>
+      </div>
+    </form>
+    @else
+    <div class="alert alert-info">
+      No items in cart.
+    </div>
+    @endif
+  </div>
+
+  @endif
+</div>
+]]></html-code>
