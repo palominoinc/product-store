@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@checkoutSucceed" id="rout_UPIaFV2fRvJ" name="checkoutSucceed" pattern="/product-store/complete-checkout" verb="get" webpalschematype="wpAppRoute"/>

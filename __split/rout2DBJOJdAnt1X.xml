@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="\ProductStore\Controllers\DataController@checkout" id="rout2DBJOJdAnt1X" pattern="/product-store/checkout-cart" verb="get" webpalschematype="wpAppRoute"/>
+<route controller="\ProductStore\Controllers\DataController@checkout" id="rout2DBJOJdAnt1X" pattern="/product-store/checkout-cart" verb="post" webpalschematype="wpAppRoute"/>

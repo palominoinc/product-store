@@ -13,6 +13,9 @@ use \WebpalCore\Source\Services\WebPalResponse;
 use Session;
 use View;
 use Redirect;
+use Validator;
+Use Mail;
+use Response;
 use \ProductStore\Models\Productstorecart;
 
 class DataController extends BaseController
@@ -54,8 +57,10 @@ class DataController extends BaseController
     } else {
       $cart->addItem(Input::all());  
     }
+    
     Session::put('cart_itemcount', $cart->itemcount());
-    return $this->showCart();
+    Session::flash('message', "Item added to cart");
+    return Redirect::back();// $this->showCart();
   }
   
   public function removeItem($id) {
@@ -93,16 +98,42 @@ class DataController extends BaseController
   
   public function checkout() {
     $cart = $this->cart();
+    // foreach ($cart->cartItems as $item) {
+    //   $qty = 0 + Input::get('qty_' . $item->id);
+    //   $qty = (int) $qty;
+    //   $qty = ($qty > 0) ? $qty: -$qty;
+    //   $cart->setItemQuantity($item, $qty );
+    // }
     if (! $cart->cartItems()) return $this->showCart();
     $data['cart_id'] = $cart->id;
     $data['cart'] = $cart;
-    return View::make('ProductStore::checkoutCart', $data);  
+    return View::make('ProductStore::checkoutCart', $data); 
+    // return Redirect('/product-store/checkout-cart')->with($data);
+  }
+  
+  public function email() {
+    $cart = $this->cart();
+    $data = Input::all();
+    $email = $data['contactemail'];
+    $name = $data['contactname'];
+    $data['cart_id'] = $cart->id;
+    $data['cart'] = $cart;
+    $subject = 'BND Order Confirmation #'.substr(sha1($cart->id), 0, 6);
+    $cart->emailsubmitted = Mail::send('ProductStore::checkoutEmail', $data, function($message) use ($email , $name, $subject)
+      {
+         $message->to($email, $name)->subject($subject)
+                 ->from('donotreply@bndinc.com')
+               // ->bcc('customerservice@bndinc.com');
+                 ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
+      });
+    $cart->save();
   }
   
   public function completeCheckout() {
     $cart = $this->cart();
     
     //(+) TODO: validation
+    $data = Input::all();
     $info = Input::only(
       'companyname',
       'companyid',
@@ -123,16 +154,40 @@ class DataController extends BaseController
       'shippingcountry'
     );
     
+    $rules = array('companyname' =>'required', 'shippingaddress1' =>'required', 'shippingpostal' =>'required', 'shippingtown' =>'required', 'contactname' =>'required', 'contactphone' =>'required', 'contactemail' => 'required|email');
+    $messages = array(
+                      'companyname.required'=> 'The company name field is required',
+      'shippingaddress1.required'=> 'The address field is required',
+      'shippingpostal.required'=> 'The postal code field is required',
+      'shippingtown.required'=> 'The city field is required',
+      'contactname.required'=> 'The contact name field is required',
+      'contactphone.required'=> 'The contact phone field is required',
+                      'contactemail.required'=>"The contact email field is required",
+                      'contactemail.email'=>"The contact email is not valid"
+    );
+    $validator = Validator::make(array("companyname" => $data['companyname'], "shippingaddress1" => $data['shippingaddress1'], "shippingpostal" => $data['shippingpostal'], "shippingtown" => $data['shippingtown'], "contactname" => $data['contactname'], "contactphone" => $data['contactphone'], "contactemail" => $data['contactemail']),
+                                 $rules, $messages);
+    if ($validator->fails()){
+      $data['cart_id'] = $cart->id;
+      $data['cart'] = $cart;
+      return Redirect::back()->withInput()->withErrors($validator);
+    }
+    else{
 // ipaddress
 // sessionduration
-
-    //send email notifications, mark cart as checked out, etc.
-    $cart->checkout($info); 
-    
-    //display receipt
-    $data['cart_id'] = $cart->id;
-    $data['cart'] = $cart;
-    return View::make('ProductStore::checkoutComplete', $data);  
+      
+      //send email notifications, mark cart as checked out, etc.
+      $cart->checkout($info);
+      $this->email();
+      //display receipt
+      $data['cart_id'] = $cart->id;
+      $data['cart'] = $cart;
+      $infor = ['companyname'=>$data['companyname'], 'shippingaddress1'=>$data['shippingaddress1'], 'contactname'=>$data['contactname'], 'contactphone'=>$data['contactphone'], 'contactemail'=>$data['contactemail']];
+      $data['infor'] = $infor;
+      $this->clearCart();
+      return View::make('ProductStore::checkoutComplete', $data);
+    }
   }
+  
   
 }

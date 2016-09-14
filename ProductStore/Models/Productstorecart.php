@@ -77,6 +77,7 @@ class Productstorecart extends Eloquent
   public function checkout(array $info=[]) {
     $this->update($info);
     $this->checkedout_at = time();
+    // $this->clear();
     $this->save();
   }
 }

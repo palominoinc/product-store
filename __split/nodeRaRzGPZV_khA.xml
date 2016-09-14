@@ -82,15 +82,6 @@
     <element name="colour" type="wpStringL" />
   </complexType>
   
-  <!-- =============== CUSTOM ===================================================== -->
-  
-  <complexType name="bndProductItem" extends="wpProductItem" >
-    <element name="sterility" type="wpStringL"  />
-    <element name="thickness" type="wpStringL"  />
-    <element name="packaging" type="wpStringL"  />
-    <element name="UOM1" type="wpStringL" />
-    <element name="UOM2" type="wpStringL" />
-  </complexType>
 
 
 </schema>]]></node-schema>

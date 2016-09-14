@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<html-code id="wpRaDgQ3k9YitfVt" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<!-- <div class="row-cart"> -->
+<!--   @if (! $cart)
+  <div class="alert alert-danger hidden">
+    <h4>Error</h4>Sorry, there is something wrong with your Order. Please try again.
+  </div>
+  @else   -->
+  <div>    
+   <p>A representative will be in touch very soon. Feel free to print or save this page for your records</p>
+  </div>  
+  <div>
+    <h2>Customer Information:</h2>
+    <b>Company Name:</b> {{{$companyname}}}<br/>
+    <b>Customer ID:</b> {{{$companyid}}} <br/>
+    <b>Address:</b><br/>
+      {{{$shippingaddress1}}}<br/>
+      {{{$shippingtown}}}<br/>
+      {{{$shippingpostal}}}<br/>
+    <br/>
+    <b>Contact Name:</b> {{{$contactname}}} <br/>
+    <b>Email:</b> {{{$contactemail}}} <br/>
+    <b>Phone:</b> {{{$contactphone}}} <br/>
+    <b>Fax:</b> {{{$companyfax}}} <br/>
+  </div>
+  <div>
+    <br/>
+    <h2>Order Information:</h2>
+
+    @if ($cart-:cartItems)
+    Items in order: [[ $cart-:itemcount() ]]
+    <p>Request Code: {{{substr(sha1($cart->id), 0, 6)}}}</p>
+      <table style="width:540px;border: solid 1px #000;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="border: solid 1px #000;">Code</th>
+            <th style="border: solid 1px #000;">Product</th>
+            <th style="border: solid 1px #000;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:skucode}}}</td>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:productname}}}</td>
+            <td style="border: solid 1px #000; text-align:right; padding: 3px;">{{{$item-:quantity}}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table> 
+    <br/>
+    @else
+    <div class="alert alert-info">
+      No items in order.
+    </div>
+    @endif
+  </div>
+
+<!--   @endif -->
+<!-- </div> -->
+<!--]]></html-code>

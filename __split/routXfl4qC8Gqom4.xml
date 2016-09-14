@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="\ProductStore\Controllers\DataController@completeCheckout" id="routXfl4qC8Gqom4" pattern="/product-store/complete-checkout" verb="post" webpalschematype="wpAppRoute"/>
+<route controller="\ProductStore\Controllers\DataController@completeCheckout" id="routXfl4qC8Gqom4" name="completeCheckout" pattern="/product-store/complete-checkout" verb="post" webpalschematype="wpAppRoute"/>
