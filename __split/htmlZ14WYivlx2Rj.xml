@@ -45,8 +45,9 @@
       <div class="pull-left">
         <a href="/product-store/clear-cart" class="btn btn-danger">Clear Cart</a>
       </div>
-      <div class="pull-right">       
-        <input type="submit" class="btn btn-primary blue" id="updateButton" value="Checkout"/>
+      <div class="pull-right">  
+        <a href="/products" class="btn green">Add More</a>
+        <input type="submit" class="btn btn-primary blue" id="updateButton" value="CHECKOUT"/>
 <!--         <a href="/product-store/checkout-cart" id="updateButton" class="btn btn-danger">Cart</a> -->
       </div>
     </form>
