@@ -77,6 +77,11 @@ class DataController extends BaseController
     Session::forget('cart_id');
     return $this->showCart();
   }
+  public function clearCartFinal() {
+    $cart = $this->cart();
+    Session::forget('cart_id');
+    return $this->showCart();
+  }
 
   private function cart() {
     if (! Session::has('cart_id')) {
@@ -119,13 +124,18 @@ class DataController extends BaseController
     $data['cart_id'] = $cart->id;
     $data['cart'] = $cart;
     $subject = 'BND Order Confirmation #'.substr(sha1($cart->id), 0, 6);
-    $cart->emailsubmitted = Mail::send('ProductStore::checkoutEmail', $data, function($message) use ($email , $name, $subject)
+    Mail::send('ProductStore::checkoutEmail', $data, function($message) use ($email , $name, $subject)
       {
          $message->to($email, $name)->subject($subject)
                  ->from('donotreply@bndinc.com')
-               // ->bcc('customerservice@bndinc.com');
-                 ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
+                ->bcc('customerservice@bndinc.com');
+               //  ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
       });
+    if(count(Mail::failures()) > 0 ){       
+    $cart->emailsubmitted=false;
+    }else{
+    $cart->emailsubmitted=true;  
+    }
     $cart->save();
   }
   
@@ -184,7 +194,7 @@ class DataController extends BaseController
       $data['cart'] = $cart;
       $infor = ['companyname'=>$data['companyname'], 'shippingaddress1'=>$data['shippingaddress1'], 'contactname'=>$data['contactname'], 'contactphone'=>$data['contactphone'], 'contactemail'=>$data['contactemail']];
       $data['infor'] = $infor;
-      $this->clearCart();
+      $this->clearCartFinal();
       return View::make('ProductStore::checkoutComplete', $data);
     }
   }
