@@ -17,9 +17,34 @@ use Validator;
 Use Mail;
 use Response;
 use \ProductStore\Models\Productstorecart;
+use Log;
 
 class DataController extends BaseController
 {
+
+  /*
+  * exports all stores as CSV
+  */
+  public function exportAll($storeid = null) {
+    $template = 'product-store-export-csv';
+    $xpath = '/web/pages';
+    $status = 200;
+    $params = ['output' => 'text', 
+               'use-cache' => false,
+              ];
+    $headers = array(
+      'Content-Type' => 'text/plain; charset=utf-8',
+      'Content-Disposition' => 'attachment',
+      'filename' => 'product-store.csv',
+      'Accept-Ranges' => 'bytes',
+      'Content-Transfer-Encoding' => 'binary',
+      'Cache-Control' => 'private',
+      'Pragma' => 'private',
+      'Expires' => date('Y-m-d hh:ii:ss T'),
+    );
+    // $headers = array();
+    return WebPalResponse::callTemplate($xpath, $template, $params, [], $status, $headers);
+  }
 
   /*
   * queries a store by certain criteria and renders results as a view
@@ -31,11 +56,11 @@ class DataController extends BaseController
     $params['q'] = strtolower($q);
     $template = 'product-store-search';
     $params['use-cache'] = false;
-    
+
     return WebPalResponse::callTemplate($xpath, $template, $params);
 
   }
-  
+
   public function updateCart() {
     $cart = $this->cart();
     foreach ($cart->cartItems as $item) {
@@ -46,7 +71,7 @@ class DataController extends BaseController
     }
     return Redirect::to('/product-store/cart');
   }
-  
+
   public function addToCart() {
     $cart = $this->cart();
     if ($item = $cart->getItem(['skucode' => Input::get('skucode')])) {
@@ -57,12 +82,12 @@ class DataController extends BaseController
     } else {
       $cart->addItem(Input::all());  
     }
-    
+
     Session::put('cart_itemcount', $cart->itemcount());
     Session::flash('message', "Item added to cart");
     return Redirect::back();// $this->showCart();
   }
-  
+
   public function removeItem($id) {
     $cart = $this->cart();
     $item = $cart->cartItems()->find($id);
@@ -70,7 +95,7 @@ class DataController extends BaseController
     Session::put('cart_itemcount', $cart->itemcount());
     return $this->showCart();
   }
-  
+
   public function clearCart() {
     $cart = $this->cart();
     if ($cart) $cart->delete();
@@ -93,14 +118,14 @@ class DataController extends BaseController
     $cart = Productstorecart::find(Session::get('cart_id'));
     return $cart;
   }
-  
+
   public function showCart() {
     $cart = $this->cart();
     $data['cart_id'] = $cart->id;
     $data['cart'] = $cart;
     return View::make('ProductStore::showCart', $data);
   }
-  
+
   public function checkout() {
     $cart = $this->cart();
     // foreach ($cart->cartItems as $item) {
@@ -115,7 +140,7 @@ class DataController extends BaseController
     return View::make('ProductStore::checkoutCart', $data); 
     // return Redirect('/product-store/checkout-cart')->with($data);
   }
-  
+
   public function email() {
     $cart = $this->cart();
     $data = Input::all();
@@ -125,23 +150,23 @@ class DataController extends BaseController
     $data['cart'] = $cart;
     $subject = 'BND Order Confirmation #'.substr(sha1($cart->id), 0, 6);
     Mail::send('ProductStore::checkoutEmail', $data, function($message) use ($email , $name, $subject)
-      {
-         $message->to($email, $name)->subject($subject)
-                 ->from('donotreply@bndinc.com')
-                ->bcc('customerservice@bndinc.com');
-               //  ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
-      });
+               {
+      $message->to($email, $name)->subject($subject)
+        ->from('donotreply@bndinc.com')
+        ->bcc('customerservice@bndinc.com');
+      //  ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
+    });
     if(count(Mail::failures()) > 0 ){       
-    $cart->emailsubmitted=false;
+      $cart->emailsubmitted=false;
     }else{
-    $cart->emailsubmitted=true;  
+      $cart->emailsubmitted=true;  
     }
     $cart->save();
   }
-  
+
   public function completeCheckout() {
     $cart = $this->cart();
-    
+
     //(+) TODO: validation
     $data = Input::all();
     $info = Input::only(
@@ -163,17 +188,17 @@ class DataController extends BaseController
       'shippingprovince',
       'shippingcountry'
     );
-    
+
     $rules = array('companyname' =>'required', 'shippingaddress1' =>'required', 'shippingpostal' =>'required', 'shippingtown' =>'required', 'contactname' =>'required', 'contactphone' =>'required', 'contactemail' => 'required|email');
     $messages = array(
-                      'companyname.required'=> 'The company name field is required',
+      'companyname.required'=> 'The company name field is required',
       'shippingaddress1.required'=> 'The address field is required',
       'shippingpostal.required'=> 'The postal code field is required',
       'shippingtown.required'=> 'The city field is required',
       'contactname.required'=> 'The contact name field is required',
       'contactphone.required'=> 'The contact phone field is required',
-                      'contactemail.required'=>"The contact email field is required",
-                      'contactemail.email'=>"The contact email is not valid"
+      'contactemail.required'=>"The contact email field is required",
+      'contactemail.email'=>"The contact email is not valid"
     );
     $validator = Validator::make(array("companyname" => $data['companyname'], "shippingaddress1" => $data['shippingaddress1'], "shippingpostal" => $data['shippingpostal'], "shippingtown" => $data['shippingtown'], "contactname" => $data['contactname'], "contactphone" => $data['contactphone'], "contactemail" => $data['contactemail']),
                                  $rules, $messages);
@@ -183,9 +208,9 @@ class DataController extends BaseController
       return Redirect::back()->withInput()->withErrors($validator);
     }
     else{
-// ipaddress
-// sessionduration
-      
+      // ipaddress
+      // sessionduration
+
       //send email notifications, mark cart as checked out, etc.
       $cart->checkout($info);
       $this->email();
@@ -198,6 +223,6 @@ class DataController extends BaseController
       return View::make('ProductStore::checkoutComplete', $data);
     }
   }
-  
-  
+
+
 }

@@ -56,14 +56,14 @@
     <element name="description" type="wpHtml" minOccurs="1" />
     <element name="features" type="wpHtml" minOccurs="1" /> -->
     <element name="image" type="wpImage" />
-    <element name="file" type="wpProductFile" />
+    <element name="files" type="wpProductFile" />
     <element name="items" type="wpProductItemsList" />
   </complexType>
   
   <complexType name="wpProductFile" edittype="sheet" icon="attach.png" lockable="yes">
     <attribute name="id" use="auto" type="wpString" value="wpProductFile" />   
     <element name="fileName" type="wpStringL"/>
-    <element name="file" type="wpFileL" />
+    <element name="file" type="wpFile" />
   </complexType>
 
   <complexType name="wpProductItemsList" edittype="table" icon="table.png" lockable="yes">

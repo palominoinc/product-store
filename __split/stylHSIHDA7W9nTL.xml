@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<stylesheet id="stylHSIHDA7W9nTL" lang="any" name="exports" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[<!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
+Illegal reproduction and disclosure will be prosecuted  -->
+
+<xsl:stylesheet
+                version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:wp="http://www.palominosys.com/wp"
+                xmlns:php="http://php.net/xsl"
+                xmlns:date="http://exslt.org/dates-and-times"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl"
+                >
+
+  <xsl:strip-space elements="*"/>
+  
+  
+  <xsl:template name="product-store-export-csv">
+    <xsl:apply-templates select="/web/pages//product-store" mode="csv"/>
+  </xsl:template>
+  
+  <xsl:template match="product-store" mode="csv">
+    <xsl:text>product-name,title,category,item-name,features,description,brand,size,colour,sterility,thickness,packaging,UOM1,UOM2,specification,image
+</xsl:text>
+    <xsl:for-each select=".//item">
+      <xsl:text>"</xsl:text>
+      <xsl:value-of select="../../@name"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate(../../title, ',','')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="../../@category"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="@name"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate(../../features, ',', '')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate((description | ../../description)[1], ',', ' ')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="(brand | ../../brand)[1]"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="size"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="colour"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="sterility"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="thickness"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="packaging"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="UOM1"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="UOM2"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="specification"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="../../image/@src"/>.jpg<xsl:text>"
+</xsl:text>
+    </xsl:for-each>
+  </xsl:template>
+  
+</xsl:stylesheet>]]></stylesheet>
