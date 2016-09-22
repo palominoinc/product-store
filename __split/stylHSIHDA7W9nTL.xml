@@ -39,7 +39,7 @@ Illegal reproduction and disclosure will be prosecuted  -->
       <xsl:value-of select="UOM1"/><xsl:text>","</xsl:text>
       <xsl:value-of select="UOM2"/><xsl:text>","</xsl:text>
       <xsl:value-of select="specification"/><xsl:text>","</xsl:text>
-      <xsl:value-of select="../../image/@src"/>.jpg<xsl:text>"
+      <xsl:value-of select="../../image/@name"/><xsl:text>"
 </xsl:text>
     </xsl:for-each>
   </xsl:template>
