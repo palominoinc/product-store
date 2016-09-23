@@ -1,2 +1,5 @@
 <?xml version="1.0"?>
-<page-view id="pagePMmjUkvifLnm" index="same as parent" name="checkoutEmail" show-in-menu="yes" webpalschematype="wpAppPage"><html-code id="wpRaDgQ3k9YitfVt" __stub="yes"/><shorttitle id="shornUDOUoF27Xyt" __stub="yes"/></page-view>
+<page-view id="pagePMmjUkvifLnm" index="same as parent" name="checkoutEmail" show-in-menu="yes" webpalschematype="wpAppPage">
+      <html-code id="wpRaDgQ3k9YitfVt" __stub="yes"/>
+      <shorttitle id="shornUDOUoF27Xyt" __stub="yes"/>
+    </page-view>

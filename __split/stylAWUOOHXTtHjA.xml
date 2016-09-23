@@ -306,7 +306,7 @@ the template mode=product-store-search can be overridden. -->
                 </div>
               </div>
             </xsl:if>
-            <xsl:if test="file != ''">
+            <xsl:if test="./file/@name != ''">
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingThree">
                   <h4 class="panel-title">
@@ -342,20 +342,14 @@ the template mode=product-store-search can be overridden. -->
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <!--           products -->
-          <!--           <xsl:apply-templates select="products" mode="similarProducts"/> -->
-
-        </div>
-      </div>
 
     </div>
   </xsl:template>
 
   <xsl:template match="product-store/products/product/file" >
     <li>
-      <a href="/resource/dm/{./file/@src}" target="_blank"><xsl:value-of select="./fileName"/></a>
+      <a href="/resource/dm/{./@src}" target="_blank"><xsl:value-of select="./@name"/></a>
+<!--       <a href="/resource/dm/{./file/@src}" target="_blank"><xsl:value-of select="./fileName"/></a> -->
     </li>
   </xsl:template>
 
@@ -423,12 +417,7 @@ the template mode=product-store-search can be overridden. -->
             </th>
           </xsl:if>
 
-          <xsl:if test="item/UOM1[.!='']">
-            <th>UOM1</th>
-          </xsl:if>
-          <xsl:if test="item/UOM2[.!='']">
-            <th>UOM2</th>
-          </xsl:if>
+          
           <xsl:if test="../brand[.!=''] or item/brand[.!='']">
 
             <th>
@@ -449,6 +438,17 @@ the template mode=product-store-search can be overridden. -->
               @endif
             </th>
           </xsl:if>
+          
+          <xsl:if test="item/specification[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              
+              @elseif(Webpal::language() == 'en')
+              Specification
+              @endif
+            </th>
+          </xsl:if>
           <xsl:if test="item/packaging[.!='']">
 
             <th>
@@ -459,15 +459,11 @@ the template mode=product-store-search can be overridden. -->
               @endif
             </th>
           </xsl:if>
-          <xsl:if test="item/specification[.!='']">
-
-            <th>
-              @if(Webpal::language() == 'fr')
-              
-              @elseif(Webpal::language() == 'en')
-              Specification
-              @endif
-            </th>
+          <xsl:if test="item/UOM1[.!='']">
+            <th>UOM1</th>
+          </xsl:if>
+          <xsl:if test="item/UOM2[.!='']">
+            <th>UOM2</th>
           </xsl:if>
           <th></th>
         </tr>
@@ -503,12 +499,7 @@ the template mode=product-store-search can be overridden. -->
         </td>
       </xsl:if>
 
-      <xsl:if test="../item/UOM1[.!='']">
-        <td><xsl:value-of select="UOM1"/></td>
-      </xsl:if>
-      <xsl:if test="../item/UOM2[.!='']">
-        <td><xsl:value-of select="UOM2"/></td>
-      </xsl:if>
+      
       <xsl:choose>
         <xsl:when test="../item/brand != ''">
           <td><xsl:value-of select="brand"/></td>
@@ -523,11 +514,18 @@ the template mode=product-store-search can be overridden. -->
       <xsl:if test="../item/thickness[.!='']">
         <td><xsl:value-of select="thickness"/></td>
       </xsl:if>
-      <xsl:if test="../item/packaging[.!='']">
-        <td><xsl:value-of select="packaging"/></td>
-      </xsl:if>
+     
       <xsl:if test="../item/specification[.!='']">
         <td><xsl:value-of select="specification"/></td>
+      </xsl:if>
+       <xsl:if test="../item/packaging[.!='']">
+        <td><xsl:value-of select="packaging"/></td>
+      </xsl:if>
+      <xsl:if test="../item/UOM1[.!='']">
+        <td><xsl:value-of select="UOM1"/></td>
+      </xsl:if>
+      <xsl:if test="../item/UOM2[.!='']">
+        <td><xsl:value-of select="UOM2"/></td>
       </xsl:if>
       <td>
         <form method="post" action="/product-store/add-to-cart">

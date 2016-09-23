@@ -19,6 +19,12 @@ Illegal reproduction and disclosure will be prosecuted  -->
     <xsl:apply-templates select="/web/pages//product-store" mode="csv"/>
   </xsl:template>
   
+  <xsl:template name="product-store-export-xml">
+    <export>
+      <xsl:apply-templates select="/web/pages//product-store" mode="xml"/>
+    </export>
+  </xsl:template>
+  
   <xsl:template match="product-store" mode="csv">
     <xsl:text>product-name,title,category,item-name,features,description,brand,size,colour,sterility,thickness,packaging,UOM1,UOM2,specification,image
 </xsl:text>
@@ -43,5 +49,10 @@ Illegal reproduction and disclosure will be prosecuted  -->
 </xsl:text>
     </xsl:for-each>
   </xsl:template>
+  
+  <xsl:template match="product-store" mode="xml">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
   
 </xsl:stylesheet>]]></stylesheet>
