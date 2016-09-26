@@ -54,9 +54,11 @@ class DataController extends BaseController
     $xpath = "//product-store";
     if ($storeid) $xpath .= "[@id='$storeid']";
     $params['q'] = strtolower($q);
+    $params['qscope'] = Input::get('qscope');
     $template = 'product-store-search';
     $params['use-cache'] = false;
 
+    Input::flash();
     return WebPalResponse::callTemplate($xpath, $template, $params);
 
   }

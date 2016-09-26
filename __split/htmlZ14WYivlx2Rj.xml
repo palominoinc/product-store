@@ -12,7 +12,7 @@
       <h4>Sorry</h4>[[[ $message ]]]
     </div>
 
-    @if ($cart-:cartItems)
+    @if ($cart-:cartItems-:count() GT 0)
     Items in cart: [[ $cart-:itemcount() ]]
     <form action="/product-store/checkout-cart" id="formUpdate" method="POST">
       <table class="table table-bordered cart-items">
@@ -32,10 +32,10 @@
             <td style="text-align:right;">
               <input style="text-align:right;"
                      id="qty_[[$item-:id]]" 
-                       name="qty_[[$item-:id]]" 
+                     name="qty_[[$item-:id]]" 
                      class="form-control"
-                       value="[[$item-:quantity]]"
-                      onchange="update()"/>
+                     value="[[$item-:quantity]]"
+                     onchange="update()"/>
             </td>
             <td><a href="/product-store/remove-from-cart/[[$item-:id]]">remove</a></td>
           </tr>
@@ -48,12 +48,14 @@
       <div class="pull-right">  
         <a href="/products" class="btn green">Add More</a>
         <input type="submit" class="btn btn-primary blue" id="updateButton" value="CHECKOUT"/>
-<!--         <a href="/product-store/checkout-cart" id="updateButton" class="btn btn-danger">Cart</a> -->
       </div>
     </form>
     @else
     <div class="alert alert-info">
       No items in cart.
+    </div>
+    <div class="pull-right">  
+      <a href="/products" class="btn green">Add Items</a>
     </div>
     @endif
   </div>
