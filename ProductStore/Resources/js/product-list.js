@@ -11,10 +11,16 @@ function update(){
 });; 
 }
 
+// if ($(".empty_image")[0]){
+//   $(".cat_image").hide();
+// } else {
+//   $(".title_only").hide();
+// }
+
 if ($(".empty_image")[0]){
-  $(".cat_image").hide();
+  $(".title_only").show();
 } else {
-  $(".title_only").hide();
+  $(".cat_image").show();
 }
 
 $(document).ready(function(){
