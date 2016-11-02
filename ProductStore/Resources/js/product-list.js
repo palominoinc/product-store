@@ -11,6 +11,12 @@ function update(){
 });; 
 }
 
+if ($(".empty_image")[0]){
+  $(".cat_image").hide();
+} else {
+  $(".title_only").hide();
+}
+
 $(document).ready(function(){
 
   // SmartMenus jQuery init

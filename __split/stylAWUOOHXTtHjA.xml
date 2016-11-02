@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<stylesheet id="stylAWUOOHXTtHjA" lang="any" name="transform" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[<!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
+<stylesheet id="stylAWUOOHXTtHjA" lang="any" name="transform" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[  <!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
 Illegal reproduction and disclosure will be prosecuted  -->
 
 <xsl:stylesheet
@@ -149,35 +149,97 @@ the template mode=product-store-search can be overridden. -->
   <xsl:template match="product-store/categories/category" mode="list">
     <xsl:variable name="my-name" select="@name"/>
     <!--     <xsl:param name="path"/> -->
-    <div class="li col-lg-3 col-md-4 col-sm-6">
 
-      <xsl:variable name="cat-image-src">
-        <xsl:choose>
-          <xsl:when test="image/@src">
-            <xsl:value-of select="image/@src"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:call-template name="cat-get-product-image"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
+    <xsl:variable name="cat-image-src">
+      <xsl:choose>
+        <xsl:when test="image/@src">
+          <xsl:value-of select="image/@src"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
 
-      <a href="/category/{@id}">
-        <div class="product">
-          <div class="productContainer">
-            <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450) !important;"></div>
-            <div class="listItems">
-              <div class="title">
-                <xsl:value-of select="title"/>
+
+    <xsl:choose>
+      <xsl:when test="$cat-image-src = ''">
+        <div class="empty_image">
+        </div>
+      </xsl:when>
+      <xsl:otherwise>
+        <div class="li col-lg-3 col-md-4 col-sm-6 cat_image">
+          <a href="/category/{@id}">
+            <div class="product">
+              <div class="productContainer">
+                <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450) !important;"></div>
+                <div class="listItems">
+                  <div class="title">
+                    <xsl:value-of select="title"/>
+                  </div>
+                </div>
               </div>
             </div>
+          </a>
+        </div>
+      </xsl:otherwise>
+    </xsl:choose>
+
+    <xsl:apply-templates select="." mode="no-image"/>
+    
+  </xsl:template>
+  
+  
+  <xsl:template match="product-store/categories/category" mode="no-image">
+    <xsl:variable name="my-name" select="@name"/>
+    <div class="title_only">
+      <a href="/category/{@id}">
+        <div class="listItems">
+          <div class="title">
+            <h4>
+              <xsl:value-of select="title"/>
+            </h4>
           </div>
         </div>
       </a>
     </div>
   </xsl:template>
-
-
+  
+<!--   <xsl:template name="cat-product-image"> -->
+  <xsl:template match="product-store/categories/category" mode="check-image">
+    <xsl:variable name="my-name" select="@name"/>
+    
+    <!-- 1. if has image for this category 2 if no subcategories check images for products 2. if has subcategories check subcategories -->
+    <xsl:choose>
+      <xsl:when test="image/@src">
+<!--         <xsl:value-of select="true()"/> -->
+        <xsl:apply-templates select="." mode="list"/>
+        <xsl:apply-templates select="." mode="no-image"/>
+      </xsl:when>
+      <xsl:when test="not(../category[@parent = $my-name])">
+        <xsl:choose>
+          <xsl:when test="not(../../products/product[@category = $my-name][image])">
+<!--             <xsl:value-of select="false()"/> -->
+            <xsl:apply-templates select="." mode="list"/>
+            <xsl:apply-templates select="." mode="no-image"/>
+          </xsl:when>
+          <xsl:otherwise>
+<!--             <xsl:value-of select="true()"/> -->
+            <xsl:apply-templates select="." mode="no-image"/>
+            <xsl:apply-templates select="." mode="list"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="../category[@parent = $my-name]">
+<!--           <xsl:call-template name="cat-product-image"/> -->
+          <xsl:apply-templates select="../category[./@parent = $my-name]" mode="check-image"/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  
 
   <!-- category page -->
   <xsl:template match="product-store/categories/category">
@@ -185,37 +247,57 @@ the template mode=product-store-search can be overridden. -->
     <xsl:apply-templates select="title"/>
     <xsl:apply-templates select="description"/>
     
-      
-      <div class="ul sub-cat nav row product-store">
-        <xsl:if test="../category[./@parent = $my-name]">
+    <div class="ul sub-cat nav row product-store">
+      <xsl:if test="../category[./@parent = $my-name]">
+        <!--         <xsl:apply-templates select="../category[./@parent = $my-name]" mode="check-image"/> -->
+
         <xsl:apply-templates select="../category[./@parent = $my-name]" mode="list"/>
-        </xsl:if>
-        <xsl:if test="../../products/product[@category = $my-name]">
-          <xsl:for-each select="../../products/product[@category = $my-name]">
-            <div class="li col-lg-3 col-md-4 col-sm-6">
+      </xsl:if>
+      <xsl:if test="../../products/product[@category = $my-name]">
+        <xsl:for-each select="../../products/product[@category = $my-name]">
+          <xsl:variable name="productImage">
+            <xsl:choose>
+              <xsl:when test="image/@src">
+                <xsl:value-of select="image/@src"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="cat-get-product-image"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
+          <xsl:choose>
+            <xsl:when test="$productImage = ''">
+              <div class="empty_image">
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <div class="li col-lg-3 col-md-4 col-sm-6 cat_image">
 
-              <xsl:variable name="productImage">
-                <xsl:choose>
-                  <xsl:when test="image/@src">
-                    <xsl:value-of select="image/@src"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:call-template name="cat-get-product-image"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-
-              </xsl:variable>
-              <a href="/product/{@id}">
-                <div class="product">
-                  <div class="productContainer" >
-                    <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/resize=x450);"></div>
-
-                    <div class="listItems">
-                      <div class="title">
-                        <xsl:value-of select="title"/>
+                <a href="/product/{@id}">
+                  <div class="product">
+                    <div class="productContainer" >
+                      <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/resize=x450);"></div>
+                      <div class="listItems">
+                        <div class="title">
+                          <xsl:value-of select="title"/>
+                        </div>
                       </div>
-                    </div>
 
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </xsl:otherwise>
+          </xsl:choose>
+
+            <div class="title_only">
+              <a href="/product/{@id}">
+                <div class="listItems">
+                  <div class="title">
+                    <h4>
+                      <xsl:value-of select="title"/>
+                    </h4>
                   </div>
                 </div>
               </a>
@@ -224,6 +306,15 @@ the template mode=product-store-search can be overridden. -->
         </xsl:if>
       </div>
 
+    
+    <script>
+      if ($(".empty_image")[0]){
+        // document.getElementsByClassName('cat_image')[0].style.visibility = 'hidden';
+        $(".cat_image").hide();
+      } else {
+        $(".title_only").hide();
+      }
+    </script>
   </xsl:template>
 
   <xsl:template match="product-store/categories/category/title">
@@ -236,7 +327,7 @@ the template mode=product-store-search can be overridden. -->
     <!-- for the current category, finds an appropriate image, in this order:
 1. first product in this category
 2. first product in a parent category
-3. first product in the whole store
+3. first product in the whole store //commented out
 -->
     <xsl:choose>
       <xsl:when test="../../products/product[@category = $my-name][image]">
@@ -247,10 +338,13 @@ the template mode=product-store-search can be overridden. -->
           <xsl:call-template name="cat-get-product-image"/>
         </xsl:for-each>
       </xsl:when>
-      <xsl:otherwise>
+<!--       <xsl:otherwise> -->
 <!--         <img class="img-responsive" style="width: 100%;" src="/resource/ext/BndDesign/img/sampleProductImage.png" /> -->
 <!--         <xsl:apply-templates select="../../products/product[1]/image/@src"/> -->
-      </xsl:otherwise>
+<!--       </xsl:otherwise> -->
+<!--       <xsl:otherwise>
+        <xsl:value-of select="1 = 0"/>
+      </xsl:otherwise> -->
     </xsl:choose>
   </xsl:template>
 

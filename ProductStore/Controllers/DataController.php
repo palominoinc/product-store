@@ -18,6 +18,7 @@ Use Mail;
 use Response;
 use \ProductStore\Models\Productstorecart;
 use Log;
+use Bugsnag;
 
 class DataController extends BaseController
 {
