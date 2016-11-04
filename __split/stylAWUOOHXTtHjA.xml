@@ -266,12 +266,12 @@ the template mode=product-store-search can be overridden. -->
             </xsl:choose>
           </xsl:variable>
           
-          <xsl:choose>
+<!--           <xsl:choose>
             <xsl:when test="$productImage = ''">
               <div class="empty_image">
               </div>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:otherwise> -->
               <div class="li col-lg-3 col-md-4 col-sm-6 cat_image">
 
                 <a href="/product/{@id}">
@@ -288,8 +288,8 @@ the template mode=product-store-search can be overridden. -->
                   </div>
                 </a>
               </div>
-            </xsl:otherwise>
-          </xsl:choose>
+<!--             </xsl:otherwise>
+          </xsl:choose> -->
 
 <!--             <div class="title_only" style="display: none;">
               <a href="/product/{@id}">
