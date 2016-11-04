@@ -44,7 +44,9 @@ class Productstorecart extends Eloquent
     $item->skucode = $itemdetails['skucode'];
     $item->skuname = $itemdetails['skuname'];
     $item->productcode = $itemdetails['productcode'];
-    $item->productname = $itemdetails['productname'];
+    $item->productname = 
+      empty($itemdetails['skudescription'])? 
+      $itemdetails['productname'] : $itemdetails['skudescription'];
     $item->quantity = 1;
     $this->cartItems()->save($item);
     $this->save();

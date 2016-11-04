@@ -630,6 +630,7 @@ the template mode=product-store-search can be overridden. -->
         <form method="post" action="/product-store/add-to-cart">
           <input type="hidden" name="skucode" value="{@name}"/>
           <input type="hidden" name="skuname" value="{@name}"/>
+          <input type="hidden" name="skudescription" value="{description}"/>
           <input type="hidden" name="productcode" value="{../../@name}"/>
           <input type="hidden" name="productname" value="{../../title}"/>
           <input type="hidden" name="quantity" value="1"/>
