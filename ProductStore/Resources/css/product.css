@@ -1,4 +1,8 @@
-.title_only {
+.product-store .title_only {
     padding-left: 15px;
     padding-right: 15px;
+    margin-bottom: 20px;
 } 
+.product-store .title_only h4 {
+    font-size: 16px;
+}
