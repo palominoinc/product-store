@@ -157,7 +157,7 @@ class DataController extends BaseController
       $message->to($email, $name)->subject($subject)
         ->from('donotreply@bndinc.com')
         ->bcc('customerservice@bndinc.com');
-      //  ->bcc('sinthu@palominosys.com'); // needs to be changed to the business email
+       // ->bcc('lei.wang@palominosys.com'); // needs to be changed to the business email
     });
     if(count(Mail::failures()) > 0 ){       
       $cart->emailsubmitted=false;
@@ -192,7 +192,13 @@ class DataController extends BaseController
       'shippingcountry'
     );
 
-    $rules = array('companyname' =>'required', 'shippingaddress1' =>'required', 'shippingpostal' =>'required', 'shippingtown' =>'required', 'contactname' =>'required', 'contactphone' =>'required', 'contactemail' => 'required|email');
+    $rules = array('companyname' =>'required', 
+                   'shippingaddress1' =>'required', 
+                   'shippingpostal' =>'required',
+                   'shippingtown' =>'required',
+                   'contactname' =>'required',
+                   'contactphone' =>'required',
+                   'contactemail' => 'required|email');
     $messages = array(
       'companyname.required'=> 'The company name field is required',
       'shippingaddress1.required'=> 'The address field is required',

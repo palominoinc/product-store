@@ -122,11 +122,18 @@ the template mode=product-store-search can be overridden. -->
 
   <!--  Side navigation  -->
   <xsl:template match="product-store/categories/category" mode="navigation">
-
+    <xsl:variable name="my-name" select="@name"/>
+    <xsl:variable name="class-dropdown">
+      <xsl:choose>
+        <xsl:when test="../category[./@parent = $my-name] | ../../products/product[@category = $my-name]">dropdown</xsl:when>
+        <xsl:otherwise>single</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
     <li class="dropdown">
       <a href="/category/{@id}"><xsl:value-of select="title"/></a>
       <ul class="dropdown-menu subnav sm-nowrap">
-        <xsl:variable name="my-name" select="@name"/>
+<!--         <xsl:variable name="my-name" select="@name"/> -->
         <xsl:if test="../category[./@parent = $my-name]">
           <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
           <xsl:variable name="name" select="@name"/>

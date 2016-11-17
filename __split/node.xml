@@ -2,7 +2,6 @@
 <extension id="extej_zuUskF9ytv" name="product-store" webpalschematype="wpExtension">
   <stylesheet id="stylHSIHDA7W9nTL" __stub="yes"/>
   <views id="viewpK3KUtPe4eUd" __stub="yes"/>
-  <resource-links id="reso9Rwt2J2F4uG0" __stub="yes"/>
   <resources id="resoZtrc9cZ5UF6A" __stub="yes"/>
   <README id="READ8BU5ooMW4BEt" __stub="yes"/>
   <routes id="routRUfhGMSlKi7Q" __stub="yes"/>
@@ -11,4 +10,5 @@
   <db-schema id="db-s3XisjLWstoyU" __stub="yes"/>
   <models id="modeKNJQHwDUOTtS" __stub="yes"/>
   <stylesheet id="stylAWUOOHXTtHjA" __stub="yes"/>
+  <resource-links id="reso9Rwt2J2F4uG0" __stub="yes"/>
 </extension>

@@ -23,6 +23,7 @@ if ($(".empty_image")[0]){
   $(".cat_image").show();
 }
 
+
 $(document).ready(function(){
 
   // SmartMenus jQuery init
@@ -31,8 +32,15 @@ $(document).ready(function(){
   //   subMenusSubOffsetX: 10,
   //   subMenusSubOffsetY: 0
   // });
+  
+  // SmartMenus jQuery init
+	$('#product-menu').smartmenus({
+	mainMenuSubOffsetX: 1,
+	mainMenuSubOffsetY: -8,
+	subMenusSubOffsetX: 1,
+	subMenusSubOffsetY: -8
+	});
   $( "span.sub-arrow" ).html( "" );
-
 
   // Instantiate EasyZoom plugin
   var $easyzoom = $('.easyzoom').easyZoom();
@@ -67,4 +75,7 @@ $(document).ready(function(){
   //   });
   // });
 
+  $('.products-side-menu .dropdown:not(.active)').hover( function() {
+    // $(".dropdown .dropdown-menu").css("bottom", "0");
+  });
 });    
