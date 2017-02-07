@@ -49,7 +49,7 @@
     <attribute name="category" use="optional" type="wpString" value=""/>
     <element name="title" type="wpStringL" />
     <element name="brand" type="wpStringL"  />
-    <element name="description" type="wpHtml"  />
+<!--     <element name="description" type="wpHtml"  /> -->
     <element name="features" type="wpHtml"  />
 <!--     <element name="title" type="wpStringL" minOccurs="1" />
     <element name="brand" type="wpStringL" minOccurs="1" />
@@ -57,9 +57,13 @@
     <element name="features" type="wpHtml" minOccurs="1" /> -->
     <element name="image" type="wpImage" />
     <element name="file" type="wpFile" />
+<!--     <element name="files" type="wpFileList" /> -->
     <element name="items" type="wpProductItemsList" />
   </complexType>
   
+<!--   <complexType name="wpFileList" edittype="sheet" icon="attach.png" lockable="yes">
+  </complexType> -->
+
   <complexType name="wpProductFile" edittype="sheet" icon="attach.png" lockable="yes">
     <attribute name="id" use="auto" type="wpString" value="wpProductFile" />   
     <element name="fileName" type="wpStringL"/>

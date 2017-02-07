@@ -314,7 +314,7 @@ the template mode=product-store-search can be overridden. -->
       </div>
     
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
-    <div class="addthis_toolbox  addthis_32x32_style">
+    <div class="addthis_toolbox  addthis_20x20_style">
       <div id="shareLinkDropdown" style="z-index: 99999; right: 15px; margin-top: 25px;">
         <a class="addthis_button_facebook"></a>
         <a class="addthis_button_twitter"></a>
@@ -385,8 +385,15 @@ the template mode=product-store-search can be overridden. -->
     <div class="product-store-product">
       <xsl:apply-templates select="title"/>
 
+      <xsl:variable name="class-name-image">
+      <xsl:choose>
+        <xsl:when test="./image">col-lg-7 col-md-7 col-sm-8</xsl:when>
+        <xsl:otherwise>col-lg-12 col-md-12 col-sm-12</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+      
       <div class="row">
-        <div class="col-lg-7 col-md-7 col-sm-8">
+        <div class="{$class-name-image}">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <xsl:if test="description != '' ">
               <div class="panel panel-default">
@@ -424,12 +431,12 @@ the template mode=product-store-search can be overridden. -->
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingThree">
                   <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                       Documents
                     </a>
                   </h4>
                 </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                   <div class="panel-body">
                     <ul>
                       <xsl:apply-templates select="file"/>
@@ -441,13 +448,14 @@ the template mode=product-store-search can be overridden. -->
 
           </div>
         </div>
+        
+        <xsl:if test="./image">
         <div class="col-lg-5 col-md-5 col-sm-4">
           <div class="easyzoom easyzoom--overlay">
-            <xsl:if test="./image">
-              <xsl:apply-templates select="./image"/>
-            </xsl:if>
+            <xsl:apply-templates select="./image"/>
           </div>
         </div>
+          </xsl:if>
       </div>
 
       <div class="row">
@@ -460,7 +468,7 @@ the template mode=product-store-search can be overridden. -->
     </div>
     
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
-    <div class="addthis_toolbox  addthis_32x32_style">
+    <div class="addthis_toolbox  addthis_20x20_style">
       <div id="shareLinkDropdown" style="z-index: 99999; right: 15px; margin-top: 25px;">
         <a class="addthis_button_facebook"></a>
         <a class="addthis_button_twitter"></a>
@@ -519,7 +527,7 @@ the template mode=product-store-search can be overridden. -->
               @if(Webpal::language() == 'fr')
               Taille
               @elseif(Webpal::language() == 'en')
-              Size
+              Volume/Size
               @endif
             </th>
           </xsl:if>
