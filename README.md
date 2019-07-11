@@ -48,7 +48,7 @@ The shopping cart allows for adding of any product item to a centralized shoppin
 ####  
 
 #### ![data?command=webpalimage.download&web_na](__resources/pastGSx2Vey8GXUe.png)  
- Note: only positive integers are allowed for quantities.
+Note: only positive integers are allowed for quantities.
 
 By default, the store cart can be accessed at:
 

@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension id="extej_zuUskF9ytv" name="product-store" webpalschematype="wpExtension">
+  <stylesheet id="stylHSIHDA7W9nTL" lang="any" name="exports" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[<!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
+Illegal reproduction and disclosure will be prosecuted  -->
+
+<xsl:stylesheet
+                version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:wp="http://www.palominosys.com/wp"
+                xmlns:php="http://php.net/xsl"
+                xmlns:date="http://exslt.org/dates-and-times"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl"
+                >
+
+  <xsl:strip-space elements="*"/>
+  
+  
+  <xsl:template name="product-store-export-csv">
+    <xsl:apply-templates select="/web/pages//product-store" mode="csv"/>
+  </xsl:template>
+  
+  <xsl:template name="product-store-export-xml">
+    <export>
+      <xsl:apply-templates select="/web/pages//product-store" mode="xml"/>
+    </export>
+  </xsl:template>
+  
+  <xsl:template match="product-store" mode="csv">
+    <xsl:text>product-name,title,category,item-name,features,description,brand,size,colour,sterility,thickness,packaging,UOM1,UOM2,specification,image
+</xsl:text>
+    <xsl:for-each select=".//item">
+      <xsl:text>"</xsl:text>
+      <xsl:value-of select="../../@name"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate(../../title, ',','')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="../../@category"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="@name"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate(../../features, ',', '')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="translate((description | ../../description)[1], ',', ' ')"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="(brand | ../../brand)[1]"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="size"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="colour"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="sterility"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="thickness"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="packaging"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="UOM1"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="UOM2"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="specification"/><xsl:text>","</xsl:text>
+      <xsl:value-of select="../../image/@name"/><xsl:text>"
+</xsl:text>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="product-store" mode="xml">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  
+</xsl:stylesheet>]]></stylesheet>
+  <views id="viewpK3KUtPe4eUd" webpalschematype="wpAppViewList">
+    <page-view id="pagePMmjUkvifLnm" index="same as parent" name="checkoutEmail" show-in-menu="yes" webpalschematype="wpAppPage">
+      <html-code id="wpRaDgQ3k9YitfVt" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<!-- <div class="row-cart"> -->
+<!--   @if (! $cart)
+  <div class="alert alert-danger hidden">
+    <h4>Error</h4>Sorry, there is something wrong with your Order. Please try again.
+  </div>
+  @else   -->
+  <div>    
+   <p>A representative will be in touch very soon. Feel free to print or save this page for your records</p>
+  </div>  
+  <div>
+    <h2>Customer Information:</h2>
+    <b>Company Name:</b> {{{$companyname}}}<br/>
+    <b>Customer ID:</b> {{{$companyid}}} <br/>
+    <b>Address:</b><br/>
+      {{{$shippingaddress1}}}<br/>
+      {{{$shippingtown}}}<br/>
+      {{{$shippingpostal}}}<br/>
+    <br/>
+    <b>Contact Name:</b> {{{$contactname}}} <br/>
+    <b>Email:</b> {{{$contactemail}}} <br/>
+    <b>Phone:</b> {{{$contactphone}}} <br/>
+    <b>Fax:</b> {{{$companyfax}}} <br/>
+  </div>
+  <div>
+    <br/>
+    <h2>Order Information:</h2>
+
+    @if ($cart-:cartItems)
+    Items in order: [[ $cart-:itemcount() ]]
+    <p>Request Code: {{{substr(sha1($cart->id), 0, 6)}}}</p>
+      <table style="width:540px;border: solid 1px #000;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="border: solid 1px #000;">Code</th>
+            <th style="border: solid 1px #000;">Product</th>
+            <th style="border: solid 1px #000;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:skucode}}}</td>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:productname}}}</td>
+            <td style="border: solid 1px #000; text-align:right; padding: 3px;">{{{$item-:quantity}}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table> 
+    <br/>
+    @else
+    <div class="alert alert-info">
+      No items in order.
+    </div>
+    @endif
+  </div>
+
+<!--   @endif -->
+<!-- </div> -->
+<!--]]></html-code>
+      <shorttitle id="shornUDOUoF27Xyt" lang="any" show-in-title="yes" webpalschematype="wpShorttitle"/>
+    </page-view>
+    <page-view design="basic" id="chapRiDClethLRTk" index="same as parent" name="checkoutComplete" show-in-menu="yes" webpalschematype="wpAppPage">
+      <html-code id="wpRa6DMy2pMfuQXL" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="row row-cart">
+  <div class="col-md-12">
+    @if (! $cart)
+    <div class="alert alert-danger hidden">
+      <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+    </div>
+    @else
+    <div>
+      <h1>Thank you!</h1>
+      <p>
+        A representative will be in touch very soon. Feel free to print this page for your records.
+      </p>
+      <div class="alert alert-dismissable alert-info hidden">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+        <h4>Sorry</h4>[[[ $message ]]]
+      </div>
+
+      @if ($cart-:cartItems)
+      <table class="table table-bordered cart-items">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Product</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td>{{{$item-:skucode}}}</td>
+            <td>{{{$item-:productname}}}</td>
+            <td>{{{$item-:quantity}}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+      @else
+      <div class="alert alert-info">
+        No items in cart.
+      </div>
+      @endif
+
+    </div>
+    @endif
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="row row-checkoutform">
+      <form class="form-horizontal" role="form" action="/product-store/complete-checkout" method="POST">
+        <div class="col-md-12">
+          <h3>Customer Information</h3>
+          <div class="row form-group">
+            <label for="companyname" class="col-sm-4">Request Code:</label>
+            <div class="col-sm-8"><b>[[[ substr(sha1($cart->id), 0, 6) ]]]</b></div>
+          </div>
+          <div class="row form-group">
+            <label for="companyname" class="col-sm-4">Company:</label>
+            <div class="col-sm-8">{{$companyname}}</div>
+          </div>
+          <div class="row form-group">
+            <label for="shippingaddress1" class="col-sm-4">Address:</label>
+            <div class="col-sm-8">{{$shippingaddress1}}<br/>
+              {{$shippingtown}}<br/>
+              {{$shippingpostal}}<br/>
+            </div>
+          </div>
+          <div class="row form-group">
+            <label for="contactname" class="col-sm-4">Contact Name:</label>
+            <div class="col-sm-8">{{$contactname}}</div>
+          </div>
+          <div class="row form-group">
+            <label for="contactemail" class="col-sm-4">Email:</label>
+            <div class="col-sm-8">{{$contactemail}}</div>
+          </div>
+          <div class="row form-group">
+            <label for="contactphone" class="col-sm-4">Phone:</label>
+            <div class="col-sm-8">{{$contactphone}}</div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+    <div class="addthis_toolbox  addthis_32x32_style">
+      <div id="shareLinkDropdown" style="z-index: 99999; right: 15px; margin-top: 25px;">
+        <a class="addthis_button_print"></a>
+      </div>
+    </div>
+    
+  </div>
+</div>
+]]></html-code>
+      <shorttitle id="wpSti7xIHF4TxafB" lang="any" show-in-title="yes" webpalschematype="wpShorttitle">Cart</shorttitle>
+    </page-view>
+    <page-view design="standard" id="chapqXGkpBQiXh0K" index="same as parent" name="checkoutCart" show-in-menu="yes" webpalschematype="wpAppPage">
+      <html-code id="wpRakHOUpQv5O7VG" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[  <div class="row row-cart">
+    <div class="col-md-12">
+      @if (! $cart)
+      <div class="alert alert-danger hidden">
+        <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+      </div>
+      @else
+      <div>
+        <h1>
+          Request Quote
+        </h1>
+        <h3>Cart information</h3>
+        <div class="alert alert-dismissable alert-warning hidden">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+          <h4>Sorry</h4>[[[ $message ]]]
+        </div>
+
+        @if ($cart-:cartItems)
+        Items in cart: [[ $cart-:itemcount() ]]
+        <table class="table table-bordered cart-items">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Product</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($cart-:cartItems as $item)
+            <tr>
+              <td>{{{$item-:skucode}}}</td>
+              <td>{{{$item-:productname}}}</td>
+              <td>{{{$item-:quantity}}}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        <div class="pull-right">
+          <a href="/product-store/cart" class="btn btn-primary blue">Edit Cart</a>
+        </div>
+        @else
+        <div class="alert alert-info">
+          No items in cart.
+        </div>
+        @endif
+      </div>
+      
+      @endif
+    </div>
+  </div>
+  <div class="row row-checkoutform">
+    <div class="col-md-12">
+      <form class="" role="form" action="/product-store/complete-checkout" method="POST">
+        <h3>Customer Information</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="companyname" class="control-label">Company: *</label>
+              <div class="">{{ Form::text('companyname', Input::old('companyname'), array('id'=: 'companyname', 'class'=:"form-control")) }}
+                <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('companyname')}}</span></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="companyid" class="control-label">Customer ID:</label>
+              <div class="">{{ Form::text('companyid', Input::old('companyid'), array('id'=: 'companyid', 'class'=:"form-control")) }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="shippingaddress1" class="control-label">Street Address: *</label>
+              <div class="">{{ Form::text('shippingaddress1', Input::old('shippingaddress1'), array('id'=: 'shippingaddress1', 'class'=:"form-control")) }}
+                <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('shippingaddress1')}}</span></div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="shippingpostal" class="control-label">Postal Code: *</label>
+              <div class="">{{ Form::text('shippingpostal', Input::old('shippingpostal'), array('id'=: 'shippingpostal', 'class'=:"form-control")) }}
+                <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('shippingpostal')}}</span></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="shippingtown" class="control-label">City: *</label>
+              <div class="">{{ Form::text('shippingtown', Input::old('shippingtown'), array('id'=: 'shippingtown', 'class'=:"form-control")) }}
+                <span id="shippingtown-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('shippingtown')}}</span></div>
+            </div>
+          </div>
+        </div>        
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="contactname" class="control-label">Contact Name: *</label>
+              <div class="">{{ Form::text('contactname', Input::old('contactname'), array('id'=: 'contactname', 'class'=:"form-control")) }}
+                <span id="contactname-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactname')}}</span></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="contactemail" class="control-label">Email: *</label>
+              <div class="">{{ Form::text('contactemail', Input::old('contactemail'), array('id'=: 'contactemail', 'class'=:"form-control")) }}
+                <span id="contactemail-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactemail')}}</span></div>
+            </div>
+          </div>
+        </div>        
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+          <label for="contactphone" class="control-label">Phone: *</label>
+          <div class="">{{ Form::text('contactphone', Input::old('contactphone'), array('id'=: 'contactphone', 'class'=:"form-control")) }}
+           <span id="contactphone-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactphone')}}</span></div>
+        </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+          <label for="companyfax" class="control-label">Fax:</label>
+          <div class="">{{ Form::text('companyfax', Input::old('companyfax'), array('id'=: 'companyfax', 'class'=:"form-control")) }}</div>
+        </div>
+          </div>
+        </div>
+
+        <button type="submit" class="pull-right btn btn-lg green">Request Quote</button>
+      </form>
+    </div>
+<!--     <div class="col-md-4"></div> -->
+  </div>
+]]></html-code>
+      <shorttitle id="wpStUvaeIgJHCoLC" lang="any" show-in-title="yes" webpalschematype="wpShorttitle">Cart</shorttitle>
+    </page-view>
+    <page-view design="standard-template" id="pageTC8KEWaYZTaA" index="same as parent" name="showCart" show-in-menu="yes" webpalschematype="wpAppPage">
+      <html-code id="htmlZ14WYivlx2Rj" lang="any" name="main" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<div class="row-cart">
+  @if (! $cart)
+  <div class="alert alert-danger hidden">
+    <h4>Error</h4>Sorry, there is something wrong with your cart. Please try again.
+  </div>
+  @else
+  <div>
+    <h1>My Cart</h1>
+    <div class="alert alert-dismissable alert-warning hidden">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> × </button>
+      <h4>Sorry</h4>[[[ $message ]]]
+    </div>
+
+    @if ($cart-:cartItems-:count() GT 0)
+    Items in cart: [[ $cart-:itemcount() ]]
+    <form action="/product-store/checkout-cart" id="formUpdate" method="POST">
+      <table class="table table-bordered cart-items">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="cart-actions">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $item)
+          <tr>
+            <td>{{{$item-:skucode}}}</td>
+            <td>{{{$item-:productname}}}</td>
+            <td style="text-align:right;">
+              <input style="text-align:right;"
+                     id="qty_[[$item-:id]]" 
+                     name="qty_[[$item-:id]]" 
+                     class="form-control"
+                     value="[[$item-:quantity]]"
+                     onchange="update()"/>
+            </td>
+            <td><a href="/product-store/remove-from-cart/[[$item-:id]]">remove</a></td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>          
+      <div class="pull-left">
+        <a href="/product-store/clear-cart" class="btn btn-danger">Clear Cart</a>
+      </div>
+      <div class="pull-right">  
+        <a href="/products" class="btn green">Add More</a>
+        <input type="submit" class="btn btn-primary blue" id="updateButton" value="CHECKOUT"/>
+      </div>
+    </form>
+    @else
+    <div class="alert alert-info">
+      No items in cart.
+    </div>
+    <div class="pull-right">  
+      <a href="/products" class="btn green">Add Items</a>
+    </div>
+    @endif
+  </div>
+
+  @endif
+</div>
+]]></html-code>
+      <shorttitle id="shorcfCXk1H94eJX" lang="any" show-in-title="yes" webpalschematype="wpShorttitle">Cart</shorttitle>
+    </page-view>
+  </views>
+  <resources folder-type="any" id="resoZtrc9cZ5UF6A" name="resources" webpalschematype="wpAppResources"/>
+  <README id="READ8BU5ooMW4BEt" lang="any" webpalschematype="wpHtml">
+    <h1>Product Store</h1>
+    <p>This extension defines a product-store node which can be used to manage unlimited projects, using nested categories. A check-out and search function is available.</p>
+    <h3>Features</h3>
+    <ul>
+      <li>unlimited nested product categories</li>
+      <li>single list of products, manageable like a spreadsheet</li>
+      <li>each product contains
+	<ul><li>title, description, features</li><li>images</li><li>list of SKUs</li></ul></li>
+      <li>displaying products and categories<ch value="nbsp"/>using by-id routes</li>
+      <li>friendly URLs</li>
+      <li>customizable product search</li>
+      <li>add-to-cart functionality</li>
+    </ul>
+    <h3>Friendly URLs</h3>
+    <p>Products can be accessed via</p>
+    <ul>
+      <li>
+        <span style="font-family:courier new,courier,monospace">/product/{product-id}</span>
+      </li>
+      <li>
+        <span style="font-family:courier new,courier,monospace">/category/{category-id}</span>
+      </li>
+    </ul>
+    <h3>Search Function</h3>
+    <p>the following routes are defined, which provide a simple, yet very customizable search capability:</p>
+    <p style="margin-left:40px;">
+      <span style="font-family:courier new,courier,monospace">GET|POST <ch value="nbsp"/><ch value="nbsp"/><ch value="nbsp"/>/product-store/search</span>
+    </p>
+    <p>This route calls the template<ch value="nbsp"/><strong>product-store-search</strong>, which<ch value="nbsp"/>expects the search query to be set in input variable <strong>$q</strong></p>
+    <p>Currently, the template implements a simple, case-insensitive search, matching any substring in the product title, however this template can easily be overridden by defining a template as such:</p>
+    <p>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="231201822114019868" src="231201822114019868"/>
+    </p>
+    <p>
+      <ch value="nbsp"/>
+    </p>
+    <p>
+      <strong>Default Search Template</strong>
+    </p>
+    <p>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="135780599778665306" src="135780599778665306"/>
+    </p>
+    <h3>Shopping Cart Function</h3>
+    <p>The shopping cart allows for adding of any product item to a centralized shopping cart that is displayed to the user after adding an item. Item quantities can be updated in bulk, with invalid entries handled gracefully.<ch value="nbsp"/></p>
+    <h4>Sample Layout</h4>
+    <h4>
+      <ch value="nbsp"/>
+    </h4>
+    <h4><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="168646928218726001" src="168646928218726001"/><br/>
+Note: only positive integers are allowed for quantities.</h4>
+    <p>By default, the store cart can be accessed at:</p>
+    <ul>
+      <li>
+        <strong>
+          <span style="font-family:courier new,courier,monospace">/product-store/cart</span>
+        </strong>
+      </li>
+    </ul>
+    <p>
+      <font face="times new roman, times, serif">The total item count can be rendered within any layout by calling the template<ch value="nbsp"/><strong>product-store-itemcount</strong></font>
+    </p>
+    <p>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="810705652877757797" src="810705652877757797"/>
+    </p>
+    <p>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="178956415017794806" src="178956415017794806"/>
+    </p>
+    <h4>
+      <strong>All defined shopping cart routes</strong>
+    </h4>
+    <h4>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="537899602164516463" src="537899602164516463"/>
+    </h4>
+    <p>
+      <ch value="nbsp"/>
+    </p>
+  </README>
+  <routes column-widths="67,60,246,396,149,516,103" id="routRUfhGMSlKi7Q" webpalschematype="wpAppRouteList">
+    <route controller="\WebpalCore\Controllers\Core@render" filter="" id="routeIGgYkfp4ABM" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store/categories/category[@id='${id}']&quot;}" pattern="/category/{id}" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\WebpalCore\Controllers\Core@render" filter="" id="routeBHrja7qLjtp" name="" parameters="{&quot;xpath&quot;:&quot;/web/pages//product-store/products/product[@id='${id}']&quot;}" pattern="/product/{id}" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@search" id="routYj6EEnsRyfKi" pattern="/product-store/search" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@search" filter="" id="routU4xuWWSnnDDr" name="" parameters="" pattern="/product-store/search" verb="post" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@showCart" id="routHYVoXjxhKmtU" pattern="/product-store/cart" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@addToCart" id="routiCXwfcvcIJTF" pattern="/product-store/add-to-cart" verb="post" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@clearCart" id="routAi_pxZe0K5fo" pattern="/product-store/clear-cart" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@removeItem" id="routykPp7UmZBBff" pattern="/product-store/remove-from-cart/{id}" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@checkout" id="rout2DBJOJdAnt1X" pattern="/product-store/checkout-cart" verb="post" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@checkout" id="rout8mFcG0TpvZtV" pattern="/product-store/checkout-cart" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@completeCheckout" id="routXfl4qC8Gqom4" name="completeCheckout" pattern="/product-store/complete-checkout" verb="post" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@checkoutSucceed" id="rout_UPIaFV2fRvJ" name="checkoutSucceed" pattern="/product-store/complete-checkout" verb="get" webpalschematype="wpAppRoute"/>
+    <route id="rout1ynJDWJ5KvYE" pattern="/product-store/add-refresh" verb="get" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@updateCart" id="routVnBy_szulLO1" pattern="/product-store/update-cart" verb="post" webpalschematype="wpAppRoute"/>
+    <route controller="\ProductStore\Controllers\DataController@exportAll" id="routO6RypJ3U5eHQ" parameters="" pattern="/product-store/export-all.csv" verb="get" webpalschematype="wpAppRoute"/>
+  </routes>
+  <controllers folder-type="php" id="contm7KUhWVfEFhn" name="controllers" webpalschematype="wpAppControllerFolder"/>
+  <node-schema id="nodeRaRzGPZV_khA" lang="any" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<schema xmlns="http://www.palominosys.com/wpschema">
+  
+  <complexType extends="wpPage" name="wpPage-wpProductStore">
+    <element name="product-store" type="wpProductStore" folder="list"/>
+  </complexType>
+  
+  <complexType extends="wpWebsettings" name="wpSettings-wpProductStore">
+    <element name="product-store" type="wpProductStoreSettings" minOccurs="1"/>
+  </complexType>
+  
+  <complexType name="wpProductStoreSettings" icon="wrench.png" edittype="attributes">
+    <attribute name="checkout-button-title" use="required" type="wpString" value="Check Out" /> 
+    <attribute name="clearcart-button-title" use="required" type="wpString" value="Clear Cart" /> 
+  </complexType>
+
+  <complexType name="wpProductStore" edittype="sheet" icon="basket.png" lockable="yes" hideChildren="no">
+    <attribute name="id" use="auto" type="wpString" value="wpProductStore" />
+    <attribute name="name" use="required" type="wpName" value=""/>
+    <attribute name="lang" use="oneof" type="wpName" value="any,en,fr"/>
+    <attribute name="shopping-cart" use="oneof" type="wpName" value="enabled,disabled"/>
+    <element name="categories" type="wpProductCategoryList" maxOccurs="1"/>
+    <element name="products" type="wpProductList" minOccurs="1" maxOccurs="1" />
+  </complexType>
+
+  <complexType name="wpProductCategoryList" edittype="table" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductCategoryList" />   
+    <element name="category" type="wpProductCategory"/>
+  </complexType>
+
+  <complexType name="wpProductCategory" edittype="sheet" icon="input.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductCategory" />
+    <attribute name="name" use="required" type="wpString" value=""/>
+    <attribute name="parent" use="optional" type="wpString" value=""/>
+    <element name="title" type="wpStringL" />
+    <element name="description" type="wpHtml" />
+    <element name="image" type="wpImage" />
+  </complexType>
+
+  <complexType name="wpProductList" edittype="table" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductList" />   
+    <element name="product" type="wpProduct"/>
+  </complexType>
+
+  <complexType name="wpProduct" edittype="sheet" icon="input.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProduct" />
+    <attribute name="name" use="required" type="wpString" value=""/>
+    <attribute name="featured" use="oneof" type="wpString" value="no,yes"/>
+    <attribute name="category" use="optional" type="wpString" value=""/>
+    <element name="title" type="wpStringL" />
+    <element name="brand" type="wpStringL"  />
+<!--     <element name="description" type="wpHtml"  /> -->
+    <element name="features" type="wpHtml"  />
+<!--     <element name="title" type="wpStringL" minOccurs="1" />
+    <element name="brand" type="wpStringL" minOccurs="1" />
+    <element name="description" type="wpHtml" minOccurs="1" />
+    <element name="features" type="wpHtml" minOccurs="1" /> -->
+    <element name="image" type="wpImage" />
+    <element name="file" type="wpFile" />
+<!--     <element name="files" type="wpFileList" /> -->
+    <element name="items" type="wpProductItemsList" />
+  </complexType>
+  
+<!--   <complexType name="wpFileList" edittype="sheet" icon="attach.png" lockable="yes">
+  </complexType> -->
+
+  <complexType name="wpProductFile" edittype="sheet" icon="attach.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductFile" />   
+    <element name="fileName" type="wpStringL"/>
+    <element name="file" type="wpFile" />
+  </complexType>
+
+  <complexType name="wpProductItemsList" edittype="table" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductItemsList" />   
+    <element name="item" type="wpProductItem"/>
+  </complexType>
+
+  <complexType name="wpProductItem" edittype="sheet" icon="table.png" lockable="yes">
+    <attribute name="id" use="auto" type="wpString" value="wpProductItems"/>
+    <attribute name="name" use="required" type="wpName" value=""/>
+<!--     <element name="description" type="wpStringL" minOccurs="1" /> -->
+    <element name="description" type="wpStringL"/>
+
+    <attribute name="discontinued" use="oneof" type="wpString" value="no,yes"/>
+    <element name="size" type="wpStringL"/>
+    <element name="colour" type="wpStringL" />
+  </complexType>
+  
+
+
+</schema>]]></node-schema>
+  <db-schema id="db-s3XisjLWstoyU" webpalschematype="wpAppSchema">
+    <object id="tbleXurnEfWHVXRy" name="productstorecart" webpalschematype="wpAppSchemaObject">
+      <fields column-widths="120,182,168,50,50,50,93,115" id="tbleBOcFrSSUcB7s" webpalschematype="wpAppSchemaFields">
+        <field id="coljEI7W1QFOVdB" index="primary" name="id" type="INT(11)" webpalschematype="wpAppSchemaField"/>
+        <field id="colo2HATnKLyGry" index="" name="created_at" type="TIMESTAMP" webpalschematype="wpAppSchemaField"/>
+        <field id="colTWGHwvUS7Ltt" index="" name="updated_at" type="TIMESTAMP" webpalschematype="wpAppSchemaField"/>
+        <field id="colYO6YTQeEEiUp" index="" name="session_id" type="INT(11)" webpalschematype="wpAppSchemaField"/>
+        <field id="colQxrA88cueUYm" index="" name="checkedout_at" type="TIMESTAMP" webpalschematype="wpAppSchemaField"/>
+        <field id="colq3BLE8wUH9gj" index="" name="companyname" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielGxyi2F1PovY0" index="" name="companyid" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colhzq_6iaQtGtI" index="" name="billingaddress1" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colp_TNmBRwQufu" index="" name="billingaddress2" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colhJ5TCPKJ5kvd" index="" name="billingtown" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colq4fTMXLnUxQ6" index="" name="billingpostal" type="VARCHAR(16)" webpalschematype="wpAppSchemaField"/>
+        <field id="colvEcffmLzYgP6" index="" name="billingprovince" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielhVeVQvqLHwBd" index="" name="contactname" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielhplznk5_PDHs" index="" name="contactphone" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielcmIlFIg8Mx_m" index="" name="contactemail" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel5t6npMG2s4YT" index="" name="companyfax" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielO5C6KdFdeEU5" index="" name="shippingaddress1" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielveEErKTsUs5T" index="" name="shippingaddress2" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielQyd4YKn121ny" index="" name="shippingtown" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel0E3p7ABUUpoQ" index="" name="shippingpostal" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielBKiGMzHtDq6L" index="" name="shippingprovince" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel3GyU3ySJwQuR" index="" name="shippingcountry" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel_Day5gf8gsCA" index="" name="ipaddress" type="VARCHAR(32)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielnPfWrSCfDceo" index="" name="sessionduration" type="INT(11)" webpalschematype="wpAppSchemaField"/>
+        <field id="fielHMJGK4KU5y1j" index="" name="test" type="BOOL" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel4k0aLNQZIF4r" index="" name="emailsubmitted" type="BOOL" webpalschematype="wpAppSchemaField"/>
+      </fields>
+    </object>
+    <object id="tble43Syd0OSqpQ3" name="productstorecartitem" webpalschematype="wpAppSchemaObject">
+      <fields column-widths="120,182,168,50,50,50,93,50" id="tblem86OU9fUmiw2" webpalschematype="wpAppSchemaFields">
+        <field id="colYaAjNqYujEuF" index="primary" name="id" type="INT(11)" webpalschematype="wpAppSchemaField"/>
+        <field id="col9KG4F55ndUu3" index="yes" name="productstorecart_id" type="INT(11)" webpalschematype="wpAppSchemaField"/>
+        <field id="colufvRRqfhG0tP" index="" name="skucode" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colLuvuHUunxvPN" index="" name="skuname" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colkJAKC0phhAwW" index="" name="productcode" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colGk7d78JoB8Iw" index="" name="productname" type="VARCHAR(256)" webpalschematype="wpAppSchemaField"/>
+        <field id="colzzpK4WZpNCVC" index="" name="producturl" type="VARCHAR(1024)" webpalschematype="wpAppSchemaField"/>
+        <field id="colt4rU2Pj7Q7ac" index="" name="quantity" type="MEDIUMINT" webpalschematype="wpAppSchemaField"/>
+        <field id="fiel0D_YU2E5irNC" index="" name="created_at" type="TIMESTAMP" webpalschematype="wpAppSchemaField"/>
+        <field id="fielS6UBf8GnrIE4" index="" name="updated_at" type="TIMESTAMP" webpalschematype="wpAppSchemaField"/>
+      </fields>
+    </object>
+  </db-schema>
+  <models folder-type="php" id="modeKNJQHwDUOTtS" name="models" webpalschematype="wpAppModelFolder"/>
+  <stylesheet id="stylAWUOOHXTtHjA" lang="any" name="transform" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[  <!-- (c) 2001-present All Copyrights Palomino System Innovations Inc.
+Illegal reproduction and disclosure will be prosecuted  -->
+
+<xsl:stylesheet
+                version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:wp="http://www.palominosys.com/wp"
+                xmlns:php="http://php.net/xsl"
+                xmlns:date="http://exslt.org/dates-and-times"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl"
+                >
+
+  <xsl:strip-space elements="*"/>
+
+  <xsl:template name="product-store-itemcount">
+    <xsl:text>{{ Session::get('cart_itemcount')?Session::get('cart_itemcount'):0 }}</xsl:text>
+  </xsl:template>
+
+  <!-- ===================== SEARCH ================== -->
+  <!-- search query expected in $q.
+the search is performed in EITHER:
+- the product-store containing current node, OR:
+- the first product-store found in the web content
+the template mode=product-store-search can be overridden. -->
+
+  <xsl:template name="product-store-search">
+    <xsl:apply-templates select="(ancestor-or-self::product-store | /web/pages//product-store)[1]"
+                         mode="product-store-search"/>
+  </xsl:template>
+
+  <xsl:template match="product-store" mode="product-store-search" priority="0.1">
+    <h1>Results for "<xsl:value-of select="$q"/>" in store <xsl:value-of select="@name"/></h1>
+    <xsl:choose>
+      <xsl:when test="contains($q, ' ')">
+        <xsl:variable name="q1" select="substring-before($q, ' ')"/>
+        <xsl:variable name="q2" select="substring-after($q, ' ')"/>
+        <xsl:for-each select="./products/product
+                              [contains(
+                              translate(concat(title, description),
+                              'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                              'abcdefghijklmnopqrstuvwxyz'),
+                              $q1
+                              )]
+                              [contains(
+                              translate(concat(title, description),
+                              'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                              'abcdefghijklmnopqrstuvwxyz'),
+                              $q2
+                              )]
+                              ">
+          <xsl:apply-templates select="." mode="product-store-search-result"/>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="./products/product
+                              [contains(
+                              translate(concat(title, description),
+                              'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                              'abcdefghijklmnopqrstuvwxyz'),
+                              $q
+                              )]">
+          <xsl:apply-templates select="." mode="product-store-search-result"/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="product" mode="product-store-search-result" priority="0.1">
+    <div class="product-store-search-result">
+      <h4><a href="/by-id/{@id}"><xsl:value-of select="title"/></a></h4>
+      <div>
+        <xsl:apply-templates select="description"/>
+      </div>
+    </div>
+  </xsl:template>
+
+  <!-- category tree -->
+  <xsl:template match="product-store">
+    <xsl:param name="current-path"/>
+    <div class="ul row product-store">
+      <xsl:apply-templates select="categories/category[not(@parent)]
+                                   | categories/category[@parent='']"
+                           mode="list"/>
+    </div>
+
+  </xsl:template>
+
+  
+  
+  <!--  Home page layout  -->
+  <xsl:template match="product-store/categories/category" mode="homepage">
+
+
+    <xsl:variable name="cat-image-src">
+      <xsl:choose>
+        <xsl:when test="image/@src">
+          <xsl:value-of select="image/@src"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <a href="/category/{@id}">
+      <div class="product">
+        <div class="productContainer">
+          <div class="productInner" style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450);"></div>
+          <div class="productCat">
+            <xsl:value-of select="title"/>
+          </div>
+        </div>
+      </div>
+
+    </a>
+  </xsl:template>
+
+
+
+
+  <!--  Side navigation  -->
+  <xsl:template match="product-store/categories/category" mode="navigation">
+    <xsl:variable name="my-name" select="@name"/>
+    <xsl:variable name="class-dropdown">
+      <xsl:choose>
+        <xsl:when test="../category[./@parent = $my-name] | ../../products/product[@category = $my-name]">dropdown</xsl:when>
+        <xsl:otherwise>single</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <li class="dropdown">
+      <a href="/category/{@id}"><xsl:value-of select="title"/></a>
+      <ul class="dropdown-menu subnav sm-nowrap">
+<!--         <xsl:variable name="my-name" select="@name"/> -->
+        <xsl:if test="../category[./@parent = $my-name]">
+          <xsl:apply-templates select="../category[./@parent = $my-name]" mode="navigation"/>
+          <xsl:variable name="name" select="@name"/>
+        </xsl:if>
+        <xsl:for-each select="../../products/product[@category = $my-name]">
+          <li>
+            <a href="/product/{@id}">
+              <xsl:value-of select="title"/>
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+
+    </li>
+  </xsl:template>
+
+
+
+  <!--  Product listing on a page  -->
+  <xsl:template match="product-store/categories/category" mode="list">
+    <xsl:variable name="my-name" select="@name"/>
+    <!--     <xsl:param name="path"/> -->
+
+    <xsl:variable name="cat-image-src">
+      <xsl:choose>
+        <xsl:when test="image/@src">
+          <xsl:value-of select="image/@src"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+    <xsl:choose>
+      <xsl:when test="$cat-image-src = ''">
+        <div class="empty_image">
+        </div>
+      </xsl:when>
+      <xsl:otherwise>
+        <div class="li col-lg-3 col-md-4 col-sm-6 cat_image" style="display: none;">
+          <a href="/category/{@id}">
+            <div class="product">
+              <div class="productContainer">
+                <div class="productImage"  style="background-image: url(/resource/dm/{$cat-image-src}/resize=x450) !important;"></div>
+                <div class="listItems">
+                  <div class="title">
+                    <xsl:value-of select="title"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </xsl:otherwise>
+    </xsl:choose>
+
+    <xsl:apply-templates select="." mode="no-image"/>
+    
+  </xsl:template>
+  
+  
+  <xsl:template match="product-store/categories/category" mode="no-image">
+    <xsl:variable name="my-name" select="@name"/>
+    <div class="title_only" style="display: none;">
+      <a href="/category/{@id}">
+        <div class="listItems">
+          <div class="title">
+            <h4>
+              <xsl:value-of select="title"/>
+            </h4>
+          </div>
+        </div>
+      </a>
+    </div>
+  </xsl:template>
+  
+<!--   <xsl:template name="cat-product-image"> -->
+  <xsl:template match="product-store/categories/category" mode="check-image">
+    <xsl:variable name="my-name" select="@name"/>
+    
+    <!-- 1. if has image for this category 2 if no subcategories check images for products 2. if has subcategories check subcategories -->
+    <xsl:choose>
+      <xsl:when test="image/@src">
+<!--         <xsl:value-of select="true()"/> -->
+        <xsl:apply-templates select="." mode="list"/>
+        <xsl:apply-templates select="." mode="no-image"/>
+      </xsl:when>
+      <xsl:when test="not(../category[@parent = $my-name])">
+        <xsl:choose>
+          <xsl:when test="not(../../products/product[@category = $my-name][image])">
+<!--             <xsl:value-of select="false()"/> -->
+            <xsl:apply-templates select="." mode="list"/>
+            <xsl:apply-templates select="." mode="no-image"/>
+          </xsl:when>
+          <xsl:otherwise>
+<!--             <xsl:value-of select="true()"/> -->
+            <xsl:apply-templates select="." mode="no-image"/>
+            <xsl:apply-templates select="." mode="list"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="../category[@parent = $my-name]">
+<!--           <xsl:call-template name="cat-product-image"/> -->
+          <xsl:apply-templates select="../category[./@parent = $my-name]" mode="check-image"/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  
+
+  <!-- category page -->
+  <xsl:template match="product-store/categories/category">
+    <xsl:variable name="my-name" select="@name"/>
+    <xsl:apply-templates select="title"/>
+    <xsl:apply-templates select="description"/>
+    
+    <div class="ul sub-cat nav row product-store">
+      <xsl:if test="../category[./@parent = $my-name]">
+        <!--         <xsl:apply-templates select="../category[./@parent = $my-name]" mode="check-image"/> -->
+
+        <xsl:apply-templates select="../category[./@parent = $my-name]" mode="list"/>
+      </xsl:if>
+      <xsl:if test="../../products/product[@category = $my-name]">
+        <xsl:for-each select="../../products/product[@category = $my-name]">
+          <xsl:variable name="productImage">
+            <xsl:choose>
+              <xsl:when test="image/@src">
+                <xsl:value-of select="image/@src"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="cat-get-product-image"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
+          <xsl:choose>
+            <xsl:when test="$productImage = ''">
+              <div class="empty_image">
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <div class="li col-lg-3 col-md-4 col-sm-6 cat_image"  style="display: none;">
+
+                <a href="/product/{@id}">
+                  <div class="product">
+                    <div class="productContainer" >
+                      <div class="productImage" style="background-image: url(/resource/dm/{$productImage}/resize=x450);"></div>
+                      <div class="listItems">
+                        <div class="title">
+                          <xsl:value-of select="title"/>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </xsl:otherwise>
+          </xsl:choose>
+
+            <div class="title_only" style="display: none;">
+              <a href="/product/{@id}">
+                <div class="listItems">
+                  <div class="title">
+                    <h4>
+                      <xsl:value-of select="title"/>
+                    </h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </xsl:for-each>
+        </xsl:if>
+      </div>
+    
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+    <div class="addthis_toolbox  addthis_20x20_style">
+      <div id="shareLinkDropdown" style="z-index: 99999; right: 15px; margin-top: 25px;">
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_linkedin"></a>
+        <a class="addthis_button_email"></a>
+        <a class="addthis_button_print"></a>
+        <a class="addthis_button_compact"></a>
+      </div>
+    </div>
+
+    
+    <script>
+      if ($(".empty_image")[0]){
+        $(".title_only").show();
+      } else {
+        $(".cat_image").show();
+      }
+    </script>
+  </xsl:template>
+
+  <xsl:template match="product-store/categories/category/title">
+    <h1><xsl:value-of select="."/></h1>
+  </xsl:template>
+
+
+  <xsl:template name="cat-get-product-image">
+    <xsl:variable name="my-name" select="@name"/>
+    <!-- for the current category, finds an appropriate image, in this order:
+1. first product in this category
+2. first product in a parent category
+3. first product in the whole store //commented out
+-->
+    <xsl:choose>
+      <xsl:when test="../../products/product[@category = $my-name][image]">
+        <xsl:value-of select="(../../products/product[@category = $my-name])[1]/image/@src"/>
+      </xsl:when>
+      <xsl:when test="../category[@parent = $my-name]">
+        <xsl:for-each select="../category[@parent = $my-name]">
+          <xsl:call-template name="cat-get-product-image"/>
+        </xsl:for-each>
+      </xsl:when>
+<!--       <xsl:otherwise> -->
+<!--         <img class="img-responsive" style="width: 100%;" src="/resource/ext/BndDesign/img/sampleProductImage.png" /> -->
+<!--         <xsl:apply-templates select="../../products/product[1]/image/@src"/> -->
+<!--       </xsl:otherwise> -->
+<!--       <xsl:otherwise>
+        <xsl:value-of select="1 = 0"/>
+      </xsl:otherwise> -->
+    </xsl:choose>
+  </xsl:template>
+
+
+
+
+  <!-- product page -->
+  <xsl:template match="product-store/products/product">
+    <script>
+      function clickAndDisable(link) {
+        // disable subsequent clicks
+        link.onclick = function(event) {
+          event.preventDefault();
+        }
+      }
+    </script>
+    
+
+    
+    <div class="product-store-product">
+      <xsl:apply-templates select="title"/>
+
+      <xsl:variable name="class-name-image">
+      <xsl:choose>
+        <xsl:when test="./image">col-lg-7 col-md-7 col-sm-8</xsl:when>
+        <xsl:otherwise>col-lg-12 col-md-12 col-sm-12</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+      
+      <div class="row">
+        <div class="{$class-name-image}">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <xsl:if test="description != '' ">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Description
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <xsl:apply-templates select="description"/>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+            <xsl:if test="features != ''">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      Features
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <xsl:apply-templates select="features"/>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+            <xsl:if test="./file/@name != ''">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                      Documents
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    <ul>
+                      <xsl:apply-templates select="file"/>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </xsl:if>
+
+          </div>
+        </div>
+        
+        <xsl:if test="./image">
+        <div class="col-lg-5 col-md-5 col-sm-4">
+          <div class="easyzoom easyzoom--overlay">
+            <xsl:apply-templates select="./image"/>
+          </div>
+        </div>
+          </xsl:if>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <xsl:apply-templates select="items"/>
+        </div>
+      </div>
+
+
+    </div>
+    
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+    <div class="addthis_toolbox  addthis_20x20_style">
+      <div id="shareLinkDropdown" style="z-index: 99999; right: 15px; margin-top: 25px;">
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_linkedin"></a>
+        <a class="addthis_button_email"></a>
+        <a class="addthis_button_print"></a>
+        <a class="addthis_button_compact"></a>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="product-store/products/product/file" >
+    <li>
+      <a href="/resource/dm/{./@src}" target="_blank"><xsl:value-of select="./@name"/></a>
+<!--       <a href="/resource/dm/{./file/@src}" target="_blank"><xsl:value-of select="./fileName"/></a> -->
+    </li>
+  </xsl:template>
+
+  <xsl:template match="product-store/products/product/title">
+    <h2><xsl:value-of select="."/></h2>
+  </xsl:template>
+
+
+  <xsl:template match="product-store/products/product/items">
+    
+    @if (Session::has('message'))
+   <p class= "bg-success">{{ Session::get('message') }}</p>
+    @endif
+    <h3>Items</h3>
+    <div class="table-responsive product-store-skus">
+      <table class="table table-bordered">
+        <tr>
+          <!--           <xsl:if test="item/@name != ''"> -->
+          <th>
+            @if(Webpal::language() == 'fr')
+            Item
+            @elseif(Webpal::language() == 'en')
+            Item
+            @endif
+          </th>
+          <!--           </xsl:if> -->
+          <!--           <xsl:if test="item/description != ''"> -->
+          <xsl:if test="item/description[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Description
+              @elseif(Webpal::language() == 'en')
+              Description
+              @endif
+            </th>
+          </xsl:if>
+          <!--           </xsl:if> -->
+          <xsl:if test="item/size[.!='']">
+            <th>
+              @if(Webpal::language() == 'fr')
+              Taille
+              @elseif(Webpal::language() == 'en')
+              Volume/Size
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/colour[.!='']">
+            <th>
+              @if(Webpal::language() == 'fr')
+              Couleur
+              @elseif(Webpal::language() == 'en')
+              Colour
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/sterility[.!='no']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Stérile
+              @elseif(Webpal::language() == 'en')
+              Sterile
+              @endif
+            </th>
+          </xsl:if>
+
+          
+          <xsl:if test="../brand[.!=''] or item/brand[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Marque
+              @elseif(Webpal::language() == 'en')
+              Brand
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/thickness[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Épaisseur
+              @elseif(Webpal::language() == 'en')
+              Thickness
+              @endif
+            </th>
+          </xsl:if>
+          
+          <xsl:if test="item/specification[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              
+              @elseif(Webpal::language() == 'en')
+              Specification
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/packaging[.!='']">
+
+            <th>
+              @if(Webpal::language() == 'fr')
+              Emballage
+              @elseif(Webpal::language() == 'en')
+              Packaging
+              @endif
+            </th>
+          </xsl:if>
+          <xsl:if test="item/UOM1[.!='']">
+            <th>UOM1</th>
+          </xsl:if>
+          <xsl:if test="item/UOM2[.!='']">
+            <th>UOM2</th>
+          </xsl:if>
+          <th></th>
+        </tr>
+        <xsl:apply-templates select="item[@discontinued != 'yes']"/>
+      </table>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="product-store/products/product/items/item">
+
+    <xsl:variable name="itemName">
+      <xsl:value-of select="@name"/>
+    </xsl:variable>
+
+    <tr>
+      <!--       <xsl:if test="@name != ''"> -->
+      <td><xsl:value-of select="@name"/></td>
+      <!--       </xsl:if> -->
+      <xsl:if test="../item/description[.!='']">
+        <td><xsl:value-of select="description"/></td>
+      </xsl:if>
+      <xsl:if test="../item/size[.!='']">
+        <td><xsl:value-of select="size"/></td>
+      </xsl:if>
+      <xsl:if test="../item/colour[.!='']">
+        <td><xsl:value-of select="colour"/></td>
+      </xsl:if>
+      <xsl:if test="../item/sterility[.!='no']">
+        <td>
+          <xsl:if test="sterility != 'no'">
+            <i class="fa fa-check" aria-hidden="true"></i>
+          </xsl:if>
+        </td>
+      </xsl:if>
+
+      
+      <xsl:choose>
+        <xsl:when test="../item/brand != ''">
+          <td><xsl:value-of select="brand"/></td>
+        </xsl:when>
+        <xsl:when test="../../brand !=''">
+          <td><xsl:value-of select="../../brand"/></td>
+        </xsl:when>
+      </xsl:choose>
+<!--       <xsl:if test="../../brand !=''">
+        <td><xsl:value-of select="../../brand"/></td>
+      </xsl:if> -->
+      <xsl:if test="../item/thickness[.!='']">
+        <td><xsl:value-of select="thickness"/></td>
+      </xsl:if>
+     
+      <xsl:if test="../item/specification[.!='']">
+        <td><xsl:value-of select="specification"/></td>
+      </xsl:if>
+       <xsl:if test="../item/packaging[.!='']">
+        <td><xsl:value-of select="packaging"/></td>
+      </xsl:if>
+      <xsl:if test="../item/UOM1[.!='']">
+        <td><xsl:value-of select="UOM1"/></td>
+      </xsl:if>
+      <xsl:if test="../item/UOM2[.!='']">
+        <td><xsl:value-of select="UOM2"/></td>
+      </xsl:if>
+      <td>
+        <form method="post" action="/product-store/add-to-cart">
+          <input type="hidden" name="skucode" value="{@name}"/>
+          <input type="hidden" name="skuname" value="{@name}"/>
+          <input type="hidden" name="skudescription" value="{description}"/>
+          <input type="hidden" name="productcode" value="{../../@name}"/>
+          <input type="hidden" name="productname" value="{../../title}"/>
+          <input type="hidden" name="quantity" value="1"/>
+          <input type="submit" class="btn btn-sm green" value="Add to cart"/> 
+        </form>
+      </td>
+    </tr>
+  </xsl:template>
+
+  <xsl:template match="product-store//*" priority="0.0">
+    <pre>
+    <xsl:copy-of select="." disable-output-escaping="yes"/>
+  </pre>
+  </xsl:template>
+
+  <xsl:template match="image">
+    <xsl:if test=". and @src !=''">
+      <a href="/resource/dm/{@src}/resize=x1000">
+        <img class="img-responsive" style="width: 100%;" src="/resource/dm/{@src}/resize=x750" />
+      </a>
+    </xsl:if>
+  </xsl:template>
+
+
+
+  <!-- breadcrumbs -->
+  <xsl:template match="product-store/products/product" mode="breadcrumbs">
+    <xsl:variable name="category" select="string(./@category)"/>
+    <xsl:apply-templates select="../../categories/category[./@name = $category][1]" mode="breadcrumbs"/>
+    <li class="active"><xsl:value-of select="./title[1]"/></li>
+  </xsl:template>
+
+  <xsl:template match="product-store/categories/category" mode="breadcrumbs">
+    <xsl:variable name="parent" select="./@parent"/>
+    <xsl:apply-templates select="../category[./@name = $parent][1]" mode="breadcrumbs"/>
+    <xsl:variable name="link">/category/<xsl:value-of select="./@id"/></xsl:variable>
+    <li><a href="{$link}"><xsl:value-of select="./title[1]"/></a></li>
+  </xsl:template>
+
+  <xsl:template name="productstore-cart-item-count"></xsl:template>
+
+
+</xsl:stylesheet>]]></stylesheet>
+  <resource-links column-widths="120,300,406" id="reso9Rwt2J2F4uG0" webpalschematype="wpAppResourceLinks">
+    <resource-link id="resorhOHu6w6cLBv" link="js/product-list.js" type="javascript" webpalschematype="wpAppResourceLink"/>
+    <resource-link id="resodEJCUzYU4Im2" link="css/product.css" type="css" webpalschematype="wpAppResourceLink"/>
+  </resource-links>
+</extension>
