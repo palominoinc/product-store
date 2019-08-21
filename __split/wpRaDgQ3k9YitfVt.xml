@@ -8,7 +8,126 @@
   <div>    
    <p>A representative will be in touch very soon. Feel free to print or save this page for your records</p>
   </div>  
+@if($is_logged_in)
+<div>
+    <h2>Customer Information:</h2>
+    <b>Company Name:</b> {{{$companyname}}}<br/>
+    <b>PO Number:</b> {{{$ponumber}}} <br/>
+    <b>Shipping Address:</b><br/>
+ 
+  @if(!empty($shipst1))
+  {{$shipst1}}<br/>
+  @endif
+  @if(!empty($shipst2))
+  {{$shipst2}}<br/>
+  @endif
+  @if(!empty($shipst3))
+  {{$shipst3}}<br/>
+  @endif
+  @if(!empty($shipcity))
+  {{$shipcity}}<br/>
+  @endif
+  @if(!empty($shipprov))
+  {{$shipprov}}<br/>
+  @endif
+  @if(!empty($shippstl))
+  {{$shippstl}}<br/>
+  @endif
+    <br/>
+    <b>Billing Address:</b><br/>
+  @if(!empty($billst1))
+  {{$billst1}}<br/>
+  @endif
+  @if(!empty($billst2))
+  {{$billst2}}<br/>
+  @endif
+  @if(!empty($billst3))
+  {{$billst3}}<br/>
+  @endif
+  @if(!empty($billcity))
+  {{$billcity}}<br/>
+  @endif
+  @if(!empty($billprovince))
+  {{$billprovince}}<br/>
+  @endif
+  @if(!empty($billpostal))
+  {{$billpostal}}<br/>
+  @endif
+    <br/>
+    <b>Contact Name:</b> {{{$contactname}}} <br/>
+    <b>Email:</b> {{{$contactemail}}} <br/>
+    <b>Phone:</b> {{{$contactphone}}} <br/>
   <div>
+    <b>Comments: </b> {{$comments}} <br/>
+  </div>
+  </div>
+  <div>
+    <br/>
+    
+    <h2>Order Information:</h2>
+
+    @if ($cart-:cartItems)
+    Items in order: [[ $cart-:itemcount() ]]
+    <p>Request Code: {{{substr(sha1($cart->id), 0, 6)}}}</p>
+      <table id="countit" style="width:540px;border: solid 1px #000;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="border: solid 1px #000;">Code</th>
+            <th style="border: solid 1px #000;">Product</th>
+            <th style="border: solid 1px #000;">Quantity</th>
+             @if($is_logged_in)
+            <!-- Place Holder when a Member is logged in -->
+            <th style="border: solid 1px #000;">Price</th>
+            @endif
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart-:cartItems as $key => $item)
+          <tr>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:skucode}}}</td>
+            <td style="border: solid 1px #000; padding: 3px;">{{{$item-:productname}}}</td>
+            <td style="border: solid 1px #000; text-align:right; padding: 3px;">{{{$item-:quantity}}}</td>
+             @if($is_logged_in)
+            <!-- Place Holder when a Member is logged in -->
+               <td class="price" id="prices" style="border: solid 1px #000; text-align:right; padding: 3px;">{{$productquantity[$key]}}</td>
+            @endif
+          </tr>
+          @endforeach
+        </tbody>
+         @if($is_logged_in)
+        <tfoot style="text-align: right;">
+          <tr class="text-offset">
+            <td colspan="3">Subtotal</td>
+            <td id="subtotal">${{$subtotal}}</td>
+          </tr>
+          <tr class="text-offset">
+            <td colspan="3">Tax Rate %</td>
+            <td id="taxrate">{{$tax}}</td>
+          </tr>
+          <tr class="text-offset">
+            <td colspan="3">Tax Amount</td>
+            <td id="tax">${{$taxAmount}}</td>
+          </tr>
+          <tr style="background: #f0f0f2; color: #030f5a; font-weight: bold;">
+            <td colspan="3">Total</td>
+            <td id="total">${{$total}}</td>
+          </tr>
+        </tfoot>
+        @endif
+      </table> 
+    @if($is_logged_in)
+     <span>*Total amount does not include products that must be quoted</span>
+    @endif
+    <br/>
+    @else
+    <div class="alert alert-info">
+      No items in order.
+    </div>
+    @endif
+  </div>
+
+@else
+<div>
     <h2>Customer Information:</h2>
     <b>Company Name:</b> {{{$companyname}}}<br/>
     <b>Customer ID:</b> {{{$companyid}}} <br/>
@@ -54,6 +173,7 @@
     </div>
     @endif
   </div>
+@endif
 
 <!--   @endif -->
 <!-- </div> -->

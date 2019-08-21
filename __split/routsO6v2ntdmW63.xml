@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\DataController@completeLogCheckout" id="routsO6v2ntdmW63" name="completeLogCheckout" pattern="/product-store/complete-logcheckout" verb="post" webpalschematype="wpAppRoute"/>

@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="\ProductStore\Controllers\CronController@importLists" id="routXFtKDTUwOFVm" pattern="/product-store/cron/import_lists/{token}" verb="get" webpalschematype="wpAppRoute"/>

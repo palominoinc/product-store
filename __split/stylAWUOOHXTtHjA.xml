@@ -599,8 +599,19 @@ the template mode=product-store-search can be overridden. -->
           <xsl:if test="item/UOM2[.!='']">
             <th>UOM2</th>
           </xsl:if>
+          
+          @if(WebpalLogin\Source\WebPalAPI\Connection::get()-:isLoggedIn())
+          <!-- Show price field if memeber is signed in -->
+          <th>Price/UOM1</th>
+          @endif
+          
           <th></th>
+          
         </tr>
+        
+        
+        
+        
         <xsl:apply-templates select="item[@discontinued != 'yes']"/>
       </table>
     </div>
@@ -661,6 +672,15 @@ the template mode=product-store-search can be overridden. -->
       <xsl:if test="../item/UOM2[.!='']">
         <td><xsl:value-of select="UOM2"/></td>
       </xsl:if>
+
+      @if(WebpalLogin\Source\WebPalAPI\Connection::get()-:isLoggedIn())
+      <!-- Show price field if memeber is signed in then take the value of the sku and pass it to getPrice() to get the price -->
+
+      [[--*/ $price= '<xsl:value-of select="@name"/>'  /*--]]
+
+      <td>{{ProductStore\Controllers\DataController::getPrice($price)}}</td> 
+      @endif
+      
       <td>
         <form method="post" action="/product-store/add-to-cart">
           <input type="hidden" name="skucode" value="{@name}"/>
@@ -668,7 +688,7 @@ the template mode=product-store-search can be overridden. -->
           <input type="hidden" name="skudescription" value="{description}"/>
           <input type="hidden" name="productcode" value="{../../@name}"/>
           <input type="hidden" name="productname" value="{../../title}"/>
-          <input type="hidden" name="quantity" value="1"/>
+          <input type="hidden" name="quantity" value="1"/>     
           <input type="submit" class="btn btn-sm green" value="Add to cart"/> 
         </form>
       </td>

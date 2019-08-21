@@ -21,11 +21,15 @@
             <th>Code</th>
             <th>Product</th>
             <th>Quantity</th>
+            @if($is_logged_in)
+            <!-- Place Holder when a Member is logged in -->
+            <th>Price</th>
+            @endif
             <th class="cart-actions">Action</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($cart-:cartItems as $item)
+          @foreach ($cart-:cartItems as $key => $item)
           <tr>
             <td>{{{$item-:skucode}}}</td>
             <td>{{{$item-:productname}}}</td>
@@ -37,6 +41,10 @@
                      value="[[$item-:quantity]]"
                      onchange="update()"/>
             </td>
+            @if($is_logged_in)
+            <!-- Place Holder when a Member is logged in -->
+            <td>{{$productquantity[$key]}}</td>
+            @endif
             <td><a href="/product-store/remove-from-cart/[[$item-:id]]">remove</a></td>
           </tr>
           @endforeach
@@ -62,4 +70,5 @@
 
   @endif
 </div>
+
 ]]></html-code>

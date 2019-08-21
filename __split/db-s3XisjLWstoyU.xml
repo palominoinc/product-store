@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
 <db-schema id="db-s3XisjLWstoyU" webpalschematype="wpAppSchema">
+  <object id="objem4vU1ZRzSnCp" __stub="yes"/>
+  <object id="objey5FU64mSNnd3" __stub="yes"/>
+  <object id="objecJmcVYYsdlAA" __stub="yes"/>
+  <object id="objewwuPkDOquNTq" __stub="yes"/>
+  <object id="objelEHDOZnCNIlv" __stub="yes"/>
+  <object id="obje8zQhH8M8Xn_K" __stub="yes"/>
+  <object id="objeNOjUnKVlIdQS" __stub="yes"/>
   <object id="tbleXurnEfWHVXRy" __stub="yes"/>
   <object id="tble43Syd0OSqpQ3" __stub="yes"/>
 </db-schema>
