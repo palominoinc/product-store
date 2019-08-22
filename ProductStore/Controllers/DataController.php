@@ -240,6 +240,7 @@ class DataController extends BaseController
     $data['billcity'] = $this->getBillingCity();
     $data['billprovince'] = $this->getBillingProvince();
     $data['billpostal'] = $this->getBillingPostal();
+    $data['custid'] = Auth::user()->getCustomerID();
    
       
     $subject = 'BND Order Confirmation #'.substr(sha1($cart->id), 0, 6);
@@ -247,7 +248,8 @@ class DataController extends BaseController
                {
       $message->to($email, $name)->subject($subject)
         ->from('donotreply@bndinc.com')
-        ->bcc('customerservice@bndinc.com');
+        // ->bcc('customerservice@bndinc.com');
+        ->bcc('ricky@palominosys.com');
     
     });
     if(count(Mail::failures()) > 0 ){       
@@ -289,7 +291,8 @@ class DataController extends BaseController
                    'shippingtown' =>'required',
                    'contactname' =>'required',
                    'contactphone' =>'required',
-                   'contactemail' => 'required|email');
+                   'contactemail' => 'required|email'
+                  );
     $messages = array(
       'companyname.required'=> 'The company name field is required',
       'shippingaddress1.required'=> 'The address field is required',
@@ -355,7 +358,8 @@ class DataController extends BaseController
                    // 'shippingtown' =>'required',
                    'contactname' =>'required',
                    'contactphone' =>'required',
-                   'contactemail' => 'required|email');
+                   'contactemail' => 'required|email'
+                );
     $messages = array(
       'companyname.required'=> 'The company name field is required',
       // 'shippingaddress1.required'=> 'The address field is required',
@@ -409,6 +413,8 @@ class DataController extends BaseController
       $data['billcity'] = $this->getBillingCity();
       $data['billprovince'] = $this->getBillingProvince();
       $data['billpostal'] = $this->getBillingPostal();
+      $data['custid'] = Auth::user()->getCustomerID();
+   
       $this->clearCartFinal();
       return View::make('ProductStore::checkoutComplete', $data);
     }

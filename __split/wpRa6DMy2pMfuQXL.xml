@@ -94,6 +94,10 @@
             <label for="companyname" class="col-sm-4">Company:</label>
             <div class="col-sm-8">{{$companyname}}</div>
           </div>
+           <div class="row form-group">
+            <label for="companyname" class="col-sm-4">Customer ID:</label>
+            <div class="col-sm-8">{{$custid}}</div>
+          </div>
           <div class="row form-group">
             <label for="companyname" class="col-sm-4">PO Number:</label>
             <div class="col-sm-8">{{$ponumber}}</div>

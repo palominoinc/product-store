@@ -136,7 +136,7 @@
         <hr/>
         <h3>Shipping Information</h3>
         <center>
-          <select name="shipid" id="shipid" class="js-example-basic-single" style="width: 500px;" onchange="PopulateShipping()">
+          <select name="shipid" id="shipid" class="js-example-basic-single" style="width: 500px;" onchange="PopulateShipping()" required>
             <option value="" default selected></option>
             @foreach($shippingadd as $key => $dw) 
             <option value="{{$locationid[$key]}}"> {{ $dw }} </option> 
@@ -149,6 +149,7 @@
             <div class="form-group">
               <label for="fullship" class="control-label">Shipping Address: </label>
               <div class="">{{ Form::textarea('fullship', Input::old('fullship'), array('id'=: 'fullship', 'class'=:"form-control", 'readonly', 'rows' => 7 )) }}
+                 <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('fullship')}}</span>
               </div>
             </div>
           </div>
@@ -156,7 +157,7 @@
 <hr/>
 <h3>Billing Information</h3>
 <center>
-  <select id="billid" class="js-example-basic-single" style="width: 500px;" onchange="PopulateBilling()">
+  <select id="billid" class="js-example-basic-single" style="width: 500px;" onchange="PopulateBilling()" required>
     <option></option> 
     <option>{{$billing}}</option> 
   </select>
@@ -165,8 +166,9 @@
     <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label for="shippingaddress1" class="control-label">Billing Address: </label>
+              <label for="billaddress" class="control-label">Billing Address: </label>
               <div class="">{{ Form::textarea('billaddress', Input::old('billaddress'), array('id'=: 'billaddress', 'class'=:"form-control", 'readonly', 'rows' => 7 )) }}
+                 <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('billaddress')}}</span>
               </div>
             </div>
           </div>

@@ -12,6 +12,7 @@
 <div>
     <h2>Customer Information:</h2>
     <b>Company Name:</b> {{{$companyname}}}<br/>
+    <b>Customer ID:</b> {{{$custid}}}<br/>
     <b>PO Number:</b> {{{$ponumber}}} <br/>
     <b>Shipping Address:</b><br/>
  
