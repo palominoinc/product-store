@@ -248,8 +248,7 @@ class DataController extends BaseController
                {
       $message->to($email, $name)->subject($subject)
         ->from('donotreply@bndinc.com')
-        // ->bcc('customerservice@bndinc.com');
-        ->bcc('ricky@palominosys.com');
+        ->bcc('customerservice@bndinc.com');
     
     });
     if(count(Mail::failures()) > 0 ){       
