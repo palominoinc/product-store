@@ -18,7 +18,7 @@
       <table class="table table-bordered cart-items">
         <thead>
           <tr>
-            <th>Code</th>
+            <th>Codes</th>
             <th>Product</th>
             <th>Quantity</th>
             @if($is_logged_in)
