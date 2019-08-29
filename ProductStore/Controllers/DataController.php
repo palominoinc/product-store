@@ -27,6 +27,7 @@ use \ProductStore\Models\ShipAddress;
 use \ProductStore\Models\BillingAddress;
 use \ProductStore\Models\CustomerTax;
 use \ProductStore\Models\TaxRate;
+use \ProductStore\Models\InvoiceEmail;
 use Log;
 use Bugsnag;
 use \WebpalLogin\Source\WebPalAPI\Connection; 
@@ -183,6 +184,7 @@ class DataController extends BaseController
       $data['billing'] = $this->getBillingAddress(); 
       $data['productprices'] = $this->productPrice($cart);
       $data['productquantity'] = $this->getPricexQty($cart);
+      $data['invoiceemails'] = $this->getInvoiceEmails(); 
     } 
     return View::make('ProductStore::checkoutCart', $data); 
     // return Redirect('/product-store/checkout-cart')->with($data);
@@ -216,8 +218,13 @@ class DataController extends BaseController
   */
     public function loggedInEmail() {
     $cart = $this->cart();
-    $data = Input::all();
-    $email = $data['contactemail'];
+    $data = Input::all();   
+    if(!empty($this->getInvoiceEmails()))
+    {
+      $email = $data['inemail'];
+     }else{
+      $email = $data['contactemail'];
+    }
     $name = $data['contactname'];
     $data['cart_id'] = $cart->id;
     $data['cart'] = $cart;
@@ -241,6 +248,7 @@ class DataController extends BaseController
     $data['billprovince'] = $this->getBillingProvince();
     $data['billpostal'] = $this->getBillingPostal();
     $data['custid'] = Auth::user()->getCustomerID();
+    $data['invoice'] = $this->getInvoiceEmails(); 
    
       
     $subject = 'BND Order Confirmation #'.substr(sha1($cart->id), 0, 6);
@@ -356,8 +364,7 @@ class DataController extends BaseController
                    // 'shippingpostal' =>'required',
                    // 'shippingtown' =>'required',
                    'contactname' =>'required',
-                   'contactphone' =>'required',
-                   'contactemail' => 'required|email'
+                   'contactphone' =>'required'
                 );
     $messages = array(
       'companyname.required'=> 'The company name field is required',
@@ -365,14 +372,12 @@ class DataController extends BaseController
       // 'shippingpostal.required'=> 'The postal code field is required',
       // 'shippingtown.required'=> 'The city field is required',
       'contactname.required'=> 'The contact name field is required',
-      'contactphone.required'=> 'The contact phone field is required',
-      'contactemail.required'=>"The contact email field is required",
-      'contactemail.email'=>"The contact email is not valid"
+      'contactphone.required'=> 'The contact phone field is required'
     );
     // $validator = Validator::make(array("companyname" => $data['companyname'], "shippingaddress1" => $data['shippingaddress1'], "shippingpostal" => $data['shippingpostal'], "shippingtown" => $data['shippingtown'], "contactname" => $data['contactname'], "contactphone" => $data['contactphone'], "contactemail" => $data['contactemail']),
     //                              $rules, $messages);
      
-     $validator = Validator::make(array("companyname" => $data['companyname'], "contactname" => $data['contactname'], "contactphone" => $data['contactphone'], "contactemail" => $data['contactemail']),
+     $validator = Validator::make(array("companyname" => $data['companyname'], "contactname" => $data['contactname'], "contactphone" => $data['contactphone']),
                                  $rules, $messages);
      
     if ($validator->fails()){
@@ -391,7 +396,7 @@ class DataController extends BaseController
       $data['cart_id'] = $cart->id;
       $data['cart'] = $cart;
       $this->storeTransaction($cart, $data);
-      $infor = ['companyname'=>$data['companyname'], 'shippingaddress1'=>$data['shippingaddress1'], 'contactname'=>$data['contactname'], 'contactphone'=>$data['contactphone'], 'contactemail'=>$data['contactemail'], 'ponumber' => $data['ponumber'], 'shipaddress' =>$data['shipaddress'], 'shipid' =>$data['shipid'], 'comments' => $data['comments']];
+      $infor = ['companyname'=>$data['companyname'], 'shippingaddress1'=>$data['shippingaddress1'], 'contactname'=>$data['contactname'], 'contactphone'=>$data['contactphone'], 'contactemail'=>$data['contactemail'], 'ponumber' => $data['ponumber'], 'shipaddress' =>$data['shipaddress'], 'shipid' =>$data['shipid'], 'comments' => $data['comments'], 'inemail' => $data['inemail']];
       $data['infor'] = $infor;
       $data['is_logged_in'] = Connection::get()->isLoggedIn();
       $data['subtotal'] = $this->getSubtotal($cart);
@@ -413,6 +418,7 @@ class DataController extends BaseController
       $data['billprovince'] = $this->getBillingProvince();
       $data['billpostal'] = $this->getBillingPostal();
       $data['custid'] = Auth::user()->getCustomerID();
+      $data['invoice'] = $this->getInvoiceEmails(); 
    
       $this->clearCartFinal();
       return View::make('ProductStore::checkoutComplete', $data);
@@ -735,6 +741,19 @@ class DataController extends BaseController
 
     return $result; 
   }
-    
   
+  private function getInvoiceEmails(){
+
+    $custid = Auth::user()->getCustomerID(); 
+
+    $result = InvoiceEmail::where('IDCUST', $custid)->select('INVOICEEMAIL')->get();
+    $emailsArray =[];
+
+    foreach ($result as $record) {
+      $emailsArray[] = $record->INVOICEEMAIL; 
+    }
+
+    return $emailsArray; 
+  }  
+
 }

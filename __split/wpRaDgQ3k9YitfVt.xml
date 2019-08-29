@@ -56,7 +56,11 @@
   @endif
     <br/>
     <b>Contact Name:</b> {{{$contactname}}} <br/>
-    <b>Email:</b> {{{$contactemail}}} <br/>
+  @if(!empty($invoice))
+  <b>Invoice Email:</b> {{{$inemail}}} <br/>
+  @else
+  <b>Invoice Email:</b> {{{$contactemail}}} <br/>
+  @endif
     <b>Phone:</b> {{{$contactphone}}} <br/>
   <div>
     <b>Comments: </b> {{$comments}} <br/>

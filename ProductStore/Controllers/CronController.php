@@ -36,6 +36,7 @@ use \ProductStore\Models\BillingAddress;
 use \ProductStore\Models\Price;
 use \ProductStore\Models\CustomerTax;
 use \ProductStore\Models\TaxRate;
+use \ProductStore\Models\InvoiceEmail;
 use Illuminate\Support\Facades\DB;
 
 // This controller contains the logic for all cron jobs in the BND Product Store application.
@@ -49,7 +50,7 @@ class CronController extends BaseController
   
   // The lists to import.
   private $lists_to_import = [
-    'Prices', 'ShippingAddresses', 'BillingAddresses', 'CustomerTax', 'TaxRates'
+    'Prices', 'ShippingAddresses', 'BillingAddresses', 'CustomerTax', 'TaxRates', 'InvoiceEmails'
   ];
   
   // If true, files are moved into an archive folder after processing.
@@ -424,6 +425,38 @@ class CronController extends BaseController
       }
     }
     
+    return $result;
+  }
+  private function importInvoiceEmails()
+  {
+    $result = true;
+
+    // Get the new invoice emails list, if it exists.
+    $uploaded_list = $this->getUploadedList('InvoiceEmails');
+
+
+    if (!empty($uploaded_list))
+    {
+      InvoiceEmail::truncate();
+
+      $cust = $uploaded_list[0][0];
+      $email = $uploaded_list[0][1];
+
+
+      $db = DB::connection()->getPdo();
+      $stmt = $db->prepare("INSERT INTO `InvoiceEmail` ($cust, $email) VALUES (?,?)");
+
+      for($i = 1; $i < count($uploaded_list); $i++){
+
+        $customerid = $uploaded_list[$i][0];
+        $invoiceemail = $uploaded_list[$i][1];
+
+        $data= [$customerid, $invoiceemail];
+        $stmt->execute($data);	
+
+      }
+    }
+
     return $result;
   }
 }

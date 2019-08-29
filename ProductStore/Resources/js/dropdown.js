@@ -89,3 +89,19 @@
     
 } 
 
+function newField(){
+  
+var ddl = document.getElementById("invoiceemails");
+    var selectedValue = ddl.options[ddl.selectedIndex].value;
+
+
+    if (selectedValue == "Other")
+    {   document.getElementById("inemail").style.display = "block";
+    }
+    else
+    {
+       document.getElementById("inemail").style.display = "none";
+       document.getElementById("inemail").value = selectedValue;
+    }
+
+}

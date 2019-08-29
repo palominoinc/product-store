@@ -109,27 +109,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="ponumber" class="control-label">PO Number: </label>
               <div class="">{{ Form::text('ponumber', Input::old('ponumber'), array('id'=: 'ponumber', 'class'=:"form-control")) }}
                 <span id="error" class="help-inline red" style="color: #bd2525">{{$errors-:first('ponumber')}}</span></div>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-6">
             <div class="form-group">
               <label for="contactphone" class="control-label">Phone: *</label>
               <div class="">{{ Form::text('contactphone', Input::old('contactphone'), array('id'=: 'contactphone', 'class'=:"form-control")) }}
                 <span id="contactphone-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactphone')}}</span></div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="contactemail" class="control-label">Email: *</label>
-              <div class="">{{ Form::text('contactemail', Input::old('contactemail'), array('id'=: 'contactemail', 'class'=:"form-control")) }}
-                <span id="contactemail-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactemail')}}</span></div>
             </div>
           </div>
         </div>
@@ -172,6 +163,36 @@
               </div>
             </div>
           </div>
+        </div>
+        <hr/>
+        <h3>Invoice Email</h3>
+        <div class="row">
+          @if(!empty($invoiceemails))
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <select name="invoiceemails" id="invoiceemails" class="form-control" style="width: 100%;" onchange="newField()" required>
+                <option value="" disabled selected hidden>Select Email</option>
+                @foreach($invoiceemails as $key => $dw) 
+                <option> {{ $dw }} </option> 
+                @endforeach
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="">{{ Form::text('inemail', Input::old('inemail'), array('id'=: 'inemail', 'class'=:"form-control", 'style'=:"display:none")) }}
+                </div>
+              </div>
+            </div>
+          </div> 
+          @else
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="">{{ Form::text('contactemail', Input::old('contactemail'), array('id'=: 'contactemail', 'class'=:"form-control", 'required')) }}
+                <span id="contactemail-error" class="help-inline red" style="color: #bd2525">{{$errors-:first('contactemail')}}</span></div>
+            </div>
+          </div>
+          @endif
         </div>
         <hr/>
         <h3>Additional Comments</h3>

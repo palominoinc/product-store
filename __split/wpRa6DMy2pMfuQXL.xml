@@ -154,8 +154,12 @@
             </div>
           </div>
           <div class="row form-group">
-            <label for="contactemail" class="col-sm-4">Email:</label>
+            <label for="contactemail" class="col-sm-4">Invoice Email:</label>
+            @if(!empty($invoice))
+            <div class="col-sm-8">{{$inemail}}</div>
+            @else
             <div class="col-sm-8">{{$contactemail}}</div>
+            @endif
           </div>
           <div class="row form-group">
             <label for="contactphone" class="col-sm-4">Phone:</label>
